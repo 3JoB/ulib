@@ -6,9 +6,10 @@ import (
 
 	tele "github.com/3JoB/telebot"
 	"github.com/3JoB/telebot/pkg"
-	"github.com/goccy/go-json"
 	"github.com/spf13/cast"
 	"github.com/tidwall/gjson"
+
+	"github.com/3JoB/ulib/json"
 )
 
 type AdminList struct {
@@ -23,8 +24,8 @@ type use struct {
 	AutoDeleteTimer time.Duration
 	AutoDelete      bool
 	ShowAlert       bool
-	Btn *tele.ReplyMarkup
-	Err error
+	Btn             *tele.ReplyMarkup
+	Err             error
 }
 
 var (
@@ -61,7 +62,7 @@ func (n *use) SetShowAlert() *use {
 	return n
 }
 
-func (n *use) SetBtn(btn *tele.ReplyMarkup) *use{
+func (n *use) SetBtn(btn *tele.ReplyMarkup) *use {
 	n.Btn = btn
 	return n
 }

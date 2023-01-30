@@ -4,8 +4,7 @@ import (
 	"github.com/goccy/go-reflect"
 )
 
-//from https://cs.opensource.google/go/go/+/refs/tags/go1.19.5:src/reflect/visiblefields.go;l=16
-
+// from https://cs.opensource.google/go/go/+/refs/tags/go1.19.5:src/reflect/visiblefields.go;l=16
 type visibleFieldsWalker struct {
 	byName   map[string]int
 	visiting map[reflect.Type]bool
