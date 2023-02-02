@@ -154,20 +154,31 @@ func (n *use) Alert(text string) error {
 
 // Get the list of group administrators
 func (n *use) GetAdminList() (map[int64]int, error) {
-	if n.ChatId == 0 {
-		return nil, errors.New("chatid not available")
-	}
 	if n.Ctx == nil {
-		return nil, errors.New("context not set")
+		return nil, errors.New("ulib.telebot: context not set")
 	}
-	var b []AdminList
-	d, _ := n.Ctx.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.ChatId})
+
+	var (
+		b []AdminList
+		d []byte
+	)
+
+	if n.ChatId != 0 {
+		d, _ = n.Ctx.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.ChatId})
+	} else {
+		if n.Ctx.Chat().Type != "supergroup" {
+			return nil, errors.New("ulib.telebot: Cannot be non-supergroup type")
+		}
+		d, _ = n.Ctx.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.Ctx.Chat().ID})
+	}
+
 	if !gjson.GetBytes(d, "ok").Bool() {
 		return nil, nil
 	}
+
 	json.UnmarshalString(gjson.GetBytes(d, "result").String(), &b)
 	if len(b) == 0 {
-		return nil, errors.New("failed to fetch admin list,please check what happened")
+		return nil, errors.New("ulib.telebot: failed to fetch admin list,please check what happened")
 	}
 	admin := make(map[int64]int)
 	for _, i := range b {

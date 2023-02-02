@@ -5,10 +5,11 @@ import (
 	"net/http"
 
 	"github.com/3JoB/telebot/pkg"
+
 	"github.com/3JoB/ulib/json"
 )
 
-func Bind(c *http.Request, v any){
+func Bind(c *http.Request, v any) {
 	data, _ := io.ReadAll(c.Body)
 	json.Unmarshal(data, v)
 }

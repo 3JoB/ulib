@@ -4,8 +4,9 @@ import (
 	"io"
 
 	"github.com/3JoB/telebot/pkg"
-	"github.com/3JoB/ulib/json"
 	"github.com/labstack/echo/v4"
+
+	"github.com/3JoB/ulib/json"
 )
 
 func Bind(c echo.Context, v any) {
