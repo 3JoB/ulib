@@ -18,7 +18,7 @@ func Marshal(a any) *marshal {
 	return m
 }
 
-func (m *marshal) String(a any) string {
+func (m *marshal) String() string {
 	return pkg.String(m.data)
 }
 
