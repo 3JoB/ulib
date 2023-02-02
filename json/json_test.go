@@ -11,7 +11,7 @@ type TestStruct struct{
 	A string `json:"a"`
 }
 
-func TestMarshrl(t *testing.T) {
+func TestMain(t *testing.T) {
 	data := `{"a": "b"}`
 	var tsc TestStruct
 	if err := json.Unmarshal(pkg.Bytes(data), &tsc); err!= nil {
