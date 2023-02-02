@@ -3,7 +3,7 @@ module github.com/3JoB/ulib
 go 1.19
 
 require (
-	github.com/3JoB/telebot v0.0.0-20230115124831-797424b7653c
+	github.com/3JoB/telebot v0.0.0-20230202125641-52c8068af540
 	github.com/gin-gonic/gin v1.8.2
 	github.com/goccy/go-json v0.10.0
 	github.com/goccy/go-reflect v1.2.0
