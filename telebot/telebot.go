@@ -5,7 +5,6 @@ import (
 	"time"
 
 	tele "github.com/3JoB/telebot"
-	"github.com/3JoB/telebot/pkg"
 	"github.com/spf13/cast"
 	"github.com/tidwall/gjson"
 
@@ -25,15 +24,48 @@ type use struct {
 	AutoDelete      bool
 	ShowAlert       bool
 	Btn             *tele.ReplyMarkup
+	SendOptions     *tele.SendOptions
+	FileMode        bool
 	Err             error
 }
 
-var (
-	SendOptions = &tele.SendOptions{ParseMode: tele.ModeHTML, DisableWebPagePreview: true}
+const (
+	ModeDef         = tele.ModeDefault
+	ModeFile string = "File"
+	ModeHTML        = tele.ModeHTML
+	ModeMD          = tele.ModeMarkdown
+	ModeMD2         = tele.ModeMarkdownV2
 )
 
 func New() *use {
 	n := new(use)
+	return n
+}
+
+func (n *use) SetModes(s any) *use {
+	switch cast.ToString(s) {
+	case ModeDef:
+		n.SendOptions.ParseMode = ModeDef
+	case ModeHTML:
+		n.SendOptions.ParseMode = ModeHTML
+	case ModeMD:
+		n.SendOptions.ParseMode = ModeMD
+	case ModeMD2:
+		n.SendOptions.ParseMode = ModeMD2
+	case ModeFile:
+		n.FileMode = true
+	default:
+		panic("ulib.telebot: Unavailable sending method!!!")
+	}
+	return n
+}
+
+func (n *use) SetWebPreview() *use {
+	if n.SendOptions.DisableWebPagePreview {
+		n.SendOptions.DisableWebPagePreview = false
+	} else {
+		n.SendOptions.DisableWebPagePreview = true
+	}
 	return n
 }
 
@@ -69,24 +101,46 @@ func (n *use) SetBtn(btn *tele.ReplyMarkup) *use {
 
 // Delete Message
 func (n *use) Delete(message int) error {
+	var chid int64
+	if n.ChatId != 0 {
+		chid = n.ChatId
+	} else {
+		chid = n.Ctx.Chat().ID
+	}
 	return n.Ctx.Bot().Delete(&tele.StoredMessage{
 		MessageID: cast.ToString(message),
-		ChatID:    n.ChatId,
+		ChatID:    chid,
 	})
 }
 
 // Send Message
 func (n *use) Send(msg any) (*tele.Message, error) {
 	var i *tele.Message
-	if n.Btn != nil {
-		i, n.Err = n.Ctx.Send(msg, SendOptions, n.Btn)
+	var cid tele.ChatID
+	if n.ChatId != 0 {
+		cid = tele.ChatID(n.ChatId)
 	} else {
-		i, n.Err = n.Ctx.Send(msg, SendOptions)
+		cid = tele.ChatID(n.Ctx.Chat().ID)
+	}
+	if n.FileMode {
+		if n.Btn != nil {
+			i, n.Err = n.Ctx.Bot().Send(cid, msg, n.Btn)
+		} else {
+			i, n.Err = n.Ctx.Bot().Send(cid, msg)
+		}
+	} else {
+		if n.Btn != nil {
+			i, n.Err = n.Ctx.Bot().Send(cid, msg, n.SendOptions, n.Btn)
+		} else {
+			i, n.Err = n.Ctx.Bot().Send(cid, msg, n.SendOptions)
+		}
 	}
 	if n.AutoDelete {
 		time.Sleep(time.Second * n.AutoDeleteTimer)
 		n.Delete(i.ID)
 	}
+	n.AutoDelete = false
+
 	return i, n.Err
 }
 
@@ -111,7 +165,7 @@ func (n *use) GetAdminList() (map[int64]int, error) {
 	if !gjson.GetBytes(d, "ok").Bool() {
 		return nil, nil
 	}
-	json.Unmarshal(pkg.Bytes(gjson.GetBytes(d, "result").String()), &b)
+	json.UnmarshalString(gjson.GetBytes(d, "result").String(), &b)
 	if len(b) == 0 {
 		return nil, errors.New("failed to fetch admin list,please check what happened")
 	}
