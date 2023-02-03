@@ -8,6 +8,7 @@
         "supergroup",
         "tele",
         "telebot",
+        "tidwall",
         "ulib",
         "zstd"
     ]

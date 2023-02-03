@@ -6,7 +6,6 @@ require (
 	github.com/3JoB/telebot v0.0.0-20230202125641-52c8068af540
 	github.com/andybalholm/brotli v1.0.4
 	github.com/gin-gonic/gin v1.8.2
-	github.com/go-resty/resty/v2 v2.7.0
 	github.com/goccy/go-json v0.10.0
 	github.com/goccy/go-reflect v1.2.0
 	github.com/klauspost/compress v1.15.9
