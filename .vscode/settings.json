@@ -1,10 +1,14 @@
 {
     "cSpell.words": [
+        "andybalholm",
+        "brotli",
         "chatid",
         "gjson",
+        "klauspost",
         "supergroup",
         "tele",
         "telebot",
-        "ulib"
+        "ulib",
+        "zstd"
     ]
 }

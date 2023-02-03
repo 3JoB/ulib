@@ -4,24 +4,27 @@ go 1.19
 
 require (
 	github.com/3JoB/telebot v0.0.0-20230202125641-52c8068af540
+	github.com/andybalholm/brotli v1.0.4
 	github.com/gin-gonic/gin v1.8.2
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/goccy/go-json v0.10.0
 	github.com/goccy/go-reflect v1.2.0
+	github.com/klauspost/compress v1.15.9
 	github.com/labstack/echo/v4 v4.10.0
 	github.com/savsgio/atreugo/v11 v11.9.9
 	github.com/spf13/cast v1.5.0
 	github.com/tidwall/gjson v1.14.4
+	github.com/zc310/headers v0.0.0-20210220023006-06acd8c1c220
 )
 
 require (
-	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/fasthttp/router v1.4.15 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
+	github.com/go-http-utils/headers v0.0.0-20181008091004-fed159eddc2a // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.11.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
