@@ -14,14 +14,24 @@ import (
 
 var decoder, _ = zstd.NewReader(nil, zstd.WithDecoderConcurrency(0))
 
-func UnPackData(r *http.Response) ([]byte, error) {
-	return upk(r)
+type update struct{
+	data []byte
+	Err error
 }
 
-func UnPackDataString(r *http.Response) (string, error) {
-	data, err := upk(r)
-	udt := pkg.String(data)
-	return udt, err
+func Data(r *http.Response) *update {
+	upd := new(update)
+	upd.data, upd.Err = upk(r)
+	return upd
+}
+
+func (u *update) String() string {
+	udt := pkg.String(u.data)
+	return udt
+}
+
+func (u *update) Bytes() []byte {
+	return u.data
 }
 
 func upk(r *http.Response) ([]byte, error) {

@@ -3,6 +3,7 @@
         "andybalholm",
         "brotli",
         "chatid",
+        "fsutil",
         "gjson",
         "klauspost",
         "supergroup",

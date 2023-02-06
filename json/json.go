@@ -22,6 +22,10 @@ func (m *marshal) String() string {
 	return pkg.String(m.data)
 }
 
+func (m *marshal) Bytes() []byte{
+	return m.data
+}
+
 func Unmarshal(data []byte, str any) error {
 	return gjs.Unmarshal(data, str)
 }

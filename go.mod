@@ -1,9 +1,9 @@
 module github.com/3JoB/ulib
 
-go 1.19
+go 1.20
 
 require (
-	github.com/3JoB/telebot v0.0.0-20230202125641-52c8068af540
+	github.com/3JoB/telebot v0.0.0-20230206093018-d4bc9140380f
 	github.com/andybalholm/brotli v1.0.4
 	github.com/gin-gonic/gin v1.8.2
 	github.com/goccy/go-json v0.10.0
@@ -23,6 +23,7 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.11.2 // indirect
+	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect

@@ -1,5 +1,5 @@
-github.com/3JoB/telebot v0.0.0-20230202125641-52c8068af540 h1:FNktUWKR3sSaw/TMU9jRMEq4oCeC6Kk4gvY2ikoNWCE=
-github.com/3JoB/telebot v0.0.0-20230202125641-52c8068af540/go.mod h1:MevyoMQ8Z2Ba3w63lGAUhGDoWs/llHBCN/p3O4h2Gbw=
+github.com/3JoB/telebot v0.0.0-20230206093018-d4bc9140380f h1:7G/ari6DQTh+6/bI+UkCKeDgroVn5QpvjV71P2Zh/7Q=
+github.com/3JoB/telebot v0.0.0-20230206093018-d4bc9140380f/go.mod h1:/5lZ+FTI/7qV+94/5F/UKgZaqEjidzsqFXq303xCO0Q=
 github.com/andybalholm/brotli v1.0.4 h1:V7DdXeJtZscaqfNuAdSRuRFzuiKlHSC/Zh3zl9qY3JY=
 github.com/andybalholm/brotli v1.0.4/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHGRSepvi9Eig=
 github.com/atreugo/mock v0.0.0-20200601091009-13c275b330b0 h1:IVqe9WnancrkICl5HqEfGjrnkQ4+VsU5fodcuFVoG/A=
@@ -32,6 +32,8 @@ github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.7 h1:81/ik6ipDQS2aGcBfIN5dHDB36BwrStyeAQquSYCV4o=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd h1:PpuIBO5P3e9hpqBD0O/HjhShYuM6XE0i/lbE6J94kww=
+github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd/go.mod h1:M5qHK+eWfAv8VR/265dIuEpL3fNfeC21tXXp9itM24A=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/klauspost/compress v1.15.9 h1:wKRjX6JRtDdrE9qwa4b/Cip7ACOshUI4smpCQanqjSY=
