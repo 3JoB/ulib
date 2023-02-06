@@ -28,3 +28,9 @@ func Write(d , v string)error {
 	writer.Flush()
 	return nil
 }
+
+type f_info struct{}
+
+func FileInfo(filepath string) *f_info {
+    return nil
+}
