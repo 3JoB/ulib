@@ -61,8 +61,8 @@ func (b *bot) CustomSettings(settings tele.Settings) *bot {
 func (b *bot) NewBot() *tb {
 	var (
 		err error
-		t   *tb
 	)
+	t := new(tb)
 	t.B, err = tele.NewBot(b.Settings)
 	if err != nil {
 		panic(err)
