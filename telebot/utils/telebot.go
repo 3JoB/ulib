@@ -39,6 +39,8 @@ const (
 
 func New() *use {
 	n := new(use)
+	n.SendOptions = new(tele.SendOptions)
+	n.Btn = new(tele.ReplyMarkup)
 	return n
 }
 
