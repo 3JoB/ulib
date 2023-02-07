@@ -7,9 +7,9 @@ import (
 	"github.com/3JoB/telebot/pkg"
 )
 
-type fsutil_struct struct{
-	Path string
-	Data string
+type fsutil_struct struct {
+	Path  string
+	Data  string
 	TRUNC bool
 }
 
@@ -32,7 +32,7 @@ func (f *fsutil_struct) SetTrunc() *fsutil_struct {
 func (f *fsutil_struct) Write(d string) error {
 	var (
 		file *os.File
-		err error
+		err  error
 	)
 	if f.TRUNC {
 		file, err = os.OpenFile(f.Path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
@@ -52,5 +52,5 @@ func (f *fsutil_struct) Write(d string) error {
 type f_info struct{}
 
 func (f *fsutil_struct) Info(filepath string) *f_info {
-    return nil
+	return nil
 }

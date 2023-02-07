@@ -6,9 +6,12 @@
         "fsutil",
         "gjson",
         "klauspost",
+        "logconf",
+        "logrus",
         "supergroup",
         "tele",
         "telebot",
+        "telemw",
         "tidwall",
         "ulib",
         "zstd"

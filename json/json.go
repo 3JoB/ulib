@@ -22,7 +22,7 @@ func (m *marshal) String() string {
 	return pkg.String(m.data)
 }
 
-func (m *marshal) Bytes() []byte{
+func (m *marshal) Bytes() []byte {
 	return m.data
 }
 

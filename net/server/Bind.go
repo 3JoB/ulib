@@ -4,12 +4,14 @@ import (
 	"io"
 
 	"github.com/3JoB/telebot/pkg"
+
 	"github.com/3JoB/ulib/json"
 )
 
-/*gin:
+/*
+gin:
 server.Bind(c.Request.Body, &v)
-*/ 
+*/
 func Bind(r io.ReadCloser, v any) {
 	data, _ := io.ReadAll(r)
 	json.Unmarshal(data, v)

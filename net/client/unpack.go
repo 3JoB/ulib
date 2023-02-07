@@ -14,9 +14,9 @@ import (
 
 var decoder, _ = zstd.NewReader(nil, zstd.WithDecoderConcurrency(0))
 
-type update struct{
+type update struct {
 	data []byte
-	Err error
+	Err  error
 }
 
 func Data(r *http.Response) *update {
