@@ -117,6 +117,9 @@ func (n *use) Delete(message int) error {
 func (n *use) Send(msg any) (*tele.Message, error) {
 	var i *tele.Message
 	var cid tele.ChatID
+	if n.SendOptions.ParseMode == "" {
+		n.SendOptions.ParseMode = ModeHTML
+	}
 	if n.ChatId != 0 {
 		cid = tele.ChatID(n.ChatId)
 	} else {
@@ -140,6 +143,7 @@ func (n *use) Send(msg any) (*tele.Message, error) {
 		n.Delete(i.ID)
 	}
 	n.AutoDelete = false
+	n.FileMode = false
 
 	return i, n.Err
 }
