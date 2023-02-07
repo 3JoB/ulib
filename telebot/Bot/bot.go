@@ -3,9 +3,10 @@ package bot
 import (
 	"net/http"
 
-	"github.com/3JoB/ulib/telebot/middleware"
 	tele "github.com/3JoB/telebot"
 	telemw "github.com/3JoB/telebot/middleware"
+
+	"github.com/3JoB/ulib/telebot/middleware"
 )
 
 type bot struct {
@@ -82,7 +83,7 @@ func (b *tb) ImportMiddlewareLogger() {
 	b.B.Use(middleware.Logger(nil))
 }
 
-func (b *tb) ImportMiddlewareRecover(){
+func (b *tb) ImportMiddlewareRecover() {
 	b.B.Use(telemw.Recover())
 }
 

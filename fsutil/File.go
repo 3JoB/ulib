@@ -2,6 +2,8 @@ package fsutil
 
 import (
 	"bufio"
+	"errors"
+	"io/fs"
 	"os"
 
 	"github.com/3JoB/telebot/pkg"
@@ -13,7 +15,20 @@ type fsutil_struct struct {
 	TRUNC bool
 }
 
-func NewFile(path string) *fsutil_struct {
+func IsFile(path string) bool {
+	_, err := os.Stat(path)
+	return errors.Is(err, fs.ErrNotExist)
+}
+
+func IsDir(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return info.IsDir()
+}
+
+func File(path string) *fsutil_struct {
 	fs := &fsutil_struct{
 		Path: path,
 	}
@@ -46,11 +61,5 @@ func (f *fsutil_struct) Write(d string) error {
 	writer := bufio.NewWriter(file)
 	writer.Write(pkg.Bytes(d))
 	writer.Flush()
-	return nil
-}
-
-type f_info struct{}
-
-func (f *fsutil_struct) Info(filepath string) *f_info {
 	return nil
 }
