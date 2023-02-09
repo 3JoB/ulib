@@ -13,7 +13,7 @@ import (
 	"github.com/3JoB/ulib/reflect"
 )
 
-type use struct {
+type Use struct {
 	Ctx             tele.Context
 	ChatId          int64
 	AutoDeleteTimer time.Duration
@@ -33,14 +33,14 @@ const (
 	ModeMD2         = tele.ModeMarkdownV2
 )
 
-func New() *use {
-	n := new(use)
+func New() *Use {
+	n := new(Use)
 	n.SendOptions = new(tele.SendOptions)
 	n.Btn = new(tele.ReplyMarkup)
 	return n
 }
 
-func (n *use) SetModes(s any) *use {
+func (n *Use) SetModes(s any) *Use {
 	switch cast.ToString(s) {
 	case ModeDef:
 		n.SendOptions.ParseMode = ModeDef
@@ -58,7 +58,7 @@ func (n *use) SetModes(s any) *use {
 	return n
 }
 
-func (n *use) SetWebPreview() *use {
+func (n *Use) SetWebPreview() *Use {
 	if n.SendOptions.DisableWebPagePreview {
 		n.SendOptions.DisableWebPagePreview = false
 	} else {
@@ -67,23 +67,23 @@ func (n *use) SetWebPreview() *use {
 	return n
 }
 
-func (n *use) SetChatID(c int64) *use {
+func (n *Use) SetChatID(c int64) *Use {
 	n.ChatId = c
 	return n
 }
 
-func (n *use) SetContext(c tele.Context) *use {
+func (n *Use) SetContext(c tele.Context) *Use {
 	n.Ctx = c
 	return n
 }
 
-func (n *use) SetAutoDelete(t time.Duration) *use {
+func (n *Use) SetAutoDelete(t time.Duration) *Use {
 	n.AutoDelete = true
 	n.AutoDeleteTimer = t
 	return n
 }
 
-func (n *use) SetShowAlert() *use {
+func (n *Use) SetShowAlert() *Use {
 	if n.ShowAlert {
 		n.ShowAlert = false
 	} else {
@@ -92,13 +92,13 @@ func (n *use) SetShowAlert() *use {
 	return n
 }
 
-func (n *use) SetBtn(btn *tele.ReplyMarkup) *use {
+func (n *Use) SetBtn(btn *tele.ReplyMarkup) *Use {
 	n.Btn = btn
 	return n
 }
 
 // Delete Message
-func (n *use) Delete(message int) error {
+func (n *Use) Delete(message int) error {
 	var chid int64
 	if n.ChatId != 0 {
 		chid = n.ChatId
@@ -112,7 +112,7 @@ func (n *use) Delete(message int) error {
 }
 
 // Send Message
-func (n *use) Send(msg any) (*tele.Message, error) {
+func (n *Use) Send(msg any) (*tele.Message, error) {
 	var i *tele.Message
 	var cid tele.ChatID
 	if n.SendOptions.ParseMode == "" {
@@ -147,7 +147,7 @@ func (n *use) Send(msg any) (*tele.Message, error) {
 }
 
 // Pop-ups
-func (n *use) Alert(text string) error {
+func (n *Use) Alert(text string) error {
 	return n.Ctx.Respond(&tele.CallbackResponse{
 		Text:      text,
 		ShowAlert: n.ShowAlert,
@@ -186,7 +186,7 @@ type User struct {
 }
 
 // Get the list of group administrators
-func (n *use) GetAdminList() (map[int64]AdminInfo, error) {
+func (n *Use) GetAdminList() (map[int64]AdminInfo, error) {
 	if n.Ctx == nil {
 		return nil, errors.New("ulib.telebot: context not set")
 	}
