@@ -2,6 +2,8 @@ package utils
 
 import (
 	"errors"
+	"fmt"
+	"github.com/3JoB/ulib/reflect"
 	"time"
 
 	tele "github.com/3JoB/telebot"
@@ -181,6 +183,8 @@ func (n *use) GetAdminList() (map[int64]int, error) {
 	if !gjson.GetBytes(d, "ok").Bool() {
 		return nil, nil
 	}
+
+	fmt.Println(reflect.String(d))
 
 	json.UnmarshalString(gjson.GetBytes(d, "result").String(), &b)
 	if len(b) == 0 {
