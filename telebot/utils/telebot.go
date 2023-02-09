@@ -3,7 +3,6 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"github.com/3JoB/ulib/reflect"
 	"time"
 
 	tele "github.com/3JoB/telebot"
@@ -11,13 +10,8 @@ import (
 	"github.com/tidwall/gjson"
 
 	"github.com/3JoB/ulib/json"
+	"github.com/3JoB/ulib/reflect"
 )
-
-type AdminList struct {
-	User struct {
-		ID int64 `json:"id"`
-	} `json:"user"`
-}
 
 type use struct {
 	Ctx             tele.Context
@@ -160,14 +154,45 @@ func (n *use) Alert(text string) error {
 	})
 }
 
+type AdminInfo struct {
+	User   User   `json:"user"`
+	Status string `json:"status"`
+	AdminPerm
+}
+
+type AdminPerm struct {
+	CanBeEdited         bool `json:"can_be_edited"`
+	CanManageChat       bool `json:"can_manage_chat"`
+	CanChangeInfo       bool `json:"can_change_info"`
+	CanDeleteMessages   bool `json:"can_delete_messages"`
+	CanInviteUsers      bool `json:"can_invite_users"`
+	CanRestrictMembers  bool `json:"can_restrict_members"`
+	CanPinMessages      bool `json:"can_pin_messages"`
+	CanManageTopics     bool `json:"can_manage_topics"`
+	CanPromoteMembers   bool `json:"can_promote_members"`
+	CanManageVideoChats bool `json:"can_manage_video_chats"`
+	IsAnonymous         bool `json:"is_anonymous"`
+	CanManageVoiceChats bool `json:"can_manage_voice_chats"`
+}
+
+type User struct {
+	ID        int64  `json:"id"`
+	IsBot     bool   `json:"is_bot"`
+	IsPremium bool   `json:"is_premium"`
+	Language  string `json:"language_code"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Username  string `json:"username"`
+}
+
 // Get the list of group administrators
-func (n *use) GetAdminList() (map[int64]int, error) {
+func (n *use) GetAdminList() (map[int64]AdminInfo, error) {
 	if n.Ctx == nil {
 		return nil, errors.New("ulib.telebot: context not set")
 	}
 
 	var (
-		b []AdminList
+		b []AdminInfo
 		d []byte
 	)
 
@@ -190,9 +215,9 @@ func (n *use) GetAdminList() (map[int64]int, error) {
 	if len(b) == 0 {
 		return nil, errors.New("ulib.telebot: failed to fetch admin list,please check what happened")
 	}
-	admin := make(map[int64]int)
+	admin := make(map[int64]AdminInfo)
 	for _, i := range b {
-		admin[i.User.ID] = 1
+		admin[i.User.ID] = i
 	}
 	return admin, nil
 }
