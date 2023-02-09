@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	tele "github.com/3JoB/telebot"
@@ -10,7 +9,6 @@ import (
 	"github.com/tidwall/gjson"
 
 	"github.com/3JoB/ulib/json"
-	"github.com/3JoB/ulib/reflect"
 )
 
 type Use struct {
@@ -208,8 +206,6 @@ func (n *Use) GetAdminList() (map[int64]AdminInfo, error) {
 	if !gjson.GetBytes(d, "ok").Bool() {
 		return nil, nil
 	}
-
-	fmt.Println(reflect.String(d))
 
 	json.UnmarshalString(gjson.GetBytes(d, "result").String(), &b)
 	if len(b) == 0 {
