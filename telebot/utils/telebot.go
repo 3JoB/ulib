@@ -17,9 +17,9 @@ type Use struct {
 	AutoDeleteTimer time.Duration
 	AutoDelete      bool
 	ShowAlert       bool
+	FileMode        bool
 	Btn             *tele.ReplyMarkup
 	SendOptions     *tele.SendOptions
-	FileMode        bool
 	Err             error
 }
 

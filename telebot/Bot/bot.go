@@ -20,8 +20,7 @@ type tb struct {
 }
 
 func New() *bot {
-	b := new(bot)
-	return b
+	return new(bot)
 }
 
 /*
