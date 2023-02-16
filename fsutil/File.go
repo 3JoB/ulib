@@ -6,7 +6,7 @@ import (
 	"io/fs"
 	"os"
 
-	"github.com/3JoB/telebot/pkg"
+	"github.com/3JoB/ulib/reflect"
 )
 
 type fsutil_struct struct {
@@ -59,7 +59,7 @@ func (f *fsutil_struct) Write(d string) error {
 	}
 	defer file.Close()
 	writer := bufio.NewWriter(file)
-	writer.Write(pkg.Bytes(d))
+	writer.Write(reflect.Bytes(d))
 	writer.Flush()
 	return nil
 }

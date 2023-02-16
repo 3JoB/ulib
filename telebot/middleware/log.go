@@ -4,10 +4,11 @@ import (
 	"path"
 
 	tele "github.com/3JoB/telebot"
-	"github.com/3JoB/telebot/pkg"
 	"github.com/goccy/go-json"
 	"github.com/natefinch/lumberjack"
 	"github.com/sirupsen/logrus"
+
+	"github.com/3JoB/ulib/reflect"
 )
 
 var (
@@ -58,7 +59,7 @@ func Logger(l *LogSettings) tele.MiddlewareFunc {
 	return func(next tele.HandlerFunc) tele.HandlerFunc {
 		return func(c tele.Context) error {
 			data, _ := json.MarshalIndent(c.Update(), "", "  ")
-			logger.Println(pkg.String(data))
+			logger.Println(reflect.String(data))
 			return next(c)
 		}
 	}
