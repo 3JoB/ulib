@@ -3,8 +3,9 @@ package server
 import (
 	"io"
 
+	"github.com/3JoB/unsafeConvert"
+
 	"github.com/3JoB/ulib/json"
-	"github.com/3JoB/ulib/reflect"
 )
 
 /*
@@ -19,5 +20,5 @@ func Bind(r io.ReadCloser, v any) {
 func Body(r io.ReadCloser, l int64) string {
 	body := make([]byte, l)
 	r.Read(body)
-	return reflect.String(body)
+	return unsafeConvert.String(body)
 }

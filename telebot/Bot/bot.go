@@ -1,7 +1,9 @@
 package bot
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	tele "github.com/3JoB/telebot"
 	telemw "github.com/3JoB/telebot/middleware"
@@ -59,14 +61,13 @@ func (b *bot) CustomSettings(settings tele.Settings) *bot {
 	return b
 }
 
-func (b *bot) NewBot() *tb {
-	var (
-		err error
-	)
+func (b *bot) CreateBot() *tb {
+	var err error
 	t := new(tb)
 	t.B, err = tele.NewBot(b.Settings)
 	if err != nil {
-		panic(err)
+		fmt.Println(err.Error())
+		os.Exit(-2)
 	}
 	return t
 }

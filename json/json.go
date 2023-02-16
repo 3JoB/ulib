@@ -3,9 +3,8 @@ package json
 import (
 	"context"
 
+	"github.com/3JoB/unsafeConvert"
 	gjs "github.com/goccy/go-json"
-
-	"github.com/3JoB/ulib/reflect"
 )
 
 type marshal struct {
@@ -20,7 +19,7 @@ func Marshal(a any) *marshal {
 }
 
 func (m *marshal) String() string {
-	return reflect.String(m.data)
+	return unsafeConvert.String(m.data)
 }
 
 func (m *marshal) Bytes() []byte {
@@ -32,7 +31,7 @@ func Unmarshal(data []byte, str any) error {
 }
 
 func UnmarshalString(data string, str any) error {
-	return gjs.Unmarshal(reflect.Bytes(data), str)
+	return gjs.Unmarshal(unsafeConvert.Bytes(data), str)
 }
 
 func UnmarshalContext(ctx context.Context, data []byte, v any) error {
@@ -40,5 +39,5 @@ func UnmarshalContext(ctx context.Context, data []byte, v any) error {
 }
 
 func UnmarshalStringContext(ctx context.Context, data string, v any) error {
-	return gjs.UnmarshalContext(ctx, reflect.Bytes(data), v)
+	return gjs.UnmarshalContext(ctx, unsafeConvert.Bytes(data), v)
 }

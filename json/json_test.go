@@ -1,9 +1,8 @@
 package json_test
 
 import (
+	"fmt"
 	"testing"
-
-	"github.com/3JoB/telebot/pkg"
 
 	"github.com/3JoB/ulib/json"
 )
@@ -15,9 +14,9 @@ type TestStruct struct {
 func TestMain(t *testing.T) {
 	data := `{"a": "b"}`
 	var tsc TestStruct
-	if err := json.Unmarshal(pkg.Bytes(data), &tsc); err != nil {
+	if err := json.UnmarshalString(data, &tsc); err != nil {
 		panic(err)
 	}
 	da := json.Marshal(&tsc).String()
-	println(da)
+	fmt.Println(da)
 }

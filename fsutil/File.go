@@ -6,7 +6,7 @@ import (
 	"io/fs"
 	"os"
 
-	"github.com/3JoB/ulib/reflect"
+	"github.com/3JoB/unsafeConvert"
 )
 
 type fsutil_struct struct {
@@ -59,7 +59,7 @@ func (f *fsutil_struct) Write(d string) error {
 	}
 	defer file.Close()
 	writer := bufio.NewWriter(file)
-	writer.Write(reflect.Bytes(d))
+	writer.Write(unsafeConvert.Bytes(d))
 	writer.Flush()
 	return nil
 }

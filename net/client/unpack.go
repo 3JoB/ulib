@@ -4,7 +4,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/3JoB/telebot/pkg"
+	"github.com/3JoB/unsafeConvert"
 	"github.com/andybalholm/brotli"
 	"github.com/klauspost/compress/flate"
 	"github.com/klauspost/compress/gzip"
@@ -26,7 +26,7 @@ func Data(r *http.Response) *update {
 }
 
 func (u *update) String() string {
-	udt := pkg.String(u.data)
+	udt := unsafeConvert.String(u.data)
 	return udt
 }
 

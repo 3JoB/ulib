@@ -1,5 +1,7 @@
 github.com/3JoB/telebot v0.0.0-20230206093018-d4bc9140380f h1:7G/ari6DQTh+6/bI+UkCKeDgroVn5QpvjV71P2Zh/7Q=
 github.com/3JoB/telebot v0.0.0-20230206093018-d4bc9140380f/go.mod h1:/5lZ+FTI/7qV+94/5F/UKgZaqEjidzsqFXq303xCO0Q=
+github.com/3JoB/unsafeConvert v0.0.1 h1:2YouOKliR6oAz7TceZYa069RcGtZ+FGdMJetIjaA1wg=
+github.com/3JoB/unsafeConvert v0.0.1/go.mod h1:iSvh1grSkQOJuPRGhfBJbG++/Z/0oHN11E4bePIbfd0=
 github.com/BurntSushi/toml v1.2.1 h1:9F2/+DoOYIOksmaJFPw1tGFy1eDnIJXg+UHjuD8lTak=
 github.com/BurntSushi/toml v1.2.1/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/andybalholm/brotli v1.0.4 h1:V7DdXeJtZscaqfNuAdSRuRFzuiKlHSC/Zh3zl9qY3JY=
