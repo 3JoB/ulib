@@ -7,7 +7,7 @@ require (
 	github.com/andybalholm/brotli v1.0.4
 	github.com/goccy/go-json v0.10.0
 	github.com/goccy/go-reflect v1.2.0
-	github.com/klauspost/compress v1.15.9
+	github.com/klauspost/compress v1.15.15
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cast v1.5.0
