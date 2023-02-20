@@ -27,7 +27,7 @@ func (z Zip) Create(source string, files []string) error {
 	}
 	w := zip.NewWriter(fs)
 	for _, f := range files {
-		ofs, err := os.OpenFile(f, os.O_WRONLY, 0644)
+		ofs, err := os.OpenFile(f, os.O_WRONLY|os.O_RDONLY|os.O_RDWR, 0755)
 		if err != nil {
 			return err
 		}

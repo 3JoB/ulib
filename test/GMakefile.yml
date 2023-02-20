@@ -1,0 +1,6 @@
+config:
+  default: all
+
+all: |
+  go build -ldflags "-s -w"
+  @echo Done!

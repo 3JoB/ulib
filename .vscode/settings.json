@@ -11,6 +11,7 @@
         "goccy",
         "gomod",
         "klauspost",
+        "ldflags",
         "logconf",
         "logrus",
         "natefinch",
@@ -20,6 +21,7 @@
         "tele",
         "telebot",
         "telemw",
+        "testdata",
         "tidwall",
         "ulib",
         "zstd"
