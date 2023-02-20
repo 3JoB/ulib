@@ -10,14 +10,24 @@ import (
 	"github.com/bodgit/sevenzip"
 )
 
-type sevenZip struct{}
+type sevenZip struct{
+	pass string
+}
 
-func NewSevenZip() *sevenZip {
+func New7Zip(pwd ...string) *sevenZip {
+	if len(pwd) != 0 {
+		return &sevenZip{pass: pwd[0]}
+	}
 	return &sevenZip{}
 }
 
-func (sv sevenZip) Extract(source, destination string) ([]string, error) {
-	i, err := sevenzip.OpenReader(source)
+func (sv sevenZip) Extract(source, destination string) (extractedFiles []string, err error) {
+	var i *sevenzip.ReadCloser
+	if sv.pass != "" {
+		sevenzip.OpenReaderWithPassword(source, sv.pass)
+	} else {
+		i, err = sevenzip.OpenReader(source)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +36,6 @@ func (sv sevenZip) Extract(source, destination string) ([]string, error) {
 		return nil, err
 	}
 
-	var extractedFiles []string
 	for _, f := range i.File {
 		if err := sv.extractAndWriteFile(destination, f); err != nil {
 			return nil, err

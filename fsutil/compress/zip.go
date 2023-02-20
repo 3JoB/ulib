@@ -11,13 +11,22 @@ import (
 	zs "github.com/klauspost/compress/zstd"
 )
 
-type Zip struct {}
+type Zip struct {
+	pass string
+}
 
 func NewZip() *Zip {
 	return &Zip{}
 }
 
-func (uz Zip) Extract(source, destination string) ([]string, error) {
+func (z Zip) Add() error {
+	encomp := zs.ZipCompressor()
+	zip.RegisterCompressor(zs.ZipMethodPKWare, encomp)
+	zip.RegisterCompressor(zs.ZipMethodWinZip, encomp)
+	return nil
+}
+
+func (z Zip) Extract(source, destination string) ([]string, error) {
 	decomp := zs.ZipDecompressor()
 	zip.RegisterDecompressor(zs.ZipMethodPKWare, decomp)
 	zip.RegisterDecompressor(zs.ZipMethodWinZip, decomp)
@@ -34,7 +43,7 @@ func (uz Zip) Extract(source, destination string) ([]string, error) {
 
 	var extractedFiles []string
 	for _, f := range r.File {
-		if err := uz.extractAndWriteFile(destination, f); err != nil {
+		if err := z.extractAndWriteFile(destination, f); err != nil {
 			return nil, err
 		}
 

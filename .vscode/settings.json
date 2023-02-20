@@ -4,6 +4,8 @@
         "bodgit",
         "brotli",
         "chatid",
+        "decomp",
+        "encomp",
         "fsutil",
         "gjson",
         "goccy",
