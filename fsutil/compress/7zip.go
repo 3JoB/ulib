@@ -10,7 +10,7 @@ import (
 	"github.com/bodgit/sevenzip"
 )
 
-type sevenZip struct{
+type sevenZip struct {
 	pass string
 }
 

@@ -11,18 +11,36 @@ import (
 	zs "github.com/klauspost/compress/zstd"
 )
 
-type Zip struct {
-	pass string
-}
+type Zip struct{}
 
 func NewZip() *Zip {
 	return &Zip{}
 }
 
-func (z Zip) Add() error {
+func (z Zip) Create(source string, files []string) error {
 	encomp := zs.ZipCompressor()
 	zip.RegisterCompressor(zs.ZipMethodPKWare, encomp)
 	zip.RegisterCompressor(zs.ZipMethodWinZip, encomp)
+	fs, err := os.OpenFile(source, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+	w := zip.NewWriter(fs)
+	for _, f := range files {
+		ofs, err := os.OpenFile(f, os.O_WRONLY, 0644)
+		if err != nil {
+			return err
+		}
+		zfs, err := w.Create(f)
+		if err != nil {
+			return err
+		}
+		if _, err := io.Copy(zfs, ofs); err != nil {
+			return err
+		}
+		ofs.Close()
+	}
+	w.Close()
 	return nil
 }
 

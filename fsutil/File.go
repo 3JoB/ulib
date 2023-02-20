@@ -28,6 +28,18 @@ func IsDir(path string) bool {
 	return info.IsDir()
 }
 
+func ReadPath(path string) (f []string) {
+	fr, _ := os.ReadDir(path)
+	for _, fs := range fr {
+		if fs.IsDir() {
+			f = append(f, ReadPath(path+"/"+fs.Name())...)
+		} else {
+			f = append(f, path+"/"+fs.Name())
+		}
+	}
+	return f
+}
+
 func File(path string) *fsutil_struct {
 	fs := &fsutil_struct{
 		Path: path,
