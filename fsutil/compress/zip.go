@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/3JoB/ulib/fsutil"
 	"github.com/klauspost/compress/zip"
 	zs "github.com/klauspost/compress/zstd"
 )
@@ -18,20 +19,26 @@ func NewZip() *Zip {
 }
 
 func (z Zip) Create(source string, files []string) error {
-	encomp := zs.ZipCompressor()
-	zip.RegisterCompressor(zs.ZipMethodPKWare, encomp)
-	zip.RegisterCompressor(zs.ZipMethodWinZip, encomp)
+	if fsutil.IsFile(source) {
+		os.RemoveAll(source)
+	}
 	fs, err := os.OpenFile(source, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
+	encomp := zs.ZipCompressor(zs.WithEncoderLevel(zs.EncoderLevelFromZstd(17)))
 	w := zip.NewWriter(fs)
+	w.RegisterCompressor(zs.ZipMethodPKWare, encomp)
+	w.RegisterCompressor(zs.ZipMethodWinZip, encomp)
 	for _, f := range files {
 		ofs, err := os.OpenFile(f, os.O_RDWR, 0755)
 		if err != nil {
 			return err
 		}
-		zfs, err := w.Create(f)
+		zfs, err := w.CreateHeader(&zip.FileHeader{
+			Name: f,
+			Method: zs.ZipMethodWinZip,
+		})
 		if err != nil {
 			return err
 		}
