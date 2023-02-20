@@ -25,7 +25,8 @@ func New() *bot {
 }
 
 /*
-	Example: 
+Example:
+
 	&tele.Webhook{
 			Endpoint:       &tele.WebhookEndpoint{PublicURL: webhookEndpoint},
 			AllowedUpdates: []string{"callback_query", "message"},
