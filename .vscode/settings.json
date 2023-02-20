@@ -15,6 +15,7 @@
         "logconf",
         "logrus",
         "natefinch",
+        "resty",
         "sevenzip",
         "sirupsen",
         "supergroup",
@@ -22,6 +23,7 @@
         "telebot",
         "telemw",
         "testdata",
+        "testios",
         "tidwall",
         "ulib",
         "zstd"

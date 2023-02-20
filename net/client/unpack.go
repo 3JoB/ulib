@@ -1,4 +1,22 @@
-package client_utils
+// ulib client unpack data
+//
+// Example:
+//
+//	package main
+//
+//	import (
+//		"fmt"
+//
+//		"github.com/3JoB/ulib/net/client"
+//		"github.com/go-resty/resty/v2"
+//	)
+//
+//	func main() {
+//		r, err := resty.New().Get("https://example.com/example.json")
+//		data := client.UnPackData(r.RawBody()).String()
+//		fmt.Println(data)
+//	}
+package client
 
 import (
 	"io"
@@ -10,6 +28,8 @@ import (
 	"github.com/klauspost/compress/gzip"
 	"github.com/klauspost/compress/zstd"
 	"github.com/zc310/headers"
+
+	"github.com/3JoB/ulib/json"
 )
 
 var decoder, _ = zstd.NewReader(nil, zstd.WithDecoderConcurrency(0))
@@ -19,22 +39,29 @@ type update struct {
 	Err  error
 }
 
-func Data(r *http.Response) *update {
-	upd := new(update)
-	upd.data, upd.Err = upk(r)
-	return upd
+// Decompress the Body package, support gzip, br, zstd, deflate
+func UnPackData(r *http.Response) *update {
+	u := new(update)
+	u.data, u.Err = unpack(r)
+	return u
 }
 
+// Return string type data
 func (u *update) String() string {
-	udt := unsafeConvert.String(u.data)
-	return udt
+	return unsafeConvert.String(u.data)
 }
 
+// Return []byte type data
 func (u *update) Bytes() []byte {
 	return u.data
 }
 
-func upk(r *http.Response) ([]byte, error) {
+// Directly bind the structure
+func (u *update) Bind(v any) error {
+	return json.Unmarshal(u.data, v)
+}
+
+func unpack(r *http.Response) ([]byte, error) {
 	switch r.Header.Get(headers.ContentEncoding) {
 	case "br":
 		return io.ReadAll(brotli.NewReader(r.Body))

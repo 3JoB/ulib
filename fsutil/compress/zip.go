@@ -7,9 +7,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/3JoB/ulib/fsutil"
 	"github.com/klauspost/compress/zip"
 	zs "github.com/klauspost/compress/zstd"
+
+	"github.com/3JoB/ulib/fsutil"
 )
 
 type Zip struct{}
@@ -36,7 +37,7 @@ func (z Zip) Create(source string, files []string) error {
 			return err
 		}
 		zfs, err := w.CreateHeader(&zip.FileHeader{
-			Name: f,
+			Name:   f,
 			Method: zs.ZipMethodWinZip,
 		})
 		if err != nil {
