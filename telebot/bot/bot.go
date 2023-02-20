@@ -19,11 +19,13 @@ type tb struct {
 	B *tele.Bot
 }
 
+// Initialize robot
 func New() *bot {
 	return new(bot)
 }
 
 /*
+	Example: 
 	&tele.Webhook{
 			Endpoint:       &tele.WebhookEndpoint{PublicURL: webhookEndpoint},
 			AllowedUpdates: []string{"callback_query", "message"},
@@ -35,16 +37,19 @@ func (b *bot) SetWebHook(webhook *tele.Webhook) *bot {
 	return b
 }
 
+// Set Robot APIKey
 func (b *bot) SetKey(key string) *bot {
 	b.Settings.Token = key
 	return b
 }
 
+// Set error handling
 func (b *bot) SetError(endpoint func(error, tele.Context)) *bot {
 	b.Settings.OnError = endpoint
 	return b
 }
 
+// Set Client (for net/http)
 func (b *bot) SetClient(end *http.Client) *bot {
 	b.Settings.Client = end
 	return b
@@ -55,11 +60,13 @@ func (b *bot) SetUpdates(updates int) *bot {
 	return b
 }
 
+// Custom Settings
 func (b *bot) CustomSettings(settings tele.Settings) *bot {
 	b.Settings = settings
 	return b
 }
 
+// Initialize with configuration
 func (b *bot) CreateBot() *tb {
 	var err error
 	t := new(tb)
@@ -71,22 +78,27 @@ func (b *bot) CreateBot() *tb {
 	return t
 }
 
+// Remove Webhooks
 func (b *tb) RemoveWebhook() {
 	b.B.RemoveWebhook(true)
 }
 
+// Import the middleware
 func (b *tb) Middleware(m ...tele.MiddlewareFunc) {
 	b.B.Use(m...)
 }
 
+// Import logging middleware (use default configuration)
 func (b *tb) ImportMiddlewareLogger() {
 	b.B.Use(middleware.Logger(nil))
 }
 
+// Import Recover middleware
 func (b *tb) ImportMiddlewareRecover() {
 	b.B.Use(telemw.Recover())
 }
 
+// Import handler
 func (b *tb) Handle(endpoint any, h tele.HandlerFunc, m ...tele.MiddlewareFunc) {
 	if len(m) != 0 {
 		b.B.Handle(endpoint, h, m...)
@@ -99,6 +111,7 @@ func (b *tb) Me() *tele.User {
 	return b.B.Me
 }
 
+// Start the robot
 func (b *tb) Start() {
 	b.B.Start()
 }
