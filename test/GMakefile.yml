@@ -2,5 +2,5 @@ config:
   default: all
 
 all: |
-  go build -ldflags "-s -w"
+  go build -ldflags "-s -w -X "main.Mode=true""
   @echo Done!
