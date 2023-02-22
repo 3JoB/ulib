@@ -14,6 +14,7 @@
         "ldflags",
         "logconf",
         "logrus",
+        "msid",
         "natefinch",
         "Nyaa",
         "resty",

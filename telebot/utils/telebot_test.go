@@ -18,7 +18,7 @@ func TestSendMessage(t *testing.T) {
 	file := &tele.Video{
 		File: tele.FromDisk("test.mp4"),
 	}
-	n.SetModes(utils.ModeFile).Send(file)
+	n.Send(file)
 }
 
 func TestShowAlert(t *testing.T) {

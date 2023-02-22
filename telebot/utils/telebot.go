@@ -12,51 +12,59 @@ import (
 )
 
 type Use struct {
-	Ctx             tele.Context
+	Context             tele.Context
 	ChatId          int64
 	AutoDeleteTimer time.Duration
 	AutoDelete      bool
 	ShowAlert       bool
-	FileMode        bool
+	DeleteCommand   bool
+	Threads         bool
 	Btn             *tele.ReplyMarkup
 	SendOptions     *tele.SendOptions
-	Err             error
 }
 
+type SendMode string
+
 const (
-	ModeDef         = tele.ModeDefault
-	ModeFile string = "File"
-	ModeHTML        = tele.ModeHTML
-	ModeMD          = tele.ModeMarkdown
-	ModeMD2         = tele.ModeMarkdownV2
+	ModeDefault SendMode  = SendMode(tele.ModeDefault)
+	ModeHTML SendMode = SendMode(tele.ModeHTML)
+	ModeMD  SendMode = SendMode(tele.ModeMarkdown)
+	ModeMD2 SendMode = SendMode(tele.ModeMarkdownV2)
+)
+
+var (
+	ErrCtxNotSet    = errors.New("ulib.telebot: context not set")
+	ErrNoSuperGroup = errors.New("ulib.telebot: Cannot be non-supergroup type")
 )
 
 func New() *Use {
 	n := new(Use)
-	n.SendOptions = new(tele.SendOptions)
-	n.Btn = new(tele.ReplyMarkup)
+	n.SendOptions, n.Btn = new(tele.SendOptions), new(tele.ReplyMarkup)
 	return n
 }
 
-func (n *Use) SetModes(s any) *Use {
-	switch cast.ToString(s) {
-	case ModeDef:
-		n.SendOptions.ParseMode = ModeDef
+func (n *Use) SetModes(s ...SendMode) *Use {
+	if len(s) == 0 {
+		return n
+	}
+
+	switch s[0] {
+	case ModeDefault:
+		n.SendOptions.ParseMode = ""
 	case ModeHTML:
-		n.SendOptions.ParseMode = ModeHTML
+		n.SendOptions.ParseMode = tele.ModeHTML
 	case ModeMD:
-		n.SendOptions.ParseMode = ModeMD
+		n.SendOptions.ParseMode = tele.ModeMarkdown
 	case ModeMD2:
-		n.SendOptions.ParseMode = ModeMD2
-	case ModeFile:
-		n.FileMode = true
+		n.SendOptions.ParseMode = tele.ModeMarkdownV2
 	default:
-		panic("ulib.telebot: Unavailable sending method!!!")
+		n.SendOptions.ParseMode = ""
 	}
 	return n
 }
 
-func (n *Use) SetWebPreview() *Use {
+// For text messages, disables previews for links in this message.
+func (n *Use) SetDisableWebPreview() *Use {
 	if n.SendOptions.DisableWebPagePreview {
 		n.SendOptions.DisableWebPagePreview = false
 	} else {
@@ -70,14 +78,27 @@ func (n *Use) SetChatID(c int64) *Use {
 	return n
 }
 
+func (n *Use) SetTopicID(v int64) *Use {
+	n.Threads, n.SendOptions.Thread.ThreadID = true, v
+	return n
+}
+
 func (n *Use) SetContext(c tele.Context) *Use {
-	n.Ctx = c
+	n.Context = c
 	return n
 }
 
 func (n *Use) SetAutoDelete(t time.Duration) *Use {
-	n.AutoDelete = true
-	n.AutoDeleteTimer = t
+	n.AutoDelete, n.AutoDeleteTimer = true, t
+	return n
+}
+
+func (n *Use) SetDeleteCommand() *Use {
+	if n.DeleteCommand {
+		n.DeleteCommand = false
+	} else {
+		n.DeleteCommand = true
+	}
 	return n
 }
 
@@ -96,57 +117,81 @@ func (n *Use) SetBtn(btn *tele.ReplyMarkup) *Use {
 }
 
 // Delete Message
-func (n *Use) Delete(message int) error {
-	var chid int64
-	if n.ChatId != 0 {
-		chid = n.ChatId
-	} else {
-		chid = n.Ctx.Chat().ID
+func (n *Use) Delete(message ...int) error {
+	if n.Context == nil {
+		return ErrCtxNotSet
 	}
-	return n.Ctx.Bot().Delete(&tele.StoredMessage{
-		MessageID: cast.ToString(message),
-		ChatID:    chid,
+
+	var c int64
+	var m int
+
+	if n.ChatId != 0 {
+		c = n.ChatId
+	} else {
+		c = n.Context.Chat().ID
+	}
+
+	if len(message) != 0 {
+		m = message[0]
+	} else {
+		m = n.Context.Message().ID
+	}
+
+	return n.Context.Bot().Delete(&tele.StoredMessage{
+		MessageID: cast.ToString(m),
+		ChatID:    c,
 	})
 }
 
 // Send Message
-func (n *Use) Send(msg any) (*tele.Message, error) {
-	var i *tele.Message
-	var cid tele.ChatID
-	if n.SendOptions.ParseMode == "" {
-		n.SendOptions.ParseMode = ModeHTML
+func (n *Use) Send(v any) (i *tele.Message, Err error) {
+	var c tele.ChatID
+
+	if n.Context == nil {
+		return nil, ErrCtxNotSet
 	}
+
 	if n.ChatId != 0 {
-		cid = tele.ChatID(n.ChatId)
+		c = tele.ChatID(n.ChatId)
 	} else {
-		cid = tele.ChatID(n.Ctx.Chat().ID)
+		c = tele.ChatID(n.Context.Chat().ID)
 	}
-	if n.FileMode {
-		if n.Btn != nil {
-			i, n.Err = n.Ctx.Bot().Send(cid, msg, n.Btn)
-		} else {
-			i, n.Err = n.Ctx.Bot().Send(cid, msg)
-		}
-	} else {
-		if n.Btn != nil {
-			i, n.Err = n.Ctx.Bot().Send(cid, msg, n.SendOptions, n.Btn)
-		} else {
-			i, n.Err = n.Ctx.Bot().Send(cid, msg, n.SendOptions)
+
+	if n.Context.Chat().IsForum {
+		if !n.Threads {
+			n.SendOptions.Thread.ThreadID = cast.ToInt64(n.Context.Message().ThreadID)
 		}
 	}
+
+	if n.Btn != nil {
+		i, Err = n.Context.Bot().Send(c, v, n.SendOptions, n.Btn)
+	} else {
+		i, Err = n.Context.Bot().Send(c, v, n.SendOptions)
+	}
+
+	if n.DeleteCommand {
+		if err := n.Delete(); err != nil {
+			return nil, err
+		}
+	}
+
 	if n.AutoDelete {
 		time.Sleep(time.Second * n.AutoDeleteTimer)
 		n.Delete(i.ID)
 	}
-	n.AutoDelete = false
-	n.FileMode = false
 
-	return i, n.Err
+	n.AutoDelete = false
+
+	return i, Err
 }
 
 // Pop-ups
 func (n *Use) Alert(text string) error {
-	return n.Ctx.Respond(&tele.CallbackResponse{
+	if n.Context == nil {
+		return ErrCtxNotSet
+	}
+
+	return n.Context.Respond(&tele.CallbackResponse{
 		Text:      text,
 		ShowAlert: n.ShowAlert,
 	})
@@ -185,8 +230,8 @@ type User struct {
 
 // Get the list of group administrators
 func (n *Use) GetAdminList() (map[int64]AdminInfo, error) {
-	if n.Ctx == nil {
-		return nil, errors.New("ulib.telebot: context not set")
+	if n.Context == nil {
+		return nil, ErrCtxNotSet
 	}
 
 	var (
@@ -195,12 +240,12 @@ func (n *Use) GetAdminList() (map[int64]AdminInfo, error) {
 	)
 
 	if n.ChatId != 0 {
-		d, _ = n.Ctx.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.ChatId})
+		d, _ = n.Context.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.ChatId})
 	} else {
-		if n.Ctx.Chat().Type != "supergroup" {
-			return nil, errors.New("ulib.telebot: Cannot be non-supergroup type")
+		if n.Context.Chat().Type != "supergroup" {
+			return nil, ErrNoSuperGroup
 		}
-		d, _ = n.Ctx.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.Ctx.Chat().ID})
+		d, _ = n.Context.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.Context.Chat().ID})
 	}
 
 	if !gjson.GetBytes(d, "ok").Bool() {
@@ -209,8 +254,9 @@ func (n *Use) GetAdminList() (map[int64]AdminInfo, error) {
 
 	json.UnmarshalString(gjson.GetBytes(d, "result").String(), &b)
 	if len(b) == 0 {
-		return nil, errors.New("ulib.telebot: failed to fetch admin list,please check what happened")
+		return nil, errors.New("ulib.telebot: failed to fetch admin list\ndata: " + cast.ToString(d))
 	}
+
 	admin := make(map[int64]AdminInfo)
 	for _, i := range b {
 		admin[i.User.ID] = i

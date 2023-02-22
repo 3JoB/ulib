@@ -6,8 +6,8 @@ import (
 	tele "github.com/3JoB/telebot"
 	"github.com/3JoB/unsafeConvert"
 	"github.com/goccy/go-json"
-	"gopkg.in/natefinch/lumberjack.v2"
 	"github.com/sirupsen/logrus"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var (

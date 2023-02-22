@@ -23,11 +23,11 @@ import (
 	"net/http"
 
 	"github.com/3JoB/unsafeConvert"
+	"github.com/JNyaa/headers"
 	"github.com/andybalholm/brotli"
 	"github.com/klauspost/compress/flate"
 	"github.com/klauspost/compress/gzip"
 	"github.com/klauspost/compress/zstd"
-	"github.com/JNyaa/headers"
 
 	"github.com/3JoB/ulib/json"
 )

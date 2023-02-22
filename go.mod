@@ -3,7 +3,7 @@ module github.com/3JoB/ulib
 go 1.20
 
 require (
-	github.com/3JoB/telebot v0.1.1
+	github.com/3JoB/telebot v1.0.0
 	github.com/3JoB/unsafeConvert v0.0.1
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
