@@ -47,7 +47,6 @@ func (n *Use) SetModes(s ...SendMode) *Use {
 	if len(s) == 0 {
 		return n
 	}
-
 	switch s[0] {
 	case ModeDefault:
 		n.SendOptions.ParseMode = ""
@@ -167,7 +166,9 @@ func (n *Use) Send(v any) (i *tele.Message, e error) {
 
 	if n.Context.Chat().IsForum {
 		if !n.Threads {
-			n.SendOptions.Thread.ThreadID = cast.ToInt64(n.Context.Message().ThreadID)
+			n.SendOptions.Thread = &tele.Topic{
+				ThreadID: cast.ToInt64(n.Context.Message().ThreadID),
+			}
 		}
 	} else {
 		if n.SendOptions.Thread != nil {
