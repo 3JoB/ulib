@@ -134,13 +134,12 @@ func (n *Use) Leave(v ...*tele.Chat) error {
 }
 
 // Delete Message
-func (n *Use) Delete(message ...int) error {
+func (n *Use) Delete(message int) error {
 	if n.Context == nil {
 		return ErrCtxNotSet
 	}
 
 	var c int64
-	var m int
 
 	if n.ChatId != 0 {
 		c = n.ChatId
@@ -148,14 +147,8 @@ func (n *Use) Delete(message ...int) error {
 		c = n.Context.Chat().ID
 	}
 
-	if len(message) != 0 {
-		m = message[0]
-	} else {
-		m = n.Context.Message().ID
-	}
-
 	return n.Context.Bot().Delete(&tele.StoredMessage{
-		MessageID: cast.ToString(m),
+		MessageID: cast.ToString(message),
 		ChatID:    c,
 	})
 }
@@ -193,13 +186,11 @@ func (n *Use) Send(v any) (i *tele.Message, e error) {
 	}
 
 	if e != nil {
-		return
+		return i, e
 	}
 
 	if n.DeleteCommand {
-		if err := n.Delete(); err != nil {
-			return nil, err
-		}
+		n.Context.Delete()
 	}
 
 	if n.AutoDelete {
@@ -211,7 +202,7 @@ func (n *Use) Send(v any) (i *tele.Message, e error) {
 
 	n.AutoDelete = false
 
-	return
+	return i, e
 }
 
 // Pop-ups
