@@ -27,7 +27,7 @@ import (
 	"github.com/klauspost/compress/flate"
 	"github.com/klauspost/compress/gzip"
 	"github.com/klauspost/compress/zstd"
-	"github.com/zc310/headers"
+	"github.com/JNyaa/headers"
 
 	"github.com/3JoB/ulib/json"
 )
