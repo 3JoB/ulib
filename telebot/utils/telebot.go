@@ -19,7 +19,7 @@ type Use struct {
 	ShowAlert       bool
 	DeleteCommand   bool
 	Threads         bool
-	ParseMode string
+	ParseMode       string
 	Btn             *tele.ReplyMarkup
 	SendOptions     *tele.SendOptions
 }
@@ -31,7 +31,7 @@ const (
 	ModeHTML    SendMode = SendMode(tele.ModeHTML)
 	ModeMD      SendMode = SendMode(tele.ModeMarkdown)
 	ModeMD2     SendMode = SendMode(tele.ModeMarkdownV2)
-	ModeFile SendMode = SendMode("File")
+	ModeFile    SendMode = SendMode("File")
 )
 
 var (
@@ -45,10 +45,11 @@ func New() *Use {
 	return n
 }
 
-func (n *Use) ImportOpts(v *tele.SendOptions) *Use{
+func (n *Use) ImportOpts(v *tele.SendOptions) *Use {
 	n.SendOptions = v
 	return nil
 }
+
 func (n *Use) SetModes(s ...SendMode) *Use {
 	if len(s) == 0 {
 		return n
