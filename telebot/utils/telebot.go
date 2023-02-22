@@ -12,7 +12,7 @@ import (
 )
 
 type Use struct {
-	Context             tele.Context
+	Context         tele.Context
 	ChatId          int64
 	AutoDeleteTimer time.Duration
 	AutoDelete      bool
@@ -26,10 +26,10 @@ type Use struct {
 type SendMode string
 
 const (
-	ModeDefault SendMode  = SendMode(tele.ModeDefault)
-	ModeHTML SendMode = SendMode(tele.ModeHTML)
-	ModeMD  SendMode = SendMode(tele.ModeMarkdown)
-	ModeMD2 SendMode = SendMode(tele.ModeMarkdownV2)
+	ModeDefault SendMode = SendMode(tele.ModeDefault)
+	ModeHTML    SendMode = SendMode(tele.ModeHTML)
+	ModeMD      SendMode = SendMode(tele.ModeMarkdown)
+	ModeMD2     SendMode = SendMode(tele.ModeMarkdownV2)
 )
 
 var (
@@ -144,7 +144,7 @@ func (n *Use) Delete(message ...int) error {
 }
 
 // Send Message
-func (n *Use) Send(v any) (i *tele.Message, Err error) {
+func (n *Use) Send(v any) (i *tele.Message, e error) {
 	var c tele.ChatID
 
 	if n.Context == nil {
@@ -161,12 +161,16 @@ func (n *Use) Send(v any) (i *tele.Message, Err error) {
 		if !n.Threads {
 			n.SendOptions.Thread.ThreadID = cast.ToInt64(n.Context.Message().ThreadID)
 		}
+	} else {
+		if n.SendOptions.Thread != nil {
+			n.SendOptions.Thread = nil
+		}
 	}
 
 	if n.Btn != nil {
-		i, Err = n.Context.Bot().Send(c, v, n.SendOptions, n.Btn)
+		i, e = n.Context.Bot().Send(c, v, n.SendOptions, n.Btn)
 	} else {
-		i, Err = n.Context.Bot().Send(c, v, n.SendOptions)
+		i, e = n.Context.Bot().Send(c, v, n.SendOptions)
 	}
 
 	if n.DeleteCommand {
@@ -182,7 +186,7 @@ func (n *Use) Send(v any) (i *tele.Message, Err error) {
 
 	n.AutoDelete = false
 
-	return i, Err
+	return
 }
 
 // Pop-ups
@@ -234,22 +238,22 @@ func (n *Use) GetAdminList() (map[int64]AdminInfo, error) {
 		return nil, ErrCtxNotSet
 	}
 
-	var (
-		b []AdminInfo
-		d []byte
-	)
+	var b []AdminInfo
+	var args map[string]int64 = map[string]int64{}
 
 	if n.ChatId != 0 {
-		d, _ = n.Context.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.ChatId})
+		args = map[string]int64{"chat_id": n.ChatId}
 	} else {
 		if n.Context.Chat().Type != "supergroup" {
 			return nil, ErrNoSuperGroup
 		}
-		d, _ = n.Context.Bot().Raw("getChatAdministrators", map[string]int64{"chat_id": n.Context.Chat().ID})
+		args = map[string]int64{"chat_id": n.Context.Chat().ID}
 	}
 
+	d, _ := n.Context.Bot().Raw("getChatAdministrators", args)
+
 	if !gjson.GetBytes(d, "ok").Bool() {
-		return nil, nil
+		return nil, errors.New("ulib.telebot: failed to fetch admin list\ndata: " + cast.ToString(d))
 	}
 
 	json.UnmarshalString(gjson.GetBytes(d, "result").String(), &b)
