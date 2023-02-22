@@ -182,6 +182,10 @@ func (n *Use) Send(v any) (i *tele.Message, e error) {
 		i, e = n.Context.Bot().Send(c, v, n.SendOptions)
 	}
 
+	if e != nil {
+		return
+	}
+
 	if n.DeleteCommand {
 		if err := n.Delete(); err != nil {
 			return nil, err
@@ -190,10 +194,10 @@ func (n *Use) Send(v any) (i *tele.Message, e error) {
 
 	if n.AutoDelete {
 		time.Sleep(time.Second * n.AutoDeleteTimer)
-		n.Delete(i.ID)
+		if err := n.Delete(i.ID); err != nil {
+			return nil, err
+		}
 	}
-
-	n.AutoDelete = false
 
 	return
 }
