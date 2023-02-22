@@ -116,6 +116,14 @@ func (n *Use) SetBtn(btn *tele.ReplyMarkup) *Use {
 	return n
 }
 
+// Leave makes bot leave a group, supergroup or channel.
+func (n *Use) Leave(v ...*tele.Chat) error {
+	if len(v) == 0 {
+		return n.Context.Bot().Leave(n.Context.Chat())
+	}
+	return n.Context.Bot().Leave(v[0])
+}
+
 // Delete Message
 func (n *Use) Delete(message ...int) error {
 	if n.Context == nil {
