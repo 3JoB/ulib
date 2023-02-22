@@ -56,6 +56,10 @@ func (u *update) Bytes() []byte {
 	return u.data
 }
 
+func (u *update) Close() {
+	u = nil
+}
+
 // Directly bind the structure
 func (u *update) Bind(v any) error {
 	return json.Unmarshal(u.data, v)
