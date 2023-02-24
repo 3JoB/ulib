@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
+	"hash"
 	"hash/crc32"
 	"io"
 	"os"
@@ -22,40 +23,27 @@ func New(path string) *Hash {
 	}
 }
 
-func (h *Hash) MD5() (string, error) {
-	f, err := os.Open(h.File)
+func ckpt(v string, h hash.Hash) (string, error) {
+	f, err := os.Open(v)
 	if err != nil {
 		f.Close()
 		return "", err
 	}
 	defer f.Close()
-	hs := md5.New()
-	_, _ = io.Copy(hs, f)
-	return hex.EncodeToString(hs.Sum(nil)), nil
+	_, _ = io.Copy(h, f)
+	return hex.EncodeToString(h.Sum(nil)), nil
+}
+
+func (h *Hash) MD5() (string, error) {
+	return ckpt(h.File, md5.New())
 }
 
 func (h *Hash) SHA1() (string, error) {
-	f, err := os.Open(h.File)
-	if err != nil {
-		f.Close()
-		return "", err
-	}
-	defer f.Close()
-	hs := sha1.New()
-	_, _ = io.Copy(hs, f)
-	return hex.EncodeToString(hs.Sum(nil)), nil
+	return ckpt(h.File, sha1.New())
 }
 
 func (h *Hash) SHA256() (string, error) {
-	f, err := os.Open(h.File)
-	if err != nil {
-		f.Close()
-		return "", err
-	}
-	defer f.Close()
-	hs := sha256.New()
-	_, _ = io.Copy(hs, f)
-	return hex.EncodeToString(hs.Sum(nil)), nil
+	return ckpt(h.File, sha256.New())
 }
 
 func (h *Hash) CRC32() (string, error) {
