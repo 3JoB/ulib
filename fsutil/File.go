@@ -9,7 +9,7 @@ import (
 	"github.com/3JoB/unsafeConvert"
 )
 
-type fsutil_struct struct {
+type FS struct {
 	Path  string
 	Data  string
 	TRUNC bool
@@ -40,14 +40,14 @@ func ReadPath(path string) (f []string) {
 	return f
 }
 
-func File(path string) *fsutil_struct {
-	fs := &fsutil_struct{
+func File(path string) *FS {
+	fs := &FS{
 		Path: path,
 	}
 	return fs
 }
 
-func (f *fsutil_struct) SetTrunc() *fsutil_struct {
+func (f *FS) SetTrunc() *FS {
 	if f.TRUNC {
 		f.TRUNC = false
 	} else {
@@ -56,7 +56,7 @@ func (f *fsutil_struct) SetTrunc() *fsutil_struct {
 	return f
 }
 
-func (f *fsutil_struct) Write(d string) error {
+func (f *FS) Write(d string) error {
 	var (
 		file *os.File
 		err  error
