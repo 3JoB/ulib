@@ -1,4 +1,4 @@
-package fsutil
+package hash
 
 import (
 	"crypto/md5"
@@ -16,7 +16,7 @@ type Hash struct {
 	File string
 }
 
-func NewHash(path string) *Hash {
+func New(path string) *Hash {
 	return &Hash{
 		File: path,
 	}
