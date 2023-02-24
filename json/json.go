@@ -7,7 +7,7 @@ import (
 	js "github.com/goccy/go-json"
 )
 
-type marshal struct {
+type M struct {
 	err  error
 	data []byte
 }
@@ -140,19 +140,19 @@ type marshal struct {
 // JSON cannot represent cyclic data structures and Marshal does not
 // handle them. Passing cyclic structures to Marshal will result in
 // an infinite recursion.
-func Marshal(a any) *marshal {
-	m := new(marshal)
+func Marshal(a any) *M {
+	m := new(M)
 	m.data, m.err = js.Marshal(a)
 	return m
 }
 
 // Return string type data
-func (m *marshal) String() string {
+func (m *M) String() string {
 	return unsafeConvert.String(m.data)
 }
 
 // Return []byte type data
-func (m *marshal) Bytes() []byte {
+func (m *M) Bytes() []byte {
 	return m.data
 }
 
