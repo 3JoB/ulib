@@ -3,6 +3,7 @@ package fsutil
 import (
 	"bufio"
 	"errors"
+	"io"
 	"io/fs"
 	"os"
 
@@ -45,6 +46,33 @@ func File(path string) *FS {
 		Path: path,
 	}
 	return fs
+}
+
+func (f *FS) CopyTo(paths string) error {
+	if f.Path == paths {
+		return errors.New("ulib.fsutil: don't use weird methods")
+	}
+	s, err := os.OpenFile(f.Path, os.O_RDONLY, 0666)
+	if err != nil {
+		return err
+	}
+	d, err := os.OpenFile(paths, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	if err != nil {
+		return err
+	}
+	defer s.Close()
+	defer d.Close()
+
+	sb := bufio.NewReader(s)
+	db := bufio.NewWriter(d)
+
+	if _ ,err = io.Copy(db,sb); err != nil {
+		return err
+	}
+	if err:= db.Flush(); err != nil {
+		return err
+	}
+	return err
 }
 
 func (f *FS) SetTrunc() *FS {
