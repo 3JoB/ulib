@@ -19,6 +19,20 @@ func NewZip() *Zip {
 	return &Zip{}
 }
 
+// Example:
+//
+//	package main
+//
+//	import (
+//		"fmt"
+//
+//		"github.com/3JoB/ulib/fsutil/compress"
+//		"github.com/3JoB/ulib/fsutil"
+//	)
+//
+//	func main() {
+//		//Todo:
+//	}
 func (z Zip) Create(source string, files []string) error {
 	if fsutil.IsFile(source) {
 		os.RemoveAll(source)
