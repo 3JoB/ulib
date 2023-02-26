@@ -19,7 +19,7 @@ import (
 func main() {
 	u := compress.NewSevenZip()
 
-	files, err := u.Extract("./data/file.zip", "./data/directory")
+	files, err := u.Extract("./data/file.7z", "./data/directory")
 	if err != nil {
 		panic(err)
 	}
