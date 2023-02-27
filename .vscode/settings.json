@@ -28,6 +28,7 @@
         "testdata",
         "testios",
         "tidwall",
+        "twofish",
         "ulib",
         "zstd"
     ]
