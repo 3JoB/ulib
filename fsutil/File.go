@@ -3,12 +3,15 @@ package fsutil
 import (
 	"bufio"
 	"errors"
-	"io"
 	"io/fs"
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
 	"github.com/spf13/cast"
+)
+
+var (
+	ErrNotExist error = errors.New("no file/folder found")
 )
 
 type FS struct {
@@ -17,71 +20,15 @@ type FS struct {
 	TRUNC bool
 }
 
-func IsFile(path string) bool {
-	_, err := os.Stat(path)
-	return errors.Is(err, fs.ErrNotExist)
-}
-
-func IsDir(path string) bool {
-	info, err := os.Stat(path)
-	if err != nil {
-		return false
-	}
-	return info.IsDir()
-}
-
-func Exists(path string) bool {
-	if _, err := os.Stat(path); err == nil {
-		return true
-	} else {
-		return os.IsNotExist(err)
-	}
-}
-
-func ReadPath(path string) (f []string) {
-	fr, _ := os.ReadDir(path)
-	for _, fs := range fr {
-		if fs.IsDir() {
-			f = append(f, ReadPath(path+"/"+fs.Name())...)
-		} else {
-			f = append(f, path+"/"+fs.Name())
-		}
-	}
-	return f
-}
-
-func File(path string) *FS {
+func File(src string) *FS {
 	fs := &FS{
-		Path: path,
+		Path: src,
 	}
 	return fs
 }
 
-func (f *FS) CopyTo(paths string) error {
-	if f.Path == paths {
-		return errors.New("ulib.fsutil: don't use weird methods")
-	}
-	s, err := os.OpenFile(f.Path, os.O_RDONLY, 0666)
-	if err != nil {
-		return err
-	}
-	d, err := os.OpenFile(paths, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
-	if err != nil {
-		return err
-	}
-	defer s.Close()
-	defer d.Close()
-
-	sb := bufio.NewReader(s)
-	db := bufio.NewWriter(d)
-
-	if _, err := io.Copy(db, sb); err != nil {
-		return err
-	}
-	if err := db.Flush(); err != nil {
-		return err
-	}
-	return err
+func (f *FS) CopyTo(dst string) error {
+	return copyTo(f.Path, dst)
 }
 
 func (f *FS) SetTrunc() *FS {
@@ -119,4 +66,11 @@ func (f *FS) Write(d any) error {
 	}
 	writer.Flush()
 	return nil
+}
+
+func Mkdir(path string, mode ...fs.FileMode) error {
+	if len(mode) != 0 {
+		return os.MkdirAll(path, mode[0])
+	}
+	return os.MkdirAll(path, os.ModePerm)
 }
