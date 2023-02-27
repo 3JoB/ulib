@@ -27,21 +27,21 @@ func New() *bot {
 /*
 Example:
 
-	package main
+		package main
 
-	import (
-		tele "github.com/3JoB/telebot"
-		tb "github.com/3JoB/ulib/telebot/bot"
-	)
+		import (
+			tele "github.com/3JoB/telebot"
+			tb "github.com/3JoB/ulib/telebot/bot"
+		)
 
-	func main(){
-		webhook := &tele.Webhook{
-			Endpoint:       &tele.WebhookEndpoint{PublicURL: webhookEndpoint},
-			AllowedUpdates: []string{"callback_query", "message"},
-			Listen:         ":8888",
-		},
-		tb.New().SetWebhook(webhook).CreateBot()
-}
+		func main(){
+			webhook := &tele.Webhook{
+				Endpoint:       &tele.WebhookEndpoint{PublicURL: webhookEndpoint},
+				AllowedUpdates: []string{"callback_query", "message"},
+				Listen:         ":8888",
+			},
+			tb.New().SetWebhook(webhook).CreateBot()
+	}
 */
 func (b *bot) SetWebHook(webhook *tele.Webhook) *bot {
 	b.Settings.Poller = webhook

@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
+	"github.com/spf13/cast"
 )
 
 type FS struct {
@@ -27,6 +28,14 @@ func IsDir(path string) bool {
 		return false
 	}
 	return info.IsDir()
+}
+
+func Exists(path string) bool {
+	if _, err := os.Stat(path); err == nil {
+		return true
+	} else {
+		return os.IsNotExist(err)
+	}
 }
 
 func ReadPath(path string) (f []string) {
@@ -66,10 +75,10 @@ func (f *FS) CopyTo(paths string) error {
 	sb := bufio.NewReader(s)
 	db := bufio.NewWriter(d)
 
-	if _ ,err = io.Copy(db,sb); err != nil {
+	if _, err := io.Copy(db, sb); err != nil {
 		return err
 	}
-	if err:= db.Flush(); err != nil {
+	if err := db.Flush(); err != nil {
 		return err
 	}
 	return err
@@ -84,7 +93,7 @@ func (f *FS) SetTrunc() *FS {
 	return f
 }
 
-func (f *FS) Write(d string) error {
+func (f *FS) Write(d any) error {
 	var (
 		file *os.File
 		err  error
@@ -95,11 +104,19 @@ func (f *FS) Write(d string) error {
 		file, err = os.OpenFile(f.Path, os.O_WRONLY|os.O_CREATE, 0666)
 	}
 	if err != nil {
+		file.Close()
 		return err
 	}
 	defer file.Close()
 	writer := bufio.NewWriter(file)
-	writer.Write(unsafeConvert.Bytes(d))
+	switch d := d.(type) {
+	case string:
+		writer.Write(unsafeConvert.Bytes(d))
+	case []byte:
+		writer.Write(d)
+	default:
+		writer.Write(unsafeConvert.Bytes(cast.ToString(d)))
+	}
 	writer.Flush()
 	return nil
 }
