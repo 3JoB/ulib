@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/3JoB/ulib/net/ua"
 	"fmt"
+
+	"github.com/3JoB/ulib/net/ua"
 )
 
 func main() {

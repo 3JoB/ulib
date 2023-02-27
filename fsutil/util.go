@@ -20,12 +20,12 @@ func IsDir(path string) bool {
 	return info.IsDir()
 }
 
-func Exists(path string) bool {
+func IsExist(path string) bool {
 	if _, err := os.Stat(path); err == nil {
 		return true
-	} else {
-		return os.IsNotExist(err)
 	}
+	// return os.IsNotExist(err)
+	return false
 }
 
 func GetRunPath() (r string) {
@@ -33,14 +33,32 @@ func GetRunPath() (r string) {
 	return
 }
 
-func ReadPath(path string) (f []string) {
-	fr, _ := os.ReadDir(path)
-	for _, fs := range fr {
-		if fs.IsDir() {
-			f = append(f, ReadPath(path+"/"+fs.Name())...)
-		} else {
+func ReadDirRaw(r string) ([]fs.DirEntry, error) {
+	return os.ReadDir(r)
+}
+
+func ReadDir(path string) (f []string) {
+	if fr, err := ReadDirRaw(path); err != nil {
+		return nil
+	} else {
+		for _, fs := range fr {
 			f = append(f, path+"/"+fs.Name())
 		}
+		return f
 	}
-	return f
+}
+
+func ReadDirAll(path string) (f []string) {
+	if fr, err := ReadDirRaw(path); err != nil {
+		return nil
+	} else {
+		for _, fs := range fr {
+			if fs.IsDir() {
+				f = append(f, ReadDirAll(path+"/"+fs.Name())...)
+			} else {
+				f = append(f, path+"/"+fs.Name())
+			}
+		}
+		return f
+	}
 }

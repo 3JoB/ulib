@@ -13,7 +13,7 @@ func main() {
 	if Mode == "true" {
 		compress.NewZip().Extract("test.zst.zip", "testios")
 	} else {
-		data := fsutil.ReadPath("testdata")
+		data := fsutil.ReadDirAll("testdata")
 		if err := compress.NewZip().Create("test.zst.zip", data); err != nil {
 			panic(err)
 		}

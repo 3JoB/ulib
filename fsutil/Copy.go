@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 )
 
 func copyTo(src, dst string) error {
@@ -37,9 +36,9 @@ func copyTo(src, dst string) error {
 }
 
 func CopyAll(src, dst string) error {
-	src = filepath.Clean(src)
-	dst = filepath.Clean(dst)
-	if !Exists(src) {
+	src = CleanPaths(src)
+	dst = CleanPaths(dst)
+	if !IsExist(src) {
 		return ErrNotExist
 	}
 	if IsDir(src) {

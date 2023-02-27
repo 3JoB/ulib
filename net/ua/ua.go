@@ -9,7 +9,7 @@ const (
 	Edge          string = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.57"
 	AndroidChrome string = "Mozilla/5.0 (Linux; Android 11; Jelly2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36"
 	ULIBDefault   string = "Mozilla/5.0 (compatible; ulib/1.4.0; +https://core.lcag.org/ulib/)"
-	Nex string = "; "
+	Nex           string = "; "
 )
 
 type Config struct {
@@ -28,14 +28,14 @@ func GenerateUA(c Config) (ua string) {
 		return ULIBDefault
 	}
 	if c.AddCompatible {
-		ua = ua + "compatible" + Nex + c.CompatibleInfo + Nex +"+" + c.CompatibleUrl
+		ua = ua + "compatible" + Nex + c.CompatibleInfo + Nex + "+" + c.CompatibleUrl
 	} else {
 		ua = ua + h.OS + Nex
 		if !c.DisableULIB {
 			ua = ua + "ulib/1.4.0" + Nex
 		}
 		if !c.DisableSysInfo {
-			ua = ua + h.Platform + "/" +h.PlatformVersion + Nex + h.KernelArch
+			ua = ua + h.Platform + "/" + h.PlatformVersion + Nex + h.KernelArch
 		}
 	}
 
