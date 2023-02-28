@@ -24,7 +24,7 @@ func New7Zip(pwd ...string) *sevenZip {
 func (sv sevenZip) Extract(source, destination string) (extractedFiles []string, err error) {
 	var i *sevenzip.ReadCloser
 	if sv.pass != "" {
-		sevenzip.OpenReaderWithPassword(source, sv.pass)
+		i, err = sevenzip.OpenReaderWithPassword(source, sv.pass)
 	} else {
 		i, err = sevenzip.OpenReader(source)
 	}
