@@ -35,7 +35,7 @@ func NewZip() *Zip {
 //	}
 func (z Zip) Create(source string, files []string) error {
 	if fsutil.IsFile(source) {
-		os.RemoveAll(source)
+		fsutil.Remove(source)
 	}
 	fs, err := os.OpenFile(source, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
@@ -77,7 +77,7 @@ func (z Zip) Extract(source, destination string) ([]string, error) {
 
 	defer r.Close()
 
-	if err := os.MkdirAll(destination, 0755); err != nil {
+	if err := fsutil.Mkdir(destination, 0755); err != nil {
 		return nil, err
 	}
 
@@ -100,17 +100,17 @@ func (Zip) extractAndWriteFile(destination string, f *zip.File) error {
 	}
 	defer rc.Close()
 
-	path := filepath.Join(destination, f.Name)
-	if !strings.HasPrefix(path, filepath.Clean(destination)+string(os.PathSeparator)) {
+	path := fsutil.JoinPaths(destination, f.Name)
+	if !strings.HasPrefix(path, fsutil.CleanPaths(destination)+string(os.PathSeparator)) {
 		return fmt.Errorf("%s: illegal file path", path)
 	}
 
 	if f.FileInfo().IsDir() {
-		if err = os.MkdirAll(path, f.Mode()); err != nil {
+		if err = fsutil.Mkdir(path, f.Mode()); err != nil {
 			return err
 		}
 	} else {
-		err = os.MkdirAll(filepath.Dir(path), f.Mode())
+		err = fsutil.Mkdir(filepath.Dir(path), f.Mode())
 		if err != nil {
 			return err
 		}

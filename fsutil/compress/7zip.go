@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/bodgit/sevenzip"
+
+	"github.com/3JoB/ulib/fsutil"
 )
 
 type sevenZip struct {
@@ -32,7 +33,7 @@ func (sv sevenZip) Extract(source, destination string) (extractedFiles []string,
 		return nil, err
 	}
 	defer i.Close()
-	if err := os.MkdirAll(destination, 0755); err != nil {
+	if err := fsutil.Mkdir(destination, 0755); err != nil {
 		return nil, err
 	}
 
@@ -54,31 +55,27 @@ func (sevenZip) extractAndWriteFile(destination string, f *sevenzip.File) error 
 	}
 	defer rc.Close()
 
-	path := filepath.Join(destination, f.Name)
-	if !strings.HasPrefix(path, filepath.Clean(destination)+string(os.PathSeparator)) {
+	path := fsutil.JoinPaths(destination, f.Name)
+	if !strings.HasPrefix(path, fsutil.CleanPaths(destination)+string(os.PathSeparator)) {
 		return fmt.Errorf("%s: illegal file path", path)
 	}
 
 	if f.FileInfo().IsDir() {
-		if err = os.MkdirAll(path, f.Mode()); err != nil {
+		if err = fsutil.Mkdir(path, f.Mode()); err != nil {
 			return err
 		}
 	} else {
-		err = os.MkdirAll(filepath.Dir(path), f.Mode())
-		if err != nil {
+		if err := fsutil.Mkdir(fsutil.DirPath(path), f.Mode()); err != nil {
 			return err
 		}
-
-		f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
-		if err != nil {
+		if f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode()); err != nil {
 			return err
-		}
-		defer f.Close()
-
-		if _, err := io.Copy(f, rc); err != nil {
-			return err
+		} else {
+			defer f.Close()
+			if _, err := io.Copy(f, rc); err != nil {
+				return err
+			}
 		}
 	}
-
 	return nil
 }

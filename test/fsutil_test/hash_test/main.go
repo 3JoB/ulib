@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	f := hash.New("GMakefile.yml")
+	// With Path
+	f := hash.NewWithPath("GMakefile.yml")
 	// SHA1
 	sha1, err := f.SHA1()
 	E(err)
@@ -17,7 +18,7 @@ func main() {
 	// SHA256
 	sha256, err := f.SHA256()
 	E(err)
-	fmt.Printf("MD5: %v\n", sha256)
+	fmt.Printf("SHA256: %v\n", sha256)
 
 	// MD5
 	md5, err := f.MD5()
@@ -28,6 +29,14 @@ func main() {
 	crc32, err := f.CRC32()
 	E(err)
 	fmt.Printf("CRC32: %v\n", crc32)
+
+	// With Os
+	y, err := os.Open("GMakefile.yml")
+	E(err)
+
+	r_md5, err := hash.NewWithOs(y).MD5()
+	E(err)
+	fmt.Printf("MD5: %v\n", r_md5)
 }
 
 func E(err error) {

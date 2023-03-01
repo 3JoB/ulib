@@ -21,7 +21,7 @@ type tb struct {
 
 // Initialize robot
 func New() *bot {
-	return new(bot)
+	return &bot{}
 }
 
 /*
@@ -80,7 +80,7 @@ func (b *bot) CustomSettings(settings tele.Settings) *bot {
 // Initialize with configuration
 func (b *bot) CreateBot() *tb {
 	var err error
-	t := new(tb)
+	t := &tb{}
 	t.B, err = tele.NewBot(b.Settings)
 	if err != nil {
 		fmt.Println(err.Error())

@@ -41,7 +41,7 @@ type update struct {
 
 // Decompress the Body package, support gzip, br, zstd, deflate
 func UnPackData(r *http.Response) *update {
-	u := new(update)
+	u := &update{}
 	u.data, u.Err = unpack(r)
 	return u
 }

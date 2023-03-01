@@ -11,8 +11,13 @@ import (
 )
 
 var (
-	ErrNotExist error = errors.New("no file/folder found")
+	ErrNotExist error = errors.New("ulib.fsutil: no file/folder found")
+	ErrMethods  error = errors.New("ulib.fsutil: don't use weird methods")
 )
+
+func Remove(v string) error {
+	return os.RemoveAll(v)
+}
 
 type FS struct {
 	Path  string

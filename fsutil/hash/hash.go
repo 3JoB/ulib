@@ -17,13 +17,13 @@ type Hash struct {
 	File string
 }
 
-func New(path string) *Hash {
+func NewWithPath(path string) *Hash {
 	return &Hash{
 		File: path,
 	}
 }
 
-func ckpt(v string, h hash.Hash) (string, error) {
+func readHash(v string, h hash.Hash) (string, error) {
 	f, err := os.Open(v)
 	if err != nil {
 		f.Close()
@@ -35,15 +35,15 @@ func ckpt(v string, h hash.Hash) (string, error) {
 }
 
 func (h *Hash) MD5() (string, error) {
-	return ckpt(h.File, md5.New())
+	return readHash(h.File, md5.New())
 }
 
 func (h *Hash) SHA1() (string, error) {
-	return ckpt(h.File, sha1.New())
+	return readHash(h.File, sha1.New())
 }
 
 func (h *Hash) SHA256() (string, error) {
-	return ckpt(h.File, sha256.New())
+	return readHash(h.File, sha256.New())
 }
 
 func (h *Hash) CRC32() (string, error) {

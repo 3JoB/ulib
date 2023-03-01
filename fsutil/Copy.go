@@ -2,7 +2,6 @@ package fsutil
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -10,7 +9,7 @@ import (
 
 func copyTo(src, dst string) error {
 	if src == dst {
-		return errors.New("ulib.fsutil: don't use weird methods")
+		return ErrMethods
 	}
 	s, err := os.OpenFile(src, os.O_RDONLY, 0666)
 	if err != nil {
@@ -36,11 +35,7 @@ func copyTo(src, dst string) error {
 }
 
 func CopyAll(src, dst string) error {
-	src = CleanPaths(src)
-	dst = CleanPaths(dst)
-	if !IsExist(src) {
-		return ErrNotExist
-	}
+	src, dst = CleanPaths(src), CleanPaths(dst)
 	if IsDir(src) {
 		if !IsDir(dst) {
 			if IsFile(dst) {
@@ -51,7 +46,9 @@ func CopyAll(src, dst string) error {
 		if err != nil {
 			return err
 		}
-		Mkdir(dst, s.Mode())
+		if err := Mkdir(dst, s.Mode()); err != nil {
+			return err
+		}
 		if entries, err := os.ReadDir(src); err != nil {
 			return err
 		} else {
@@ -60,13 +57,17 @@ func CopyAll(src, dst string) error {
 				dstPath := JoinPaths(dst, entry.Name())
 
 				if entry.IsDir() {
-					copyTo(src, dst)
+					if err := copyTo(src, dst); err != nil {
+						return err
+					}
 				} else {
 					// Skip symlinks.
 					if entry.Type()&os.ModeSymlink != 0 {
 						continue
 					}
-					copyTo(srcPath, dstPath)
+					if err := copyTo(srcPath, dstPath); err != nil {
+						return err
+					}
 				}
 			}
 		}
