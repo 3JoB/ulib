@@ -1,7 +1,9 @@
 package json
 
 import (
+	"bytes"
 	"context"
+	"io"
 
 	"github.com/3JoB/unsafeConvert"
 	js "github.com/goccy/go-json"
@@ -146,6 +148,31 @@ func Marshal(a any) *M {
 	return m
 }
 
+// MarshalContext returns the JSON encoding of v with context.Context and EncodeOption.
+func MarshalContext(ctx context.Context, v any, optFuncs ...js.EncodeOptionFunc) *M {
+	m := &M{}
+	if len(optFuncs) != 0 {
+		m.data, m.err = js.MarshalContext(ctx, v, optFuncs...)
+	} else {
+		m.data, m.err = js.MarshalContext(ctx, v)
+	}
+	return m
+}
+
+// MarshalNoEscape returns the JSON encoding of v and doesn't escape v.
+func MarshalNoEscape(v any) *M {
+	m := &M{}
+	m.data, m.err = js.MarshalNoEscape(v)
+	return m
+}
+
+// MarshalIndent is like Marshal but applies Indent to format the output. Each JSON element in the output will begin on a new line beginning with prefix followed by one or more copies of indent according to the indentation nesting.
+func MarshalIndent(v any, prefix, indent string) *M {
+	m := &M{}
+	m.data, m.err = js.MarshalIndent(v, prefix, indent)
+	return m
+}
+
 // Return string type data
 func (m *M) String() string {
 	return unsafeConvert.String(m.data)
@@ -161,11 +188,48 @@ func (m *M) Err() error {
 	return m.err
 }
 
-// MarshalIndent is like Marshal but applies Indent to format the output. Each JSON element in the output will begin on a new line beginning with prefix followed by one or more copies of indent according to the indentation nesting.
-func MarshalIndent(v any, prefix, indent string) *M {
-	m := &M{}
-	m.data, m.err = js.MarshalIndent(v, prefix, indent)
-	return m
+/*
+Indent appends to dst an indented form of the JSON-encoded src.
+
+Each element in a JSON object or array begins on a new,
+indented line beginning with prefix followed by one or more copies of indent according to the indentation nesting.
+
+The data appended to dst does not begin with the prefix nor any indentation,
+to make it easier to embed inside other formatted JSON data.
+
+Although leading space characters (space, tab, carriage return, newline) at the beginning of src are dropped, trailing space characters at the end of src are preserved and copied to dst. For example, if src has no trailing spaces, neither will dst; if src ends in a trailing newline, so will dst.
+*/
+func Indent(dst *bytes.Buffer, src []byte, prefix string, indent string) error {
+	return js.Indent(dst, src, prefix, indent)
+}
+
+/*
+Indent appends to dst an indented form of the JSON-encoded src.
+
+Each element in a JSON object or array begins on a new,
+indented line beginning with prefix followed by one or more copies of indent according to the indentation nesting.
+
+The data appended to dst does not begin with the prefix nor any indentation,
+to make it easier to embed inside other formatted JSON data.
+
+Although leading space characters (space, tab, carriage return, newline) at the beginning of src are dropped, trailing space characters at the end of src are preserved and copied to dst. For example, if src has no trailing spaces, neither will dst; if src ends in a trailing newline, so will dst.
+*/
+func IndentString(dst *bytes.Buffer, src string, prefix string, indent string) error {
+	return js.Indent(dst, unsafeConvert.Bytes(src), prefix, indent)
+}
+
+// NewEncoder returns a new encoder that writes to w.
+func NewEncoder(w io.Writer) *js.Encoder {
+	return js.NewEncoder(w)
+}
+
+/*
+NewDecoder returns a new decoder that reads from r.
+
+The decoder introduces its own buffering and may read data from r beyond the JSON values requested.
+*/
+func NewDecoder(r io.Reader) *js.Decoder {
+	return js.NewDecoder(r)
 }
 
 // Unmarshal parses the JSON-encoded data and stores the result
