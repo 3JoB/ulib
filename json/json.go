@@ -141,7 +141,7 @@ type M struct {
 // handle them. Passing cyclic structures to Marshal will result in
 // an infinite recursion.
 func Marshal(a any) *M {
-	m := new(M)
+	m := &M{}
 	m.data, m.err = js.Marshal(a)
 	return m
 }
@@ -154,6 +154,18 @@ func (m *M) String() string {
 // Return []byte type data
 func (m *M) Bytes() []byte {
 	return m.data
+}
+
+// Return Error Data
+func (m *M) Err() error {
+	return m.err
+}
+
+// MarshalIndent is like Marshal but applies Indent to format the output. Each JSON element in the output will begin on a new line beginning with prefix followed by one or more copies of indent according to the indentation nesting.
+func MarshalIndent(v any, prefix, indent string) *M {
+	m := &M{}
+	m.data, m.err = js.MarshalIndent(v, prefix, indent)
+	return m
 }
 
 // Unmarshal parses the JSON-encoded data and stores the result

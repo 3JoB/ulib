@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/miekg/dns"
+
 	ucn "github.com/3JoB/ulib/net/client"
 )
 
@@ -17,14 +18,13 @@ type DialFunc func(c context.Context, network string, address string) (net.Conn,
 type DOHServer string
 
 const (
-	Alicloud DOHServer = "https://dns.alidns.com/dns-query"
+	Alicloud   DOHServer = "https://dns.alidns.com/dns-query"
 	Cloudflare DOHServer = "https://cloudflare-dns.com/dns-query"
 	Google     DOHServer = "https://dns.google/dns-query"
 	Quad9      DOHServer = "https://dns.quad9.net/dns-query"
 	OpenDNS    DOHServer = "https://doh.opendns.com/dns-query"
 	AdGuard    DOHServer = "https://dns.adguard.com/dns-query"
 )
-
 
 func Dialer(addr DOHServer) (*net.Dialer, error) {
 	addrs := string(addr)
@@ -34,9 +34,9 @@ func Dialer(addr DOHServer) (*net.Dialer, error) {
 		return nil, err
 	}
 	dnsClient := http.DefaultClient
-	//dnsClient.Timeout = 10 * 1000000000
+	// dnsClient.Timeout = 10 * 1000000000
 	s := &net.Dialer{
-		//Timeout:   10 * 1000000000,
+		// Timeout:   10 * 1000000000,
 		KeepAlive: 0,
 		Resolver: &net.Resolver{
 			PreferGo: true,
@@ -48,7 +48,7 @@ func Dialer(addr DOHServer) (*net.Dialer, error) {
 
 func parse(addr string, ns *url.URL, dnsClient *http.Client) DialFunc {
 	return func(c context.Context, network, address string) (net.Conn, error) {
-		//server := ns.Hostname()
+		// server := ns.Hostname()
 		query := url.Values{}
 		query.Set("dns", address)
 		query.Set("type", "A")
