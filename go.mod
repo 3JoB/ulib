@@ -10,7 +10,7 @@ require (
 	github.com/bodgit/sevenzip v1.4.0
 	github.com/goccy/go-json v0.10.0
 	github.com/goccy/go-reflect v1.2.0
-	github.com/klauspost/compress v1.15.15
+	github.com/klauspost/compress v1.16.0
 	github.com/miekg/dns v1.1.51
 	github.com/shirou/gopsutil/v3 v3.23.1
 	github.com/sirupsen/logrus v1.9.0
