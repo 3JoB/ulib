@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/klauspost/compress/zip"
@@ -34,10 +33,10 @@ func NewZip() *Zip {
 //		//Todo:
 //	}
 func (z Zip) Create(source string, files []string) error {
-	if fsutil.IsFile(source) {
+	if fsutil.IsExist(source) {
 		fsutil.Remove(source)
 	}
-	fs, err := os.OpenFile(source, os.O_CREATE|os.O_WRONLY, 0644)
+	fs, err := fsutil.OpenFile(source, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
@@ -46,7 +45,7 @@ func (z Zip) Create(source string, files []string) error {
 	w.RegisterCompressor(zs.ZipMethodPKWare, encomp)
 	w.RegisterCompressor(zs.ZipMethodWinZip, encomp)
 	for _, f := range files {
-		ofs, err := os.OpenFile(f, os.O_RDWR, 0755)
+		ofs, err := fsutil.OpenFile(f, os.O_RDWR, 0755)
 		if err != nil {
 			return err
 		}
@@ -66,7 +65,8 @@ func (z Zip) Create(source string, files []string) error {
 	return nil
 }
 
-func (z Zip) Extract(source, destination string) ([]string, error) {
+// Extract files
+func (z Zip) Extract(source, destination string) (extractedFiles []string, err error) {
 	decomp := zs.ZipDecompressor()
 	zip.RegisterDecompressor(zs.ZipMethodPKWare, decomp)
 	zip.RegisterDecompressor(zs.ZipMethodWinZip, decomp)
@@ -77,11 +77,16 @@ func (z Zip) Extract(source, destination string) ([]string, error) {
 
 	defer r.Close()
 
-	if err := fsutil.Mkdir(destination, 0755); err != nil {
-		return nil, err
+	if !fsutil.IsExist(destination) {
+		if err := fsutil.Mkdir(destination, 0755); err != nil {
+			return nil, err
+		}
+	} else {
+		if !fsutil.IsDir(destination) {
+			return nil, ErrTargetType
+		}
 	}
 
-	var extractedFiles []string
 	for _, f := range r.File {
 		if err := z.extractAndWriteFile(destination, f); err != nil {
 			return nil, err
@@ -93,6 +98,7 @@ func (z Zip) Extract(source, destination string) ([]string, error) {
 	return extractedFiles, nil
 }
 
+// Extract files
 func (Zip) extractAndWriteFile(destination string, f *zip.File) error {
 	rc, err := f.Open()
 	if err != nil {
@@ -106,16 +112,22 @@ func (Zip) extractAndWriteFile(destination string, f *zip.File) error {
 	}
 
 	if f.FileInfo().IsDir() {
-		if err = fsutil.Mkdir(path, f.Mode()); err != nil {
-			return err
+		if !fsutil.IsExist(path) {
+			if err = fsutil.Mkdir(path, f.Mode()); err != nil {
+				return err
+			}
 		}
 	} else {
-		err = fsutil.Mkdir(filepath.Dir(path), f.Mode())
-		if err != nil {
+		if fsutil.IsExist(path) {
+			if err := fsutil.Remove(path); err != nil {
+				return err
+			}
+		}
+		if err := fsutil.Mkdir(fsutil.DirPath(path), f.Mode()); err != nil {
 			return err
 		}
 
-		f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		f, err := fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 		if err != nil {
 			return err
 		}

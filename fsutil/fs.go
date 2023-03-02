@@ -3,6 +3,7 @@ package fsutil
 import (
 	"bufio"
 	"errors"
+	"io"
 	"io/fs"
 	"os"
 
@@ -15,10 +16,6 @@ var (
 	ErrMethods  error = errors.New("ulib.fsutil: don't use weird methods")
 )
 
-func Remove(v string) error {
-	return os.RemoveAll(v)
-}
-
 type FS struct {
 	Path  string
 	Data  string
@@ -30,6 +27,27 @@ func File(src string) *FS {
 		Path: src,
 	}
 	return fs
+}
+
+func Open(v string) (*os.File, error) {
+	return os.Open(v)
+}
+
+func OpenRead(v string) ([]byte, error) {
+	o, err := Open(v)
+	if err != nil {
+		return nil, err
+	}
+	defer o.Close()
+	if data, err := io.ReadAll(o); err != nil {
+		return nil, err
+	} else {
+		return data, err
+	}
+}
+
+func OpenFile(name string, flag int, perm fs.FileMode) (*os.File, error) {
+	return os.OpenFile(name, flag, perm)
 }
 
 func (f *FS) CopyTo(dst string) error {
@@ -78,4 +96,8 @@ func Mkdir(path string, mode ...fs.FileMode) error {
 		return os.MkdirAll(path, mode[0])
 	}
 	return os.MkdirAll(path, os.ModePerm)
+}
+
+func Remove(v string) error {
+	return os.RemoveAll(v)
 }

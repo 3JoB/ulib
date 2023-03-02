@@ -68,7 +68,7 @@ func (sevenZip) extractAndWriteFile(destination string, f *sevenzip.File) error 
 		if err := fsutil.Mkdir(fsutil.DirPath(path), f.Mode()); err != nil {
 			return err
 		}
-		if f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode()); err != nil {
+		if f, err := fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode()); err != nil {
 			return err
 		} else {
 			defer f.Close()
