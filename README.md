@@ -6,14 +6,14 @@ A wrapper that provides functional extensions and a quick start.
 
 ----
 
-crypt - Hash encryption for fast encapsulation.
+[crypt](https://godoc.org/github.com/3JoB/ulib/crypt) - Hash encryption for fast encapsulation.
 
-fsutil - Rapid encapsulation of various file operations.
+[fsutil](https://godoc.org/github.com/3JoB/ulib/fsutil) - Rapid encapsulation of various file operations.
 
-json - Enhanced encapsulation of JSON packages.
+[json](https://godoc.org/github.com/3JoB/ulib/json) - Enhanced encapsulation of JSON packages.
 
-net - Extension of the functionality of net/http.
+[net](https://godoc.org/github.com/3JoB/ulib/net) - Extension of the functionality of net/http.
 
-reflect - Extensions to [go-reflect](https://github.com/goccy/go-reflect).
+[reflect](https://godoc.org/github.com/3JoB/ulib/reflect) - Extensions to [go-reflect](https://github.com/goccy/go-reflect).
 
-telebot - Rapid encapsulation of [go-telebot](https://github.com/3JoB/telebot) .
+[telebot](https://godoc.org/github.com/3JoB/ulib/telebot) - Rapid encapsulation of [go-telebot](https://github.com/3JoB/telebot) .
