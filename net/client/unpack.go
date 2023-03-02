@@ -36,13 +36,13 @@ var decoder, _ = zstd.NewReader(nil, zstd.WithDecoderConcurrency(0))
 
 type update struct {
 	data []byte
-	Err  error
+	err  error
 }
 
 // Decompress the Body package, support gzip, br, zstd, deflate
 func UnPackData(r *http.Response) *update {
 	u := &update{}
-	u.data, u.Err = unpack(r)
+	u.data, u.err = unpack(r)
 	return u
 }
 
@@ -54,6 +54,11 @@ func (u *update) String() string {
 // Return []byte type data
 func (u *update) Bytes() []byte {
 	return u.data
+}
+
+// Return error data
+func (u *update) Error() error {
+	return u.err
 }
 
 // Directly bind the structure

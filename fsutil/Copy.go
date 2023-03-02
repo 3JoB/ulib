@@ -11,11 +11,11 @@ func copyTo(src, dst string) error {
 	if src == dst {
 		return ErrMethods
 	}
-	s, err := os.OpenFile(src, os.O_RDONLY, 0666)
+	s, err := OpenFile(src, os.O_RDONLY, 0666)
 	if err != nil {
 		return err
 	}
-	d, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	d, err := OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if err != nil {
 		return err
 	}
@@ -49,7 +49,7 @@ func CopyAll(src, dst string) error {
 		if err := Mkdir(dst, s.Mode()); err != nil {
 			return err
 		}
-		if entries, err := os.ReadDir(src); err != nil {
+		if entries, err := ReadDirRaw(src); err != nil {
 			return err
 		} else {
 			for _, entry := range entries {
