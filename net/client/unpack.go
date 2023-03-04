@@ -12,8 +12,8 @@
 //	)
 //
 //	func main() {
-//		r, err := resty.New().Get("https://example.com/example.json")
-//		data := client.UnPackData(r.RawBody()).String()
+//		r, err := resty.New().R().Get("https://example.com/example.json")
+//		data := client.UnPackData(r.RawResponse).String()
 //		fmt.Println(data)
 //	}
 package client
@@ -42,8 +42,27 @@ type update struct {
 // Decompress the Body package, support gzip, br, zstd, deflate
 func UnPackData(r *http.Response) *update {
 	u := &update{}
-	u.data, u.err = unpack(r)
+	u.unpack(r)
 	return u
+}
+
+func GetSource(r *http.Response) any {
+	switch r.Header.Get(headers.ContentEncoding) {
+	case "br":
+		return brotli.NewReader(r.Body)
+	case "gzip":
+		reader, err := gzip.NewReader(r.Body)
+		if err != nil {
+			return err
+		}
+		return reader
+	case "zstd":
+		return nil
+	case "deflate":
+		return flate.NewReader(r.Body)
+	default:
+		return nil
+	}
 }
 
 // Return string type data
@@ -66,16 +85,18 @@ func (u *update) Bind(v any) error {
 	return json.Unmarshal(u.data, v)
 }
 
-func unpack(r *http.Response) ([]byte, error) {
+func (u *update) unpack(r *http.Response) ([]byte, error) {
 	switch r.Header.Get(headers.ContentEncoding) {
 	case "br":
-		return io.ReadAll(brotli.NewReader(r.Body))
+		reader := brotli.NewReader(r.Body)
+		return io.ReadAll(reader)
 	case "gzip":
-		gr, err := gzip.NewReader(r.Body)
+		reader, err := gzip.NewReader(r.Body)
 		if err != nil {
 			return nil, err
 		}
-		return io.ReadAll(gr)
+		defer reader.Close()
+		return io.ReadAll(reader)
 	case "zstd":
 		reader, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -83,9 +104,9 @@ func unpack(r *http.Response) ([]byte, error) {
 		}
 		return decoder.DecodeAll(reader, nil)
 	case "deflate":
-		zr := flate.NewReader(r.Body)
-		defer zr.Close()
-		return io.ReadAll(zr)
+		reader := flate.NewReader(r.Body)
+		defer reader.Close()
+		return io.ReadAll(reader)
 	default:
 		return io.ReadAll(r.Body)
 	}
