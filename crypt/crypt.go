@@ -6,35 +6,25 @@ import (
 	"crypto/sha512"
 	"encoding/hex"
 	"hash"
+
+	"github.com/3JoB/unsafeConvert"
 )
 
 func SHA256(data string) string {
-	if b, err := Crypt(sha256.New(), data); err != nil {
-		return ""
-	} else {
-		return b
-	}
+	return Crypt(sha256.New(), data)
 }
 
 func SHA512(data string) string {
-	if b, err := Crypt(sha512.New(), data); err != nil {
-		return ""
-	} else {
-		return b
-	}
+	return Crypt(sha512.New(), data)
 }
 
 func MD5(data string) string {
-	if b, err := Crypt(md5.New(), data); err != nil {
-		return ""
-	} else {
-		return b
-	}
+	return Crypt(md5.New(), data)
 }
 
-func Crypt(h hash.Hash, d string) (string, error) {
-	if _, err := h.Write([]byte(d)); err != nil {
-		return "", err
+func Crypt(h hash.Hash, d string) string{
+	if _, err := h.Write(unsafeConvert.BytesReflect(d)); err != nil {
+		return ""
 	}
-	return hex.EncodeToString(h.Sum(nil)), nil
+	return hex.EncodeToString(h.Sum(nil))
 }

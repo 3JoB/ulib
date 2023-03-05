@@ -37,51 +37,51 @@ func (h *Hash) HMAC(key string) *Hash {
 	return h
 }
 
-func readHash(v string, h hash.Hash) (string, error) {
-	f, err := os.Open(v)
-	if err != nil {
-		f.Close()
-		return "", err
-	}
-	defer f.Close()
-	_, _ = io.Copy(h, f)
-	return hex.EncodeToString(h.Sum(nil)), nil
-}
-
-func (h *Hash) MD5() (string, error) {
-	if h.Hmac {
-		return readHash(h.File, hmac.New(md5.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return readHash(h.File, md5.New())
-}
-
-func (h *Hash) SHA1() (string, error) {
-	if h.Hmac {
-		return readHash(h.File, hmac.New(sha1.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return readHash(h.File, sha1.New())
-}
-
-func (h *Hash) SHA256() (string, error) {
-	if h.Hmac {
-		return readHash(h.File, hmac.New(sha256.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return readHash(h.File, sha256.New())
-}
-
-
-func (h *Hash) SHA512() (string, error) {
-	if h.Hmac {
-		return readHash(h.File, hmac.New(sha512.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return readHash(h.File, sha512.New())
-}
-
-func (h *Hash) CRC32() (string, error) {
+func (h *Hash) readHash(hs hash.Hash) string {
 	f, err := os.Open(h.File)
 	if err != nil {
 		f.Close()
-		return "", err
+		return ""
+	}
+	defer f.Close()
+	_, _ = io.Copy(hs, f)
+	return hex.EncodeToString(hs.Sum(nil))
+}
+
+func (h *Hash) MD5() string {
+	if h.Hmac {
+		return h.readHash(hmac.New(md5.New, unsafeConvert.BytesReflect(h.HmacKey)))
+	}
+	return h.readHash(md5.New())
+}
+
+func (h *Hash) SHA1() string {
+	if h.Hmac {
+		return h.readHash(hmac.New(sha1.New, unsafeConvert.BytesReflect(h.HmacKey)))
+	}
+	return h.readHash(sha1.New())
+}
+
+func (h *Hash) SHA256() string {
+	if h.Hmac {
+		return h.readHash(hmac.New(sha256.New, unsafeConvert.BytesReflect(h.HmacKey)))
+	}
+	return h.readHash(sha256.New())
+}
+
+
+func (h *Hash) SHA512() string{
+	if h.Hmac {
+		return h.readHash(hmac.New(sha512.New, unsafeConvert.BytesReflect(h.HmacKey)))
+	}
+	return h.readHash(sha512.New())
+}
+
+func (h *Hash) CRC32() string {
+	f, err := os.Open(h.File)
+	if err != nil {
+		f.Close()
+		return ""
 	}
 	defer f.Close()
 	hs := crc32.NewIEEE()
@@ -89,13 +89,13 @@ func (h *Hash) CRC32() (string, error) {
 	if h.Hmac{
 		return crc32HMAC(hs, h.HmacKey, cast.ToString(hs.Sum32()))
 	}
-	return cast.ToString(hs.Sum32()), nil
+	return cast.ToString(hs.Sum32())
 }
 
-func crc32HMAC(hs hash.Hash32, key, rta string) (string, error){
+func crc32HMAC(hs hash.Hash32, key, rta string) string{
 	m := hmac.New(sha512.New, unsafeConvert.BytesReflect(key))
 	if _, err := m.Write(unsafeConvert.BytesReflect(rta)); err != nil {
-		return "", err
+		return ""
 	}
-	return hex.EncodeToString(m.Sum(nil)), nil
+	return hex.EncodeToString(m.Sum(nil))
 }
