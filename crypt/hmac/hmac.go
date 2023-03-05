@@ -9,7 +9,15 @@ import (
 	"github.com/3JoB/ulib/crypt"
 )
 
+func checkKey(k string) string {
+	if k == "" {
+		k = "ulib-hmac"
+	}
+	return k
+}
+
 func SHA256(data, key string) string {
+	key = checkKey(key)
 	if b, err := crypt.Crypt(hmac.New(sha256.New, []byte(key)), data); err != nil {
 		return ""
 	} else {
@@ -18,6 +26,7 @@ func SHA256(data, key string) string {
 }
 
 func SHA512(data, key string) string {
+	key = checkKey(key)
 	if b, err := crypt.Crypt(hmac.New(sha512.New, []byte(key)), data); err != nil {
 		return ""
 	} else {
@@ -26,6 +35,7 @@ func SHA512(data, key string) string {
 }
 
 func MD5(data, key string) string {
+	key = checkKey(key)
 	if b, err := crypt.Crypt(hmac.New(md5.New, []byte(key)), data); err != nil {
 		return ""
 	} else {
