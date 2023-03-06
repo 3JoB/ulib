@@ -2,18 +2,12 @@ package fsutil
 
 import (
 	"bufio"
-	"errors"
 	"io"
 	"io/fs"
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
 	"github.com/spf13/cast"
-)
-
-var (
-	ErrNotExist error = errors.New("ulib.fsutil: no file/folder found")
-	ErrMethods  error = errors.New("ulib.fsutil: don't use weird methods")
 )
 
 type FS struct {
@@ -39,19 +33,19 @@ func OpenRead(v string) ([]byte, error) {
 		return nil, err
 	}
 	defer o.Close()
-	if data, err := io.ReadAll(o); err != nil {
+	if data, err := ReadAll(o); err != nil {
 		return nil, err
 	} else {
 		return data, err
 	}
 }
 
-func OpenFile(name string, flag int, perm fs.FileMode) (*os.File, error) {
-	return os.OpenFile(name, flag, perm)
+func ReadAll(r io.Reader) ([]byte, error) {
+	return io.ReadAll(r)
 }
 
-func (f *FS) CopyTo(dst string) error {
-	return copyTo(f.Path, dst)
+func OpenFile(name string, flag int, perm fs.FileMode) (*os.File, error) {
+	return os.OpenFile(name, flag, perm)
 }
 
 func (f *FS) SetTrunc() *FS {
@@ -69,9 +63,9 @@ func (f *FS) Write(d any) error {
 		err  error
 	)
 	if f.TRUNC {
-		file, err = os.OpenFile(f.Path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
+		file, err = OpenFile(f.Path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
 	} else {
-		file, err = os.OpenFile(f.Path, os.O_WRONLY|os.O_CREATE, 0666)
+		file, err = OpenFile(f.Path, os.O_WRONLY|os.O_CREATE, 0666)
 	}
 	if err != nil {
 		file.Close()

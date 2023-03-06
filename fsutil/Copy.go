@@ -34,6 +34,17 @@ func copyTo(src, dst string) error {
 	return err
 }
 
+func Copy(src, dst string) error {
+	return copyTo(src, dst)
+}
+
+func Move(src, dst string) error {
+	if err := CopyAll(src, dst); err != nil {
+		return err
+	}
+	return Remove(src)
+}
+
 func CopyAll(src, dst string) error {
 	src, dst = CleanPaths(src), CleanPaths(dst)
 	if IsDir(src) {

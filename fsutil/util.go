@@ -1,15 +1,19 @@
 package fsutil
 
 import (
-	"errors"
 	"io/fs"
 	"os"
 	"path/filepath"
 )
 
 func IsFile(path string) bool {
-	_, err := os.Stat(path)
-	return errors.Is(err, fs.ErrNotExist)
+	if !IsExist(path) {
+		return false
+	}
+	if i, _ := os.Stat(path);i.IsDir() {
+		return false
+	}
+	return true
 }
 
 func IsDir(path string) bool {
