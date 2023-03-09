@@ -12,12 +12,9 @@ import (
 )
 
 func c(h func() hash.Hash, data, key string) string {
-	key = func() string{
-		if key == "" {
-			key = "ulib-hmac"
-		}
-		return key
-	}()
+	if key == "" {
+		key = "ulib-hmac"
+	}
 	return crypt.Crypt(hmac.New(h, unsafeConvert.BytesReflect(key)), data)
 }
 

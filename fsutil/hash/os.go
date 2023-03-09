@@ -5,12 +5,11 @@ import (
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"hash"
 	"hash/crc32"
 	"io"
 	"os"
-
-	"github.com/spf13/cast"
 )
 
 type HashF struct {
@@ -27,7 +26,7 @@ func (h *HashF) DisableAutoClose() *HashF {
 	return h
 }
 
-func (h *HashF) hashWithOs(hs hash.Hash) string{
+func (h *HashF) hashWithOs(hs hash.Hash) string {
 	_, _ = io.Copy(hs, h.Os)
 	if h.Close {
 		h.Os.Close()
@@ -53,5 +52,5 @@ func (h *HashF) CRC32() string {
 	if h.Close {
 		h.Os.Close()
 	}
-	return cast.ToString(hs.Sum32())
+	return fmt.Sprint(hs.Sum32())
 }

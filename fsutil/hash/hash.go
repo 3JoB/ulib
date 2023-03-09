@@ -7,19 +7,20 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/hex"
+	"fmt"
 	"hash"
 	"hash/crc32"
 	"io"
-	"os"
 
 	"github.com/3JoB/unsafeConvert"
-	"github.com/spf13/cast"
+
+	"github.com/3JoB/ulib/fsutil"
 )
 
 type Hash struct {
-	File string
+	File    string
 	HmacKey string
-	Hmac bool
+	Hmac    bool
 }
 
 func NewWithPath(path string) *Hash {
@@ -38,7 +39,7 @@ func (h *Hash) HMAC(key string) *Hash {
 }
 
 func (h *Hash) readHash(hs hash.Hash) string {
-	f, err := os.Open(h.File)
+	f, err := fsutil.Open(h.File)
 	if err != nil {
 		f.Close()
 		return ""
@@ -69,8 +70,7 @@ func (h *Hash) SHA256() string {
 	return h.readHash(sha256.New())
 }
 
-
-func (h *Hash) SHA512() string{
+func (h *Hash) SHA512() string {
 	if h.Hmac {
 		return h.readHash(hmac.New(sha512.New, unsafeConvert.BytesReflect(h.HmacKey)))
 	}
@@ -78,7 +78,7 @@ func (h *Hash) SHA512() string{
 }
 
 func (h *Hash) CRC32() string {
-	f, err := os.Open(h.File)
+	f, err := fsutil.Open(h.File)
 	if err != nil {
 		f.Close()
 		return ""
@@ -86,13 +86,13 @@ func (h *Hash) CRC32() string {
 	defer f.Close()
 	hs := crc32.NewIEEE()
 	_, _ = io.Copy(hs, f)
-	if h.Hmac{
-		return crc32HMAC(hs, h.HmacKey, cast.ToString(hs.Sum32()))
+	if h.Hmac {
+		return crc32HMAC(hs, h.HmacKey, fmt.Sprint(hs.Sum32()))
 	}
-	return cast.ToString(hs.Sum32())
+	return fmt.Sprint(hs.Sum32())
 }
 
-func crc32HMAC(hs hash.Hash32, key, rta string) string{
+func crc32HMAC(hs hash.Hash32, key, rta string) string {
 	m := hmac.New(sha512.New, unsafeConvert.BytesReflect(key))
 	if _, err := m.Write(unsafeConvert.BytesReflect(rta)); err != nil {
 		return ""

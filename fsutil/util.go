@@ -10,7 +10,7 @@ func IsFile(path string) bool {
 	if !IsExist(path) {
 		return false
 	}
-	if i, _ := os.Stat(path);i.IsDir() {
+	if i, _ := os.Stat(path); i.IsDir() {
 		return false
 	}
 	return true

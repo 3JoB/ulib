@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
-	"github.com/spf13/cast"
 )
 
 type FS struct {
@@ -79,7 +78,7 @@ func (f *FS) Write(d any) error {
 	case []byte:
 		writer.Write(d)
 	default:
-		writer.Write(unsafeConvert.Bytes(cast.ToString(d)))
+		writer.Write(unsafeConvert.Bytes(d.(string)))
 	}
 	writer.Flush()
 	return nil
