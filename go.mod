@@ -3,7 +3,7 @@ module github.com/3JoB/ulib
 go 1.20
 
 require (
-	github.com/3JoB/telebot v1.0.2
+	github.com/3JoB/telebot v1.1.1
 	github.com/3JoB/unsafeConvert v1.2.0
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
@@ -40,5 +40,5 @@ require (
 	go4.org v0.0.0-20201209231011-d4a079459e60 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
 )
