@@ -1,6 +1,6 @@
 package hash
 
-import (
+/*import (
 	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
@@ -54,3 +54,4 @@ func (h *HashF) CRC32() string {
 	}
 	return fmt.Sprint(hs.Sum32())
 }
+*/

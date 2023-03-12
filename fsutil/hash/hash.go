@@ -17,29 +17,63 @@ import (
 	"github.com/3JoB/ulib/fsutil"
 )
 
-type Hash struct {
-	File    string
-	HmacKey string
-	Hmac    bool
+type Crypt string
+
+const (
+	MD5 Crypt = "MD5"
+	SHA1 Crypt = "SHA1"
+	SHA224 Crypt = "SHA224"
+	SHA256 Crypt = "SHA256"
+	SHA384 Crypt = "SHA384"
+	SHA512_224 Crypt = "SHA512_224"
+	SHA512_256 Crypt = "SHA512_256"
+	SHA512 Crypt = "SHA512"
+	CRC32 Crypt = "CRC32"
+)
+
+type HashOpt struct{
+	HMAC *HashHMAC
+	Crypt Crypt
 }
 
-func NewWithPath(path string) *Hash {
-	return &Hash{
-		File: path,
+type HashHMAC struct {
+	Key string
+}
+
+func New(path string, opt *HashOpt) string {
+	var h func() hash.Hash
+	var hs hash.Hash
+	switch opt.Crypt {
+	case MD5:
+		h = md5.New
+	case SHA1:
+		h = sha1.New
+	case SHA224:
+		h = sha256.New224
+	case SHA256:
+		h = sha256.New
+	case SHA384:
+		h = sha512.New384
+	case SHA512_224:
+		h = sha512.New512_224
+	case SHA512_256:
+		h = sha512.New512_256
+	case SHA512:
+		h = sha512.New
+	case CRC32:
+		return c32(path, opt)
+	default:
+		return ""
 	}
-}
-
-func (h *Hash) HMAC(key string) *Hash {
-	h.Hmac = true
-	if key == "" {
-		key = "ulibHMAC"
-	}
-	h.HmacKey = key
-	return h
-}
-
-func (h *Hash) readHash(hs hash.Hash) string {
-	f, err := fsutil.Open(h.File)
+if opt.HMAC != nil {
+			if opt.HMAC.Key == ""{
+				opt.HMAC.Key = "ulib"
+			}
+			hs = hmac.New(h, unsafeConvert.BytesReflect(opt.HMAC.Key))
+		} else {
+			hs = h()
+		}
+	f, err := fsutil.Open(path)
 	if err != nil {
 		f.Close()
 		return ""
@@ -49,36 +83,8 @@ func (h *Hash) readHash(hs hash.Hash) string {
 	return hex.EncodeToString(hs.Sum(nil))
 }
 
-func (h *Hash) MD5() string {
-	if h.Hmac {
-		return h.readHash(hmac.New(md5.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return h.readHash(md5.New())
-}
-
-func (h *Hash) SHA1() string {
-	if h.Hmac {
-		return h.readHash(hmac.New(sha1.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return h.readHash(sha1.New())
-}
-
-func (h *Hash) SHA256() string {
-	if h.Hmac {
-		return h.readHash(hmac.New(sha256.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return h.readHash(sha256.New())
-}
-
-func (h *Hash) SHA512() string {
-	if h.Hmac {
-		return h.readHash(hmac.New(sha512.New, unsafeConvert.BytesReflect(h.HmacKey)))
-	}
-	return h.readHash(sha512.New())
-}
-
-func (h *Hash) CRC32() string {
-	f, err := fsutil.Open(h.File)
+func c32(path string, opt *HashOpt) string {
+	f, err := fsutil.Open(path)
 	if err != nil {
 		f.Close()
 		return ""
@@ -86,8 +92,11 @@ func (h *Hash) CRC32() string {
 	defer f.Close()
 	hs := crc32.NewIEEE()
 	_, _ = io.Copy(hs, f)
-	if h.Hmac {
-		return crc32HMAC(hs, h.HmacKey, fmt.Sprint(hs.Sum32()))
+	if opt.HMAC != nil {
+		if opt.HMAC.Key == ""{
+			opt.HMAC.Key = "ulib"
+		}
+		return crc32HMAC(hs, opt.HMAC.Key, fmt.Sprint(hs.Sum32()))
 	}
 	return fmt.Sprint(hs.Sum32())
 }
