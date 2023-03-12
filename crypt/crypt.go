@@ -22,7 +22,7 @@ func MD5(data string) string {
 	return Crypt(md5.New(), data)
 }
 
-func Crypt(h hash.Hash, d string) string{
+func Crypt(h hash.Hash, d string) string {
 	if _, err := h.Write(unsafeConvert.BytesReflect(d)); err != nil {
 		return ""
 	}

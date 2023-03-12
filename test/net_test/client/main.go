@@ -5,9 +5,10 @@ import (
 	"io"
 	"os"
 
+	"github.com/go-resty/resty/v2"
+
 	"github.com/3JoB/ulib/fsutil"
 	"github.com/3JoB/ulib/net/client"
-	"github.com/go-resty/resty/v2"
 )
 
 func main() {

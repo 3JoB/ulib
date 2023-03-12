@@ -7,8 +7,9 @@ import (
 	"crypto/sha512"
 	"hash"
 
-	"github.com/3JoB/ulib/crypt"
 	"github.com/3JoB/unsafeConvert"
+
+	"github.com/3JoB/ulib/crypt"
 )
 
 func c(h func() hash.Hash, data, key string) string {

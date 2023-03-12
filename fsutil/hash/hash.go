@@ -20,19 +20,19 @@ import (
 type Crypt string
 
 const (
-	MD5 Crypt = "MD5"
-	SHA1 Crypt = "SHA1"
-	SHA224 Crypt = "SHA224"
-	SHA256 Crypt = "SHA256"
-	SHA384 Crypt = "SHA384"
+	MD5        Crypt = "MD5"
+	SHA1       Crypt = "SHA1"
+	SHA224     Crypt = "SHA224"
+	SHA256     Crypt = "SHA256"
+	SHA384     Crypt = "SHA384"
 	SHA512_224 Crypt = "SHA512_224"
 	SHA512_256 Crypt = "SHA512_256"
-	SHA512 Crypt = "SHA512"
-	CRC32 Crypt = "CRC32"
+	SHA512     Crypt = "SHA512"
+	CRC32      Crypt = "CRC32"
 )
 
-type HashOpt struct{
-	HMAC *HashHMAC
+type HashOpt struct {
+	HMAC  *HashHMAC
 	Crypt Crypt
 }
 
@@ -65,14 +65,14 @@ func New(path string, opt *HashOpt) string {
 	default:
 		return ""
 	}
-if opt.HMAC != nil {
-			if opt.HMAC.Key == ""{
-				opt.HMAC.Key = "ulib"
-			}
-			hs = hmac.New(h, unsafeConvert.BytesReflect(opt.HMAC.Key))
-		} else {
-			hs = h()
+	if opt.HMAC != nil {
+		if opt.HMAC.Key == "" {
+			opt.HMAC.Key = "ulib"
 		}
+		hs = hmac.New(h, unsafeConvert.BytesReflect(opt.HMAC.Key))
+	} else {
+		hs = h()
+	}
 	f, err := fsutil.Open(path)
 	if err != nil {
 		f.Close()
@@ -93,7 +93,7 @@ func c32(path string, opt *HashOpt) string {
 	hs := crc32.NewIEEE()
 	_, _ = io.Copy(hs, f)
 	if opt.HMAC != nil {
-		if opt.HMAC.Key == ""{
+		if opt.HMAC.Key == "" {
 			opt.HMAC.Key = "ulib"
 		}
 		return crc32HMAC(hs, opt.HMAC.Key, fmt.Sprint(hs.Sum32()))
