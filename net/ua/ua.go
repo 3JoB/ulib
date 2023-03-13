@@ -1,6 +1,8 @@
 package ua
 
 import (
+	"bytes"
+
 	"github.com/shirou/gopsutil/v3/host"
 )
 
@@ -14,35 +16,47 @@ const (
 
 type Config struct {
 	AddCompatible  bool
-	CompatibleInfo string
-	CompatibleUrl  string
 	DisableSysInfo bool
 	DisableULIB    bool
+	CompatibleInfo string
+	CompatibleUrl  string
 	SoftInfo       string
 }
 
-func GenerateUA(c Config) (ua string) {
-	ua = "Mozilla/5.0 ("
+func GenerateUA(c Config) string {
+	var buffer bytes.Buffer
+	buffer.WriteString("Mozilla/5.0 (")
 	h, err := host.Info()
 	if err != nil {
 		return ULIBDefault
 	}
 	if c.AddCompatible {
-		ua = ua + "compatible" + Nex + c.CompatibleInfo + Nex + "+" + c.CompatibleUrl
+		buffer.WriteString("compatible")
+		buffer.WriteString(Nex)
+		buffer.WriteString(c.CompatibleInfo)
+		buffer.WriteString(Nex)
+		buffer.WriteString("+")
+		buffer.WriteString(c.CompatibleUrl)
 	} else {
-		ua = ua + h.OS + Nex
+		buffer.WriteString(h.OS)
+		buffer.WriteString(Nex)
 		if !c.DisableULIB {
-			ua = ua + "ulib/1.4.0" + Nex
+			buffer.WriteString("ulib/1.4.0")
+			buffer.WriteString(Nex)
 		}
 		if !c.DisableSysInfo {
-			ua = ua + h.Platform + "/" + h.PlatformVersion + Nex + h.KernelArch
+			buffer.WriteString(h.Platform)
+			buffer.WriteString("/")
+			buffer.WriteString(h.PlatformVersion)
+			buffer.WriteString(Nex)
+			buffer.WriteString(h.KernelArch)
 		}
 	}
 
-	ua = ua + ") "
+	buffer.WriteString(") ")
 
 	if c.SoftInfo != "" {
-		ua = ua + c.SoftInfo
+		buffer.WriteString(c.SoftInfo)
 	}
-	return
+	return buffer.String()
 }
