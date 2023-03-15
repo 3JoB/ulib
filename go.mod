@@ -9,9 +9,9 @@ require (
 	github.com/andybalholm/brotli v1.0.5
 	github.com/bodgit/sevenzip v1.4.0
 	github.com/go-resty/resty/v2 v2.7.0
-	github.com/goccy/go-json v0.10.0
+	github.com/goccy/go-json v0.10.1
 	github.com/goccy/go-reflect v1.2.0
-	github.com/klauspost/compress v1.16.0
+	github.com/klauspost/compress v1.16.3
 	github.com/shirou/gopsutil/v3 v3.23.2
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cast v1.5.0
