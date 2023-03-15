@@ -10,7 +10,7 @@ import (
 )
 
 func Create(v string) (*os.File, error) {
-	return os.Create(v)
+	return OpenFile(v, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 }
 
 /*
@@ -33,6 +33,10 @@ func CreateTemp(dir string, pattern string) (*os.File, error) {
 	return os.CreateTemp(dir, pattern)
 }
 
+func Rename(old, new string) error {
+	return os.Rename(old, new)
+}
+
 /*
 Open opens the named file for reading.
 
@@ -42,7 +46,7 @@ the associated file descriptor has mode O_RDONLY.
 If there is an error, it will be of type *PathError.
 */
 func Open(v string) (*os.File, error) {
-	return os.Open(v)
+	return OpenFile(v, os.O_RDONLY, 0)
 }
 
 func OpenRead(v string) ([]byte, error) {

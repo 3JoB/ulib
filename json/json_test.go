@@ -1,10 +1,11 @@
 package json_test
 
 import (
+	ej "encoding/json"
 	"testing"
 
-	ej "encoding/json"
 	js "github.com/goccy/go-json"
+
 	"github.com/3JoB/ulib/json"
 )
 
@@ -55,7 +56,7 @@ func Benchmark_Json_Unmarshal(b *testing.B) {
 
 func Benchmark_GoJson_Unmarshal(b *testing.B) {
 	b.ResetTimer()
-	
+
 	for i := 0; i < b.N; i++ {
 		data := `{"a": "b"}`
 		var tsc TestStruct

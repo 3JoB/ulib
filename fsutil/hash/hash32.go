@@ -3,16 +3,13 @@ package hash
 import (
 	"crypto/hmac"
 	"crypto/sha512"
-	"encoding/hex"
-	"fmt"
 	"hash"
 	"hash/crc32"
 	"hash/fnv"
-	"io"
 
 	"github.com/3JoB/unsafeConvert"
 
-	"github.com/3JoB/ulib/fsutil"
+	"github.com/3JoB/ulib/hex"
 )
 
 func New32(path string, opt *HashOpt) string {
@@ -31,25 +28,15 @@ func New32(path string, opt *HashOpt) string {
 	default:
 		return ""
 	}
-	if opt.HMAC != nil {
-		if opt.HMAC.Key == "" {
-			opt.HMAC.Key = "ulib"
-		}
-		return hmac32(h, opt.HMAC.Key, fmt.Sprint(h.Sum32()))
+	if opt.HMACKey != "" {
+		return hmac32(h, opt.HMACKey)
 	}
-	f, err := fsutil.Open(path)
-	if err != nil {
-		f.Close()
-		return ""
-	}
-	defer f.Close()
-	_, _ = io.Copy(h, f)
-	return hex.EncodeToString(h.Sum(nil))
+	return hash32el(path, h)
 }
 
-func hmac32(hs hash.Hash32, key, rta string) string {
+func hmac32(hs hash.Hash32, key string) string {
 	m := hmac.New(sha512.New, unsafeConvert.BytesReflect(key))
-	if _, err := m.Write(unsafeConvert.BytesReflect(rta)); err != nil {
+	if _, err := m.Write(unsafeConvert.BytesReflect(hex.EncodeToString(hs.Sum(nil)))); err != nil {
 		return ""
 	}
 	return hex.EncodeToString(m.Sum(nil))
