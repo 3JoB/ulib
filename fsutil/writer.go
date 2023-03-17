@@ -12,6 +12,9 @@ type nn struct {
 	writer *bufio.Writer
 }
 
+// Higher performance sustainable file write operations.
+//
+// Example Files: `writer_test.go`
 func NewWriter(path string) (*nn, error) {
 	n := &nn{}
 	var err error
@@ -23,6 +26,7 @@ func NewWriter(path string) (*nn, error) {
 	return n, nil
 }
 
+// Write data of type `any` to the buffer (automatically checked)
 func (n *nn) Add(w any) (err error) {
 	switch s := w.(type) {
 	case string:
@@ -35,10 +39,12 @@ func (n *nn) Add(w any) (err error) {
 	return
 }
 
+// Write data of type `[]byte` to the buffer
 func (n *nn) AddBytes(w []byte) error {
 	return n.addBytes(w)
 }
 
+// Write data of type `String` to the buffer
 func (n *nn) AddString(w string) error {
 	return n.addString(w)
 }
@@ -58,6 +64,9 @@ func (n *nn) addBytes(w []byte) error {
 	return nil
 }
 
+// Write the data in the buffer to the file and close the IO channel.
+//
+// Tips: After this operation, please do not continue to operate on the previous pointer!
 func (n *nn) Close() error {
 	if err := n.writer.Flush(); err != nil {
 		return err
