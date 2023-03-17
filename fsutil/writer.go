@@ -8,7 +8,7 @@ import (
 )
 
 type nn struct {
-	os  *os.File
+	os     *os.File
 	writer *bufio.Writer
 }
 
@@ -33,6 +33,14 @@ func (n *nn) Add(w any) (err error) {
 		err = n.addAny(w)
 	}
 	return
+}
+
+func (n *nn) AddBytes(w []byte) error {
+	return n.addBytes(w)
+}
+
+func (n *nn) AddString(w string) error {
+	return n.addString(w)
 }
 
 func (n *nn) addAny(w any) error {

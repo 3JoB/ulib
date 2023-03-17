@@ -35,8 +35,8 @@ const (
 )
 
 type HashOpt struct {
-	HMACKey  string
-	Crypt int
+	HMACKey string
+	Crypt   int
 }
 
 func New(path string, opt *HashOpt) string {

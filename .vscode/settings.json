@@ -36,6 +36,8 @@
         "tidwall",
         "twofish",
         "ulib",
+        "ulibw",
+        "ulibws",
         "zstd"
     ]
 }

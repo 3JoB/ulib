@@ -11,7 +11,9 @@ func Benchmark_Ulib_Write(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		fsutil.Write("test.ulib.io", "What fuck????")
 	}
-	fsutil.Remove("test.ulib.io")
+	if err := fsutil.Remove("test.ulib.io"); err != nil {
+		panic(err)
+	}
 }
 
 func Benchmark_UlibWriter_Write(b *testing.B) {
@@ -21,7 +23,21 @@ func Benchmark_UlibWriter_Write(b *testing.B) {
 		w.Add("test.ulibw.io")
 	}
 	w.Close()
-	fsutil.Remove("test.ulibw.io")
+	if err := fsutil.Remove("test.ulibw.io"); err != nil {
+		panic(err)
+	}
+}
+
+func Benchmark_UlibWriter_Strings_Write(b *testing.B) {
+	b.ResetTimer()
+	w, _ := fsutil.NewWriter("test.ulibws.io")
+	for i := 0; i < b.N; i++ {
+		w.AddString("test.ulibws.io")
+	}
+	w.Close()
+	if err := fsutil.Remove("test.ulibws.io"); err != nil {
+		panic(err)
+	}
 }
 
 func Benchmark_Basic_Write(b *testing.B) {
@@ -31,5 +47,7 @@ func Benchmark_Basic_Write(b *testing.B) {
 		f.Write([]byte("What fuck????"))
 	}
 	f.Close()
-	fsutil.Remove("test.basic.io")
+	if err := fsutil.Remove("test.basic.io"); err != nil {
+		panic(err)
+	}
 }
