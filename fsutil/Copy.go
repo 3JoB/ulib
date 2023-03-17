@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/3JoB/ulib/fsutil/path"
 )
 
 func copyTo(src, dst string) error {
@@ -46,7 +48,7 @@ func Move(src, dst string) error {
 }
 
 func CopyAll(src, dst string) error {
-	src, dst = CleanPaths(src), CleanPaths(dst)
+	src, dst = path.Clean(src), path.Clean(dst)
 	if IsDir(src) {
 		if !IsDir(dst) {
 			if IsFile(dst) {
@@ -64,8 +66,8 @@ func CopyAll(src, dst string) error {
 			return err
 		} else {
 			for _, entry := range entries {
-				srcPath := JoinPaths(src, entry.Name())
-				dstPath := JoinPaths(dst, entry.Name())
+				srcPath := path.Join(src, entry.Name())
+				dstPath := path.Join(dst, entry.Name())
 
 				if entry.IsDir() {
 					if err := copyTo(src, dst); err != nil {
@@ -86,7 +88,7 @@ func CopyAll(src, dst string) error {
 		if IsFile(dst) {
 			return copyTo(src, dst)
 		}
-		return copyTo(src, JoinPaths(dst, BasePaths(src)))
+		return copyTo(src, path.Join(dst, path.Base(src)))
 	}
 	return nil
 }

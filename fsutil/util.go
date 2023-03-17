@@ -3,21 +3,22 @@ package fsutil
 import (
 	"io/fs"
 	"os"
-	"path/filepath"
+
+	ph "github.com/3JoB/ulib/fsutil/path"
 )
 
 func IsFile(path string) bool {
 	if !IsExist(path) {
 		return false
 	}
-	if i, _ := os.Stat(path); i.IsDir() {
+	if i, _ := Stat(path); i.IsDir() {
 		return false
 	}
 	return true
 }
 
 func IsDir(path string) bool {
-	info, err := os.Stat(path)
+	info, err := Stat(path)
 	if err != nil {
 		return false
 	}
@@ -25,7 +26,7 @@ func IsDir(path string) bool {
 }
 
 func IsExist(path string) bool {
-	if _, err := os.Stat(path); err == nil {
+	if _, err := Stat(path); err == nil {
 		return true
 	}
 	// return os.IsNotExist(err)
@@ -33,7 +34,7 @@ func IsExist(path string) bool {
 }
 
 func GetRunPath() (r string) {
-	r, _ = filepath.Abs(filepath.Dir(os.Args[0]))
+	r, _ = ph.Abs(ph.Dir(os.Args[0]))
 	return
 }
 

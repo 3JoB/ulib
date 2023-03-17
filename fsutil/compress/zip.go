@@ -10,6 +10,7 @@ import (
 	zs "github.com/klauspost/compress/zstd"
 
 	"github.com/3JoB/ulib/fsutil"
+	ph "github.com/3JoB/ulib/fsutil/path"
 )
 
 type Zip struct{}
@@ -106,8 +107,8 @@ func (Zip) extractAndWriteFile(destination string, f *zip.File) error {
 	}
 	defer rc.Close()
 
-	path := fsutil.JoinPaths(destination, f.Name)
-	if !strings.HasPrefix(path, fsutil.CleanPaths(destination)+string(os.PathSeparator)) {
+	path := ph.Join(destination, f.Name)
+	if !strings.HasPrefix(path, ph.Clean(destination)+string(os.PathSeparator)) {
 		return fmt.Errorf("%s: illegal file path", path)
 	}
 
@@ -123,7 +124,7 @@ func (Zip) extractAndWriteFile(destination string, f *zip.File) error {
 				return err
 			}
 		}
-		if err := fsutil.Mkdir(fsutil.DirPath(path), f.Mode()); err != nil {
+		if err := fsutil.Mkdir(ph.DirPath(path), f.Mode()); err != nil {
 			return err
 		}
 

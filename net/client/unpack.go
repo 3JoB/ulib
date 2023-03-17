@@ -46,23 +46,16 @@ func UnPackData(r *http.Response) *update {
 	return u
 }
 
-func GetSource(r *http.Response) any {
-	switch r.Header.Get(headers.ContentEncoding) {
-	case "br":
-		return brotli.NewReader(r.Body)
-	case "gzip":
-		reader, err := gzip.NewReader(r.Body)
-		if err != nil {
-			return err
-		}
-		return reader
-	case "zstd":
-		return nil
-	case "deflate":
-		return flate.NewReader(r.Body)
-	default:
-		return nil
-	}
+func UnPackRawFromBrotli(src io.Reader) *brotli.Reader {
+	return brotli.NewReader(src)
+}
+
+func UnPackRawFromGZip(src io.Reader) (*gzip.Reader, error) {
+	return gzip.NewReader(src)
+}
+
+func UnPackRawFromDeflate(src io.Reader) io.ReadCloser {
+	return flate.NewReader(src)
 }
 
 // Return string type data
@@ -88,10 +81,9 @@ func (u *update) Bind(v any) error {
 func (u *update) unpack(r *http.Response) ([]byte, error) {
 	switch r.Header.Get(headers.ContentEncoding) {
 	case "br":
-		reader := brotli.NewReader(r.Body)
-		return io.ReadAll(reader)
+		return io.ReadAll(UnPackRawFromBrotli(r.Body))
 	case "gzip":
-		reader, err := gzip.NewReader(r.Body)
+		reader, err := UnPackRawFromGZip(r.Body)
 		if err != nil {
 			return nil, err
 		}
@@ -104,7 +96,7 @@ func (u *update) unpack(r *http.Response) ([]byte, error) {
 		}
 		return decoder.DecodeAll(reader, nil)
 	case "deflate":
-		reader := flate.NewReader(r.Body)
+		reader := UnPackRawFromDeflate(r.Body)
 		defer reader.Close()
 		return io.ReadAll(reader)
 	default:

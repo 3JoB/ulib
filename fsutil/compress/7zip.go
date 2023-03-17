@@ -9,6 +9,7 @@ import (
 	"github.com/bodgit/sevenzip"
 
 	"github.com/3JoB/ulib/fsutil"
+	ph "github.com/3JoB/ulib/fsutil/path"
 )
 
 type sevenZip struct {
@@ -55,8 +56,8 @@ func (sevenZip) extractAndWriteFile(destination string, f *sevenzip.File) error 
 	}
 	defer rc.Close()
 
-	path := fsutil.JoinPaths(destination, f.Name)
-	if !strings.HasPrefix(path, fsutil.CleanPaths(destination)+string(os.PathSeparator)) {
+	path := ph.Join(destination, f.Name)
+	if !strings.HasPrefix(path, ph.Clean(destination)+string(os.PathSeparator)) {
 		return fmt.Errorf("%s: illegal file path", path)
 	}
 
@@ -65,7 +66,7 @@ func (sevenZip) extractAndWriteFile(destination string, f *sevenzip.File) error 
 			return err
 		}
 	} else {
-		if err := fsutil.Mkdir(fsutil.DirPath(path), f.Mode()); err != nil {
+		if err := fsutil.Mkdir(ph.DirPath(path), f.Mode()); err != nil {
 			return err
 		}
 		if f, err := fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode()); err != nil {

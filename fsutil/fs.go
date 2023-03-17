@@ -9,6 +9,10 @@ import (
 	"github.com/3JoB/unsafeConvert"
 )
 
+func Stat(w string) (os.FileInfo, error) {
+	return os.Stat(w)
+}
+
 func Create(v string) (*os.File, error) {
 	return OpenFile(v, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 }
