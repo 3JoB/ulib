@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "andybalholm",
+        "blang",
         "bodgit",
         "brotli",
         "chatid",
@@ -21,6 +22,7 @@
         "ldflags",
         "logconf",
         "logrus",
+        "memfs",
         "msid",
         "natefinch",
         "Nyaa",

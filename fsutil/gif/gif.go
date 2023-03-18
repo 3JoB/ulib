@@ -7,7 +7,7 @@ import (
 	"image/gif"
 	"image/png"
 
-	"github.com/blang/vfs"
+	"github.com/3JoB/vfs/memfs"
 
 	"github.com/3JoB/ulib/fsutil"
 )
@@ -18,7 +18,7 @@ type Info struct {
 	// FileList returns a list of all available files.
 	FileList []string
 	// FS returns an operational virtual file system.
-	FS       vfs.Filesystem
+	FS       *memfs.MemFS
 }
 
 // Extract a GIF file.
@@ -27,7 +27,7 @@ func Decode(v string) (*Info, error) {
 		return nil, err
 	} else {
 		info := &Info{
-			FS: vFS(),
+			FS: memfs.Create(),
 		}
 		if gifs, err := gif.DecodeAll(f); err != nil {
 			return nil, err
@@ -51,8 +51,6 @@ func Decode(v string) (*Info, error) {
 	}
 }
 
-// Filesystem represents an abstract filesystem
-func vFS() vfs.Filesystem {
-	var s vfs.Filesystem
-	return s
+func Encode() {
+	
 }

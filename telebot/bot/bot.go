@@ -54,6 +54,12 @@ func (b *bot) SetKey(key string) *bot {
 	return b
 }
 
+// Set Custom API Server
+func (b *bot) SetAPIServer(server string) *bot {
+	b.Settings.URL = server
+	return b
+}
+
 // Set error handling
 func (b *bot) SetError(endpoint func(error, tele.Context)) *bot {
 	b.Settings.OnError = endpoint
