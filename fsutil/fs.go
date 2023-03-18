@@ -9,12 +9,28 @@ import (
 	"github.com/3JoB/unsafeConvert"
 )
 
+const (
+	O_ModePerm fs.FileMode = 511
+
+	// O_TRUNC = os.O_WRONLY|os.O_TRUNC|os.O_CREATE
+	O_TRUNC int = 577
+
+	// O_RDWTRUNC = os.O_RDWR|os.O_CREATE|os.O_TRUNC
+	O_RDWTRUNC int = 578
+
+	// O_RDONLY = os.O_RDONLY
+	O_RDONLY int = 0
+
+	// O_WROC = os.O_WRONLY|os.O_CREATE
+	O_WROC int = 65
+)
+
 func Stat(w string) (os.FileInfo, error) {
 	return os.Stat(w)
 }
 
 func Create(v string) (*os.File, error) {
-	return OpenFile(v, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	return OpenFile(v, O_RDWTRUNC, 0666)
 }
 
 /*
@@ -50,7 +66,7 @@ the associated file descriptor has mode O_RDONLY.
 If there is an error, it will be of type *PathError.
 */
 func Open(v string) (*os.File, error) {
-	return OpenFile(v, os.O_RDONLY, 0)
+	return OpenFile(v, O_RDONLY, 0)
 }
 
 func OpenRead(v string) ([]byte, error) {
@@ -90,7 +106,7 @@ func OpenFile(name string, flag int, perm fs.FileMode) (*os.File, error) {
 }
 
 func TruncWrite(path string, d any) error {
-	file, err := OpenFile(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
+	file, err := OpenFile(path, O_TRUNC, 0666)
 	if err != nil {
 		file.Close()
 		return err
@@ -100,7 +116,7 @@ func TruncWrite(path string, d any) error {
 }
 
 func Write(path string, d any) error {
-	file, err := OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
+	file, err := OpenFile(path, O_WROC, 0666)
 	if err != nil {
 		file.Close()
 		return err
@@ -127,7 +143,7 @@ func Mkdir(path string, mode ...fs.FileMode) error {
 	if len(mode) != 0 {
 		return os.MkdirAll(path, mode[0])
 	}
-	return os.MkdirAll(path, os.ModePerm)
+	return os.MkdirAll(path, O_ModePerm)
 }
 
 func Remove(v string) error {

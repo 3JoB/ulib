@@ -8,6 +8,7 @@
         "decomp",
         "encomp",
         "fsutil",
+        "gifs",
         "gjson",
         "goccy",
         "gomod",
@@ -23,6 +24,7 @@
         "msid",
         "natefinch",
         "Nyaa",
+        "RDWTRUNC",
         "resty",
         "sevenzip",
         "shirou",
@@ -38,6 +40,7 @@
         "ulib",
         "ulibw",
         "ulibws",
+        "WROC",
         "zstd"
     ]
 }

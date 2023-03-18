@@ -7,6 +7,7 @@ require (
 	github.com/3JoB/unsafeConvert v1.2.0
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
+	github.com/blang/vfs v1.0.0
 	github.com/bodgit/sevenzip v1.4.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/goccy/go-json v0.10.1
