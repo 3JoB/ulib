@@ -60,7 +60,7 @@ func UnPackRawFromDeflate(src io.Reader) io.ReadCloser {
 
 // Return string type data
 func (u *update) String() string {
-	return unsafeConvert.String(u.data)
+	return unsafeConvert.StringReflect(u.data)
 }
 
 // Return []byte type data

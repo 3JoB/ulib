@@ -10,7 +10,7 @@ import (
 	zs "github.com/klauspost/compress/zstd"
 
 	"github.com/3JoB/ulib/fsutil"
-	ph "github.com/3JoB/ulib/fsutil/path"
+	ph "github.com/3JoB/ulib/path"
 )
 
 type Zip struct{}

@@ -8,7 +8,7 @@ import (
 
 	"github.com/3JoB/unsafeConvert"
 
-	ph "github.com/3JoB/ulib/fsutil/path"
+	ph "github.com/3JoB/ulib/path"
 )
 
 type Info struct {

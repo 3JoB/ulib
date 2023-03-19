@@ -20,5 +20,5 @@ func Bind(r io.ReadCloser, v any) {
 func Body(r io.ReadCloser, l int64) string {
 	body := make([]byte, l)
 	r.Read(body)
-	return unsafeConvert.String(body)
+	return unsafeConvert.StringReflect(body)
 }

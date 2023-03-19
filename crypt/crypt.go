@@ -4,10 +4,11 @@ import (
 	"crypto/md5"
 	"crypto/sha256"
 	"crypto/sha512"
-	"encoding/hex"
 	"hash"
 
 	"github.com/3JoB/unsafeConvert"
+
+	"github.com/3JoB/ulib/hex"
 )
 
 func SHA256(data string) string {

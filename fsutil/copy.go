@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/3JoB/ulib/fsutil/path"
+	"github.com/3JoB/ulib/path"
 )
 
 func copyTo(src, dst string) error {
