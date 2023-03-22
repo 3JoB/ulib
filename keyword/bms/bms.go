@@ -1,3 +1,4 @@
+// This is not a public method package, it is recommended to use an external wrapper.
 package bms
 
 import (
