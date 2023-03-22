@@ -16,11 +16,9 @@
 A wrapper that provides functional extensions and a quick start.
 
 Usage: 
-```sj
+```sh
 $ go get github.com/3JoB/ulib@v1.19.0
 ```
-
-[godoc](https://godoc.org/github.com/3JoB/ulib)
 
 ----
 
