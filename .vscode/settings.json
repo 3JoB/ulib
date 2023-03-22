@@ -2,6 +2,7 @@
     "cSpell.words": [
         "andybalholm",
         "blang",
+        "bmsa",
         "bodgit",
         "brotli",
         "bytedance",
@@ -28,6 +29,7 @@
         "ldflags",
         "logconf",
         "logrus",
+        "Marshalers",
         "memfs",
         "msid",
         "natefinch",
@@ -50,6 +52,9 @@
         "ulib",
         "ulibw",
         "ulibws",
+        "unmarshaled",
+        "unmarshaling",
+        "unmarshals",
         "WROC",
         "zstd"
     ]

@@ -82,6 +82,10 @@ func OpenRead(v string) ([]byte, error) {
 	}
 }
 
+func CleanFile(path string) error {
+	return TruncWrite(path, "")
+}
+
 /*
 ReadAll reads from r until an error or EOF and returns the data it read.
 A successful call returns err == nil, not err == EOF.
@@ -90,6 +94,10 @@ it does not treat an EOF from Read as an error to be reported.
 */
 func ReadAll(r io.Reader) ([]byte, error) {
 	return io.ReadAll(r)
+}
+
+func ReaderWriter(w io.Reader, r io.Writer) (*bufio.Reader, *bufio.Writer) {
+	return bufio.NewReader(w), bufio.NewWriter(r)
 }
 
 /*

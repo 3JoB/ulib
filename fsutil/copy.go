@@ -1,7 +1,6 @@
 package fsutil
 
 import (
-	"bufio"
 	"fmt"
 	"io"
 	"os"
@@ -24,8 +23,7 @@ func copyTo(src, dst string) error {
 	defer s.Close()
 	defer d.Close()
 
-	sb := bufio.NewReader(s)
-	db := bufio.NewWriter(d)
+	sb, db := ReaderWriter(s, d)
 
 	if _, err := io.Copy(db, sb); err != nil {
 		return err

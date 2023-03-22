@@ -46,6 +46,10 @@ github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMn
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/connesc/cipherio v0.2.1 h1:FGtpTPMbKNNWByNrr9aEBtaJtXjqOzkIXNYJp6OEycw=
 github.com/connesc/cipherio v0.2.1/go.mod h1:ukY0MWJDFnJEbXMQtOcn2VmTpRfzcTz4OoVrWGGJZcA=
+github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206 h1:xCM/A0kr8HgAUDRVIxmSjiArWToQrlJ6MQ0VLgUNUpg=
+github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206/go.mod h1:1PkVluDmW+Z1O29Fe5zPkX+D7bu4oe/kNh1SbAYvhdE=
+github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62 h1:3RoRVoZEWanetr2l9GtLLBMTkS7zcuYXN7FetCBCVww=
+github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62/go.mod h1:uS2b13mjReIyjTsez0r4ivFFGCsBpROxe15lIZnbFBE=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

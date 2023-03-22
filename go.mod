@@ -10,9 +10,12 @@ require (
 	github.com/andybalholm/brotli v1.0.5
 	github.com/bodgit/sevenzip v1.4.0
 	github.com/bytedance/sonic v1.8.5
+	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
+	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/goccy/go-json v0.10.2
 	github.com/goccy/go-reflect v1.2.0
+	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
 	github.com/klauspost/compress v1.16.3
 	github.com/shirou/gopsutil/v3 v3.23.2
 	github.com/sirupsen/logrus v1.9.0
@@ -27,7 +30,6 @@ require (
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/connesc/cipherio v0.2.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
-	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect

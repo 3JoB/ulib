@@ -30,45 +30,37 @@ func NewWriter(path string) (*nn, error) {
 func (n *nn) Add(w any) (err error) {
 	switch s := w.(type) {
 	case string:
-		err = n.addString(s)
+		err = n.AddString(s)
 	case []byte:
-		err = n.addBytes(s)
+		err = n.AddBytes(s)
 	default:
-		err = n.addAny(w)
+		_, err = n.writer.Write(unsafeConvert.BytesReflect(w.(string)))
 	}
 	return
 }
 
 // Write data of type `[]byte` to the buffer
 func (n *nn) AddBytes(w []byte) error {
-	return n.addBytes(w)
+	_, err := n.writer.Write(w)
+	return err
 }
 
 // Write data of type `String` to the buffer
 func (n *nn) AddString(w string) error {
-	return n.addString(w)
+	_, err := n.writer.Write(unsafeConvert.BytesReflect(w))
+	return err
 }
 
-func (n *nn) addAny(w any) error {
-	n.writer.Write(unsafeConvert.BytesReflect(w.(string)))
-	return nil
-}
-
-func (n *nn) addString(w string) error {
-	n.writer.Write(unsafeConvert.BytesReflect(w))
-	return nil
-}
-
-func (n *nn) addBytes(w []byte) error {
-	n.writer.Write(w)
-	return nil
+// Flush writes any buffered data to the underlying io.Writer.
+func (n *nn) Flush() error {
+	return n.writer.Flush()
 }
 
 // Write the data in the buffer to the file and close the IO channel.
 //
 // Tips: After this operation, please do not continue to operate on the previous pointer!
 func (n *nn) Close() error {
-	if err := n.writer.Flush(); err != nil {
+	if err := n.Flush(); err != nil {
 		return err
 	}
 	if err := n.os.Close(); err != nil {
