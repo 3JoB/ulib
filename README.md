@@ -13,14 +13,15 @@
         <a href="#"><img src="https://img.shields.io/github/commit-activity/m/3JoB/ulib?style=flat-square" alt="GitHub commit activity"></a>
     </p>
 
-A wrapper that provides functional extensions and a quick start.
+**A wrapper that provides functional extensions and a quick start.**
 
-Usage: 
+**Usage**
 ```sh
 $ go get github.com/3JoB/ulib@v1.19.0
 ```
 
 ----
+## Package
 
 [crypt](https://godoc.org/github.com/3JoB/ulib/crypt) - Hash encryption for fast encapsulation.
 - [crypt/hmac](https://godoc.org/github.com/3JoB/ulib/crypt/hmac)
