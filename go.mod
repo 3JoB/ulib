@@ -9,7 +9,7 @@ require (
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
 	github.com/bodgit/sevenzip v1.4.0
-	github.com/bytedance/sonic v1.8.5
+	github.com/bytedance/sonic v1.8.6
 	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/go-resty/resty/v2 v2.7.0
