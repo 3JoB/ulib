@@ -1,4 +1,4 @@
-package compress
+package seven
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ type sevenZip struct {
 	pass string
 }
 
-func New7Zip(pwd ...string) *sevenZip {
+func New(pwd ...string) *sevenZip {
 	if len(pwd) != 0 {
 		return &sevenZip{pass: pwd[0]}
 	}

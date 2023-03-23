@@ -40,7 +40,36 @@ type User struct {
 	Username  string `json:"username"`
 }
 
+// GetChatMember Status
+//
+// 0 error, 1 Not in Chat, 2 In Chat, 3 Banned
+func (n *Use) GetChatMember(uid int64) (int, error) {
+	if uid == 0 {
+        return 0, errors.New("uid is 0")
+    }
+	if n.ChatId == 0 {
+		if n.Context.Chat().Type == "private" {
+			return 0, errors.New("chat is private")
+		}
+		n.ChatId = n.Context.Chat().ID
+	}
+	d, err := n.Context.Bot().Raw("getChatMember", map[string]int64{"chat_id": n.ChatId, "user_id": uid})
+	if err != nil {
+		return 0, err
+	}
+	switch gjson.GetBytes(d, "result.status").String() {
+	case "kicked":
+		return 3, nil
+	case "left":
+		return 1, nil
+	default:
+		return 2, nil
+	}
+}
+
 // Get the list of group administrators
+//
+// It is now recommended to use `telebot.Context.Bot().Adminsof()` method.
 func (n *Use) GetAdminList() (map[int64]AdminInfo, error) {
 	if n.Context == nil {
 		return nil, ErrCtxNotSet

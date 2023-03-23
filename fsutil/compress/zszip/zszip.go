@@ -1,21 +1,19 @@
-package compress
+package zszip
 
 import (
-	"fmt"
 	"io"
 	"os"
-	"strings"
 
 	"github.com/klauspost/compress/zip"
 	zs "github.com/klauspost/compress/zstd"
 
 	"github.com/3JoB/ulib/fsutil"
-	ph "github.com/3JoB/ulib/path"
+	"github.com/3JoB/ulib/fsutil/compress"
 )
 
 type Zip struct{}
 
-func NewZip() *Zip {
+func New() *Zip {
 	return &Zip{}
 }
 
@@ -26,7 +24,7 @@ func NewZip() *Zip {
 //	import (
 //		"fmt"
 //
-//		"github.com/3JoB/ulib/fsutil/compress"
+//		"github.com/3JoB/ulib/fsutil/compress/zszip"
 //		"github.com/3JoB/ulib/fsutil"
 //	)
 //
@@ -84,12 +82,12 @@ func (z Zip) Extract(source, destination string) (extractedFiles []string, err e
 		}
 	} else {
 		if !fsutil.IsDir(destination) {
-			return nil, ErrTargetType
+			return nil, compress.ErrTargetType
 		}
 	}
 
 	for _, f := range r.File {
-		if err := z.extractAndWriteFile(destination, f); err != nil {
+		if err := compress.ExtractAndWriteFile(destination, f); err != nil {
 			return nil, err
 		}
 
@@ -97,47 +95,4 @@ func (z Zip) Extract(source, destination string) (extractedFiles []string, err e
 	}
 
 	return extractedFiles, nil
-}
-
-// Extract files
-func (Zip) extractAndWriteFile(destination string, f *zip.File) error {
-	rc, err := f.Open()
-	if err != nil {
-		return err
-	}
-	defer rc.Close()
-
-	path := ph.Join(destination, f.Name)
-	if !strings.HasPrefix(path, ph.Clean(destination)+string(os.PathSeparator)) {
-		return fmt.Errorf("%s: illegal file path", path)
-	}
-
-	if f.FileInfo().IsDir() {
-		if !fsutil.IsExist(path) {
-			if err = fsutil.Mkdir(path, f.Mode()); err != nil {
-				return err
-			}
-		}
-	} else {
-		if fsutil.IsExist(path) {
-			if err := fsutil.Remove(path); err != nil {
-				return err
-			}
-		}
-		if err := fsutil.Mkdir(ph.DirPath(path), f.Mode()); err != nil {
-			return err
-		}
-
-		f, err := fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
-		if err != nil {
-			return err
-		}
-		defer f.Close()
-
-		if _, err := io.Copy(f, rc); err != nil {
-			return err
-		}
-	}
-
-	return nil
 }

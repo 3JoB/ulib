@@ -50,6 +50,7 @@ func Decode(v string) (*Info, error) {
 					of.Close()
 				}
 			}
+			info.FS.Remove("/tmp/backend")
 			return info, nil
 		}
 	}

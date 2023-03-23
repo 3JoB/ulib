@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"hash"
+	"strings"
 
 	"github.com/3JoB/unsafeConvert"
 
@@ -21,6 +22,14 @@ func SHA512(data string) string {
 
 func MD5(data string) string {
 	return Crypt(md5.New(), data)
+}
+
+func MD5Str(s string) string {
+	h := md5.New()
+	h.Write(unsafeConvert.BytesReflect(s))
+	result := strings.ToUpper(hex.EncodeToString(h.Sum(nil)))
+	result = result[8:24]
+	return result
 }
 
 func Crypt(h hash.Hash, d string) string {
