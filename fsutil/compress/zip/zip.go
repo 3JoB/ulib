@@ -47,7 +47,7 @@ func (z Zip) Create(source string, files []string) error {
 		zfs, err := w.Create(f)
 		if err != nil {
 			return err
-        }
+		}
 		if _, err := io.Copy(zfs, ofs); err != nil {
 			return err
 		}

@@ -45,8 +45,8 @@ type User struct {
 // 0 error, 1 Not in Chat, 2 In Chat, 3 Banned
 func (n *Use) GetChatMember(uid int64) (int, error) {
 	if uid == 0 {
-        return 0, errors.New("uid is 0")
-    }
+		return 0, errors.New("uid is 0")
+	}
 	if n.ChatId == 0 {
 		if n.Context.Chat().Type == "private" {
 			return 0, errors.New("chat is private")

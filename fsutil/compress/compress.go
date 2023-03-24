@@ -1,12 +1,13 @@
 package compress
 
 import (
-	"github.com/klauspost/compress/zip"
 	"errors"
 	"fmt"
 	"io"
 	"os"
 	"strings"
+
+	"github.com/klauspost/compress/zip"
 
 	"github.com/3JoB/ulib/fsutil"
 	ph "github.com/3JoB/ulib/path"
