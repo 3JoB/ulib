@@ -3,7 +3,6 @@
 package gif
 
 import (
-	"errors"
 	"fmt"
 	"image"
 	"image/gif"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/3JoB/vfs/memfs"
 
+	"github.com/3JoB/ulib/err"
 	"github.com/3JoB/ulib/fsutil"
 )
 
@@ -59,13 +59,13 @@ func Decode(v string) (*Info, error) {
 // Create a GIF file.
 func Encode(i *Info, path string) error {
 	if len(i.FileList) == 0 {
-		return errors.New("no files to encode")
+		return &err.Err{Op: "gif.Encode", Err: "no files to encode"}
 	}
 	if len(i.Delay) == 0 {
-		return errors.New("the playback speed cannot be empty")
+		return &err.Err{Op: "gif.Encode", Err: "the playback speed cannot be empty"}
 	}
 	if len(i.Delay) != len(i.FileList) {
-		return errors.New("the number of files does not match the playback speed")
+		return &err.Err{Op: "gif.Encode", Err: "the number of files does not match the playback speed"}
 	}
 	g := &gif.GIF{}
 	for e, filename := range i.FileList {

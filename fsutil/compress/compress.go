@@ -1,7 +1,6 @@
 package compress
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -9,13 +8,12 @@ import (
 
 	"github.com/klauspost/compress/zip"
 
+	"github.com/3JoB/ulib/err"
 	"github.com/3JoB/ulib/fsutil"
 	ph "github.com/3JoB/ulib/path"
 )
 
-var (
-	ErrTargetType error = errors.New("ulib.fsutil.compress: the target directory type is file")
-)
+var ErrTargetType error = &err.Err{Op: "ulib.fsutil.compress", Err: "The target directory type is file"}
 
 // Extract files
 func ExtractAndWriteFile(destination string, f *zip.File) error {
