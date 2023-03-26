@@ -6,6 +6,6 @@ import (
 	"github.com/3JoB/ulib/runtime"
 )
 
-func main(){
+func main() {
 	fmt.Println(runtime.IsAdmin())
 }

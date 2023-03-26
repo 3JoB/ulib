@@ -33,7 +33,7 @@ func IsAdmin() bool {
 	if d, err := exec.Command("ps", "-o", "state=-p"+unsafeConvert.IntToString(ppid)).Output(); err != nil {
 		return false
 	} else {
-		// sudo -pxxx S S S R 
+		// sudo -pxxx S S S R
 		r := strings.ReplaceAll(strings.Trim(fmt.Sprint(strings.Split(unsafeConvert.StringReflect(d), "\n")[1:]), "[]"), " ", " ")
 		return r == "S S S R "
 	}
