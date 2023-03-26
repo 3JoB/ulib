@@ -17,7 +17,7 @@
 
 **Usage**
 ```sh
-$ go get github.com/3JoB/ulib@v1.21.0
+$ go get github.com/3JoB/ulib@v1.22.0
 ```
 
 ----
