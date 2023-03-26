@@ -5,6 +5,10 @@ import (
 	"os"
 )
 
+func Symlink(src, dst string) error {
+	return os.Symlink(src, dst)
+}
+
 func IsFile(path string) bool {
 	if !IsExist(path) {
 		return false

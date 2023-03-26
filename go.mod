@@ -12,7 +12,6 @@ require (
 	github.com/bytedance/sonic v1.8.6
 	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
-	github.com/go-resty/resty/v2 v2.7.0
 	github.com/goccy/go-json v0.10.2
 	github.com/goccy/go-reflect v1.2.0
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
@@ -47,7 +46,6 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go4.org v0.0.0-20201209231011-d4a079459e60 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect

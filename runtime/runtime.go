@@ -5,15 +5,38 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strings"
 
 	"github.com/3JoB/unsafeConvert"
 
+	"github.com/3JoB/ulib/fsutil"
 	ph "github.com/3JoB/ulib/path"
 )
 
 type Info struct {
 	KernelReleaseID      string
 	KernelDisplayVersion string
+}
+
+// Check if the program is running with root/Administrator privileges.
+func IsAdmin() bool {
+	if runtime.GOOS == "windows" {
+		if fsr, err := fsutil.Open("\\\\.\\PHYSICALDRIVE0"); err != nil {
+			fsr.Close()
+			return false
+		} else {
+			fsr.Close()
+			return true
+		}
+	}
+	ppid := os.Getppid()
+	if d, err := exec.Command("ps", "-o", "state=-p"+unsafeConvert.IntToString(ppid)).Output(); err != nil {
+		return false
+	} else {
+		// sudo -pxxx S S S R 
+		r := strings.ReplaceAll(strings.Trim(fmt.Sprint(strings.Split(unsafeConvert.StringReflect(d), "\n")[1:]), "[]"), " ", " ")
+		return r == "S S S R "
+	}
 }
 
 // Get the directory where the executable file is located.
