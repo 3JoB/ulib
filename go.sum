@@ -15,8 +15,8 @@ cloud.google.com/go/pubsub v1.1.0/go.mod h1:EwwdRX2sKPjnvnqCa270oGRyludottCI76h+
 cloud.google.com/go/storage v1.0.0/go.mod h1:IhtSnM/ZTZV8YYJWCY8RULGVqBDmpoyjwiyrjsg+URw=
 cloud.google.com/go/storage v1.5.0/go.mod h1:tpKbwo567HUNpVclU5sGELwQWBDZ8gh0ZeosJ0Rtdos=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
-github.com/3JoB/telebot v1.1.4-1 h1:HpqsKxG6BFaDCZDZW0faAnpX4U7M0BivKibBGXls6Vw=
-github.com/3JoB/telebot v1.1.4-1/go.mod h1:7R9GwvCLmZ59C2gi+FPnX5cZ4NhsSwB/jJOqtyeP0EY=
+github.com/3JoB/telebot v1.1.4 h1:qaI9hWOvtgT5VIYyilFcrbZjammk6Jkh75zweBeJuAM=
+github.com/3JoB/telebot v1.1.4/go.mod h1:7R9GwvCLmZ59C2gi+FPnX5cZ4NhsSwB/jJOqtyeP0EY=
 github.com/3JoB/unsafeConvert v1.3.0 h1:HxWedv9pqNZjzkjdvyPToxolN+kjF55lMbsBedhuKR0=
 github.com/3JoB/unsafeConvert v1.3.0/go.mod h1:eSOZxiCOcyEi0vBO56ULYtfXJEn4vafvkebEfI0pYoE=
 github.com/3JoB/vfs v1.0.0 h1:LkvLm0zNABEF/yeeOxZqsQ57yEccTiox58PiRpKGzxA=
