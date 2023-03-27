@@ -10,7 +10,7 @@ const (
 	Chrome        string = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 	Edge          string = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.57"
 	AndroidChrome string = "Mozilla/5.0 (Linux; Android 11; Jelly2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36"
-	ULIBDefault   string = "Mozilla/5.0 (compatible; ulib/1.22.0; +https://github.com/3JoB/ulib/)"
+	ULIBDefault   string = "Mozilla/5.0 (compatible; ulib/1.22.1; +https://github.com/3JoB/ulib/)"
 	Nex           string = "; "
 )
 
@@ -41,7 +41,7 @@ func GenerateUA(c Config) string {
 		buffer.WriteString(h.OS)
 		buffer.WriteString(Nex)
 		if !c.DisableULIB {
-			buffer.WriteString("ulib/1.22.0")
+			buffer.WriteString("ulib/1.22.1")
 			buffer.WriteString(Nex)
 		}
 		if !c.DisableSysInfo {

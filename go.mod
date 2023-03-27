@@ -3,7 +3,7 @@ module github.com/3JoB/ulib
 go 1.20
 
 require (
-	github.com/3JoB/telebot v1.1.2
+	github.com/3JoB/telebot v1.1.4-1
 	github.com/3JoB/unsafeConvert v1.3.0
 	github.com/3JoB/vfs v1.0.0
 	github.com/JNyaa/headers v0.1.0
@@ -36,7 +36,6 @@ require (
 	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
-	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
