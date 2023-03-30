@@ -3,7 +3,6 @@ module github.com/3JoB/ulib
 go 1.20
 
 require (
-	github.com/3JoB/telebot v1.1.5
 	github.com/3JoB/unsafeConvert v1.3.0
 	github.com/3JoB/vfs v1.0.0
 	github.com/JNyaa/headers v0.1.0
@@ -18,15 +17,9 @@ require (
 	github.com/klauspost/compress v1.16.3
 	github.com/saracen/walker v0.1.3
 	github.com/shirou/gopsutil/v3 v3.23.2
-	github.com/sirupsen/logrus v1.9.0
-	github.com/spf13/cast v1.5.0
-	github.com/tidwall/gjson v1.14.4
-	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
 require (
-	github.com/3JoB/resty-ilo v1.1.0 // indirect
-	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
 	github.com/bodgit/plumbing v1.3.0 // indirect
 	github.com/bodgit/windows v1.0.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
@@ -38,8 +31,6 @@ require (
 	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
-	github.com/tidwall/match v1.1.1 // indirect
-	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
 	github.com/tklauser/numcpus v0.6.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
@@ -47,11 +38,7 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go4.org v0.0.0-20201209231011-d4a079459e60 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
-	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
-	lukechampine.com/frand v1.4.2 // indirect
-	pgregory.net/rand v1.0.2 // indirect
 )
