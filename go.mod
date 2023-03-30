@@ -3,7 +3,7 @@ module github.com/3JoB/ulib
 go 1.20
 
 require (
-	github.com/3JoB/telebot v1.1.4
+	github.com/3JoB/telebot v1.1.5
 	github.com/3JoB/unsafeConvert v1.3.0
 	github.com/3JoB/vfs v1.0.0
 	github.com/JNyaa/headers v0.1.0
@@ -25,6 +25,8 @@ require (
 )
 
 require (
+	github.com/3JoB/resty-ilo v1.1.0 // indirect
+	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
 	github.com/bodgit/plumbing v1.3.0 // indirect
 	github.com/bodgit/windows v1.0.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
@@ -45,7 +47,11 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go4.org v0.0.0-20201209231011-d4a079459e60 // indirect
 	golang.org/x/arch v0.3.0 // indirect
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
+	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
+	lukechampine.com/frand v1.4.2 // indirect
+	pgregory.net/rand v1.0.2 // indirect
 )
