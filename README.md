@@ -53,10 +53,5 @@ $ go get github.com/3JoB/ulib@v1.22.2
 - [runtime/cuser](https://godoc.org/github.com/3JoB/ulib/runtime/cuser)
 - [runtime/user](https://godoc.org/github.com/3JoB/ulib/runtime/user)
 
-[telebot](https://godoc.org/github.com/3JoB/ulib/telebot) - Rapid encapsulation of [go-telebot](https://github.com/3JoB/telebot) .
-- [telebot/bot](https://godoc.org/github.com/3JoB/ulib/telebot/bot)
-- [telebot/middleware](https://godoc.org/github.com/3JoB/ulib/telebot/middleware)
-- [telebot/utils](https://godoc.org/github.com/3JoB/ulib/telebot/utils)
-
 # License
 This software is distributed under Apache-2.0 license.
