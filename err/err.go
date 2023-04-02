@@ -12,11 +12,15 @@ type Err struct {
 }
 
 func (e *Err) Error() string {
-	e.E = errors.New(e.Err)
+	if e.E == nil {
+		e.E = errors.New(e.Err)
+	}
 	return fmt.Sprintf("%v: %v", e.Op, e.Err)
 }
 
 func (e *Err) Unwrap() error {
-	e.E = errors.New(e.Err)
+	if e.E == nil {
+		e.E = errors.New(e.Err)
+	}
 	return e.E
 }

@@ -1,8 +1,10 @@
 package fsutil
 
-import "errors"
+import (
+	"github.com/3JoB/ulib/err"
+)
 
 var (
-	ErrNotExist error = errors.New("ulib.fsutil: no file/folder found")
-	ErrMethods  error = errors.New("ulib.fsutil: don't use weird methods")
+	ErrNotExist error = &err.Err{Op: "ulib.fsutil", Err: "no file/folder found"}
+	ErrMethods  error = &err.Err{Op: "ulib.fsutil", Err: "don't use weird methods"}
 )

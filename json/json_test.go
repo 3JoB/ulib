@@ -7,6 +7,7 @@ import (
 	js "github.com/goccy/go-json"
 
 	"github.com/3JoB/ulib/json"
+	sonic "github.com/3JoB/ulib/json/sonic"
 )
 
 type TestStruct struct {
@@ -32,6 +33,15 @@ func Benchmark_GoJson_Marshal(b *testing.B) {
 	}
 }
 
+func Benchmark_Sonic_Marshal(b *testing.B) {
+	b.ResetTimer()
+	var tsc TestStruct
+	for i := 0; i < b.N; i++ {
+		tsc = TestStruct{A: "test"}
+		_ = sonic.Marshal(&tsc).String()
+	}
+}
+
 // Marshal
 func Benchmark_Ulib_Marshal(b *testing.B) {
 	b.ResetTimer()
@@ -45,8 +55,8 @@ func Benchmark_Ulib_Marshal(b *testing.B) {
 // Unmarshal
 func Benchmark_Json_Unmarshal(b *testing.B) {
 	b.ResetTimer()
+	data := `{"a": "b"}`
 	for i := 0; i < b.N; i++ {
-		data := `{"a": "b"}`
 		var tsc TestStruct
 		if err := ej.Unmarshal([]byte(data), &tsc); err != nil {
 			panic(err)
@@ -56,11 +66,21 @@ func Benchmark_Json_Unmarshal(b *testing.B) {
 
 func Benchmark_GoJson_Unmarshal(b *testing.B) {
 	b.ResetTimer()
-
+	data := `{"a": "b"}`
 	for i := 0; i < b.N; i++ {
-		data := `{"a": "b"}`
 		var tsc TestStruct
 		if err := js.Unmarshal([]byte(data), &tsc); err != nil {
+			panic(err)
+		}
+	}
+}
+
+func Benchmark_Sonic_Unmarshal(b *testing.B) {
+	b.ResetTimer()
+	data := `{"a": "b"}`
+	for i := 0; i < b.N; i++ {
+		var tsc TestStruct
+		if err := sonic.Unmarshal([]byte(data), &tsc); err != nil {
 			panic(err)
 		}
 	}
@@ -69,10 +89,22 @@ func Benchmark_GoJson_Unmarshal(b *testing.B) {
 // Unmarshal
 func Benchmark_Ulib_Unmarshal(b *testing.B) {
 	b.ResetTimer()
+	data := `{"a": "b"}`
 	for i := 0; i < b.N; i++ {
-		data := `{"a": "b"}`
 		var tsc TestStruct
 		if err := json.UnmarshalString(data, &tsc); err != nil {
+			panic(err)
+		}
+	}
+}
+
+// Unmarshal T
+func Benchmark_Ulib_UnmarshalT(b *testing.B) {
+	b.ResetTimer()
+	data := `{"a": "b"}`
+	for i := 0; i < b.N; i++ {
+		_, err := json.TUnmarshalString[TestStruct](data)
+		if err != nil {
 			panic(err)
 		}
 	}

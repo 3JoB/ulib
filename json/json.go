@@ -309,6 +309,32 @@ func Unmarshal(data []byte, str any) error {
 	return js.Unmarshal(data, str)
 }
 
+// Example:
+//
+//	func main(){
+//		data := []byte(`{"type":"object","properties":{"a":{"type":"integer"}}}`)
+//		str, err := json.TUnmarshal[Main](data)
+//		fmt.Println(str.Type)
+//	}
+func TUnmarshal[T any](data []byte) (T, error) {
+	var t T
+	err := js.Unmarshal(data, &t)
+	return t, err
+}
+
+// Example:
+//
+//	func main(){
+//		data := `{"type":"object","properties":{"a":{"type":"integer"}}}`
+//		str, err := json.TUnmarshalString[Main](data)
+//		fmt.Println(str.Type)
+//	}
+func TUnmarshalString[T any](data string) (T, error) {
+	var t T
+	err := js.Unmarshal(unsafeConvert.BytesReflect(data), &t)
+	return t, err
+}
+
 // Unmarshal For String
 func UnmarshalString(data string, str any) error {
 	return js.Unmarshal(unsafeConvert.BytesReflect(data), str)
