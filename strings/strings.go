@@ -15,8 +15,8 @@ func NewBuilder(b []byte) *strings.Builder {
 
 func NewBuilderString(s string) *strings.Builder {
 	builder := &strings.Builder{}
-    builder.WriteString(s)
-    return builder
+	builder.WriteString(s)
+	return builder
 }
 
 func ReadFrom(b *strings.Builder, r io.Reader) (n int64, err error) {
