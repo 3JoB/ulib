@@ -3,6 +3,8 @@ package strings
 import (
 	"io"
 	"strings"
+
+	"github.com/3JoB/unsafeConvert"
 )
 
 func NewBuilder(b []byte) *strings.Builder {
@@ -27,4 +29,8 @@ func ReadFrom(b *strings.Builder, r io.Reader) (n int64, err error) {
 		b.Write(buf[:rn])
 		n += int64(rn)
 	}
+}
+
+func Bytes(b *strings.Builder) []byte {
+	return unsafeConvert.BytesReflect(b.String())
 }
