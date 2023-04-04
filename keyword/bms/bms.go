@@ -1,32 +1,19 @@
-// This is not a public method package, it is recommended to use an external wrapper.
 package bms
 
 import (
-	"github.com/cubicdaiya/bms"
+	"github.com/3JoB/ulib/internal/keyword/bms"
 )
 
-type BMSCompile struct {
-	Keyword string
-	Table   map[rune]int
-}
-
-// DO NOT USE!
-//
-// This is not a public function!
-func (c *BMSCompile) Init(keyword string) (err error) {
-	c.Keyword = keyword
-	c.Table = make(map[rune]int)
-	c.Table = bms.BuildSkipTable(keyword)
-	return
-}
-
-func (c *BMSCompile) Find(text string) bool {
-	if c.Table == nil {
-		return false
+// Use Boyer-Moore's compilation method to find the existence of keywords
+func Compile(keyword string) (*bms.BMSCompile, error) {
+	k := &bms.BMSCompile{}
+	if err := k.Init(keyword); err != nil {
+		return nil, err
 	}
-	return bms.SearchBySkipTable(text, c.Keyword, c.Table) != 0
+	return k, nil
 }
 
-func Search(text, keyword string) bool {
-	return bms.Search(text, keyword) != 0
+// Use the Boyer-Moore method to find the existence of keywords.
+func Find(text, keyword string) bool {
+	return bms.Search(text, keyword)
 }

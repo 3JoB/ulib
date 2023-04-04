@@ -1,15 +1,19 @@
-package fsutil
+package writer
 
 import (
 	"bufio"
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
+
+	"github.com/3JoB/ulib/fsutil"
 )
 
 type nn struct {
-	os     *os.File
-	writer *bufio.Writer
+	buffer    int
+	maxbuffer int
+	os        *os.File
+	writer    *bufio.Writer
 }
 
 // Higher performance sustainable file write operations.
@@ -18,7 +22,7 @@ type nn struct {
 func NewWriter(path string) (*nn, error) {
 	n := &nn{}
 	var err error
-	n.os, err = OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
+	n.os, err = fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +40,28 @@ func (n *nn) Add(w any) (err error) {
 	default:
 		_, err = n.writer.Write(unsafeConvert.BytesReflect(w.(string)))
 	}
+	if err == nil {
+		if n.maxbuffer == 0 {
+			return
+		}
+		if n.Buffered() > n.maxbuffer {
+			err = n.Flush()
+		}
+	}
 	return
+}
+
+// Set the maximum buffer size, default (unlimited buffer)
+//
+// Reasonable settings can greatly improve performance.
+func (n *nn) MaxBuffer(max int) {
+	n.maxbuffer = max
+}
+
+// Buffered returns the number of bytes that have been written into the current buffer.
+func (n *nn) Buffered() int {
+	n.buffer = n.writer.Buffered()
+	return n.buffer
 }
 
 // Write data of type `[]byte` to the buffer
@@ -53,6 +78,9 @@ func (n *nn) AddString(w string) error {
 
 // Flush writes any buffered data to the underlying io.Writer.
 func (n *nn) Flush() error {
+	if n.Buffered() == 0 {
+		return nil
+	}
 	return n.writer.Flush()
 }
 
@@ -66,6 +94,5 @@ func (n *nn) Close() error {
 	if err := n.os.Close(); err != nil {
 		return err
 	}
-	n.os = nil
 	return nil
 }

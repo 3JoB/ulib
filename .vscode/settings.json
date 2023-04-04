@@ -36,6 +36,7 @@
         "logconf",
         "logrus",
         "Marshalers",
+        "maxbuffer",
         "memfs",
         "miekg",
         "msid",

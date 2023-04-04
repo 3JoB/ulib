@@ -7,7 +7,6 @@ import (
 	js "github.com/goccy/go-json"
 
 	"github.com/3JoB/ulib/json"
-	sonic "github.com/3JoB/ulib/json/sonic"
 )
 
 type TestStruct struct {
@@ -30,15 +29,6 @@ func Benchmark_GoJson_Marshal(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		tsc = TestStruct{A: "test"}
 		_, _ = js.Marshal(&tsc)
-	}
-}
-
-func Benchmark_Sonic_Marshal(b *testing.B) {
-	b.ResetTimer()
-	var tsc TestStruct
-	for i := 0; i < b.N; i++ {
-		tsc = TestStruct{A: "test"}
-		_ = sonic.Marshal(&tsc).String()
 	}
 }
 
@@ -70,17 +60,6 @@ func Benchmark_GoJson_Unmarshal(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		var tsc TestStruct
 		if err := js.Unmarshal([]byte(data), &tsc); err != nil {
-			panic(err)
-		}
-	}
-}
-
-func Benchmark_Sonic_Unmarshal(b *testing.B) {
-	b.ResetTimer()
-	data := `{"a": "b"}`
-	for i := 0; i < b.N; i++ {
-		var tsc TestStruct
-		if err := sonic.Unmarshal([]byte(data), &tsc); err != nil {
 			panic(err)
 		}
 	}
