@@ -3,6 +3,7 @@
         "addrs",
         "Adminsof",
         "Alicloud",
+        "allocs",
         "andybalholm",
         "blang",
         "bmsa",
@@ -20,6 +21,7 @@
         "fsutil",
         "gifs",
         "gjson",
+        "goarch",
         "goccy",
         "godoc",
         "gomod",
@@ -71,6 +73,7 @@
         "unmarshaling",
         "unmarshals",
         "WROC",
+        "Xeon",
         "zstd",
         "zszip"
     ]
