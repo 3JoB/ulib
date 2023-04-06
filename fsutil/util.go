@@ -43,10 +43,11 @@ func ReadDirRaw(path string) ([]fs.DirEntry, error) {
 	return os.ReadDir(path)
 }
 
-func ReadDirInfo(path string) (r []fs.FileInfo) {
+func ReadDirInfo(path string) []fs.FileInfo {
 	if fr, err := ReadDirRaw(path); err != nil {
 		return nil
 	} else {
+		r:= make([]fs.FileInfo,0 , len(fr))
 		for _, fs := range fr {
 			info, _ := fs.Info()
 			r = append(r, info)
@@ -55,10 +56,11 @@ func ReadDirInfo(path string) (r []fs.FileInfo) {
 	}
 }
 
-func ReadDir(path string) (f []string) {
+func ReadDir(path string) []string {
 	if fr, err := ReadDirRaw(path); err != nil {
 		return nil
 	} else {
+		f := make([]string, 0, len(fr))
 		for _, fs := range fr {
 			f = append(f, path+"/"+fs.Name())
 		}
@@ -66,10 +68,11 @@ func ReadDir(path string) (f []string) {
 	}
 }
 
-func ReadDirAll(path string) (f []string) {
+func ReadDirAll(path string) []string {
 	if fr, err := ReadDirRaw(path); err != nil {
 		return nil
 	} else {
+		f := make([]string, 0, len(fr))
 		for _, fs := range fr {
 			if fs.IsDir() {
 				f = append(f, ReadDirAll(path+"/"+fs.Name())...)
