@@ -47,7 +47,7 @@ func ReadDirInfo(path string) []fs.FileInfo {
 	if fr, err := ReadDirRaw(path); err != nil {
 		return nil
 	} else {
-		r:= make([]fs.FileInfo,0 , len(fr))
+		r := make([]fs.FileInfo, 0, len(fr))
 		for _, fs := range fr {
 			info, _ := fs.Info()
 			r = append(r, info)
