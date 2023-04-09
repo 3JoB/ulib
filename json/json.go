@@ -5,8 +5,8 @@ import (
 	"context"
 	"io"
 
+	js "github.com/3JoB/go-json"
 	"github.com/3JoB/unsafeConvert"
-	js "github.com/goccy/go-json"
 )
 
 type M struct {

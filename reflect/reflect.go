@@ -1,7 +1,7 @@
 package reflect
 
 import (
-	"github.com/goccy/go-reflect"
+	"github.com/3JoB/go-reflect"
 )
 
 // from https://cs.opensource.google/go/go/+/refs/tags/go1.19.5:src/reflect/visiblefields.go;l=16
