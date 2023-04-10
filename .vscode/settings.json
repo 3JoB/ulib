@@ -35,6 +35,8 @@
         "KHTML",
         "klauspost",
         "ldflags",
+        "linkname",
+        "litefmt",
         "logconf",
         "logrus",
         "Marshalers",

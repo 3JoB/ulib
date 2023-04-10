@@ -13,6 +13,10 @@ func NewBuilder(b []byte) *strings.Builder {
 	return builder
 }
 
+func NewBuilders() *strings.Builder {
+	return &strings.Builder{}
+}
+
 func NewBuilderString(s string) *strings.Builder {
 	builder := &strings.Builder{}
 	builder.WriteString(s)

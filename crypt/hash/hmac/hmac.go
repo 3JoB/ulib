@@ -9,7 +9,7 @@ import (
 
 	"github.com/3JoB/unsafeConvert"
 
-	"github.com/3JoB/ulib/crypt"
+	uch "github.com/3JoB/ulib/crypt/hash"
 )
 
 var pubkey string = "ulib-hmac"
@@ -18,7 +18,7 @@ func c(h func() hash.Hash, data, key string) string {
 	if key == "" {
 		key = pubkey
 	}
-	return crypt.Select(hmac.New(h, unsafeConvert.BytesReflect(key)), data)
+	return uch.Select(hmac.New(h, unsafeConvert.BytesReflect(key)), data)
 }
 
 func SHA224(data, key string) string {

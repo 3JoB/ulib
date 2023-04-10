@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	_ "unsafe"
 
 	"github.com/3JoB/ulib/err"
 	"github.com/3JoB/ulib/path"
@@ -38,6 +39,9 @@ func copyTo(src, dst string) error {
 func Copy(src, dst string) error {
 	return copyTo(src, dst)
 }
+
+//go:linkname IoCopy io.Copy
+func IoCopy(dst io.Writer, src io.Reader) (written int64, err error)
 
 func Move(src, dst string) error {
 	if err := CopyAll(src, dst); err != nil {
