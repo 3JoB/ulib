@@ -27,7 +27,7 @@ func copyTo(src, dst string) error {
 
 	sb, db := ReaderWriter(s, d)
 
-	if _, err := io.Copy(db, sb); err != nil {
+	if _, err := IoCopy(db, sb); err != nil {
 		return err
 	}
 	if err := db.Flush(); err != nil {
@@ -36,9 +36,8 @@ func copyTo(src, dst string) error {
 	return err
 }
 
-func Copy(src, dst string) error {
-	return copyTo(src, dst)
-}
+//go:linkname Copy copyTo
+func Copy(src, dst string) error
 
 //go:linkname IoCopy io.Copy
 func IoCopy(dst io.Writer, src io.Reader) (written int64, err error)
