@@ -2,6 +2,7 @@ package writer
 
 import (
 	"bufio"
+	"io"
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
@@ -28,6 +29,15 @@ func NewWriter(path string) (*nn, error) {
 	}
 	n.writer = bufio.NewWriter(n.os)
 	return n, nil
+}
+
+func (n *nn) CopyTo(to io.Reader) (written int64, err error) {
+	return fsutil.IoCopy(n.writer, to)
+}
+
+func (n *nn) CopyIn(in io.Writer) (written int64, err error) {
+	n.Flush()
+	return fsutil.IoCopy(in, n.os)
 }
 
 // Write data of type `any` to the buffer (automatically checked)

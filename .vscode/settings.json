@@ -41,6 +41,7 @@
         "logrus",
         "Marshalers",
         "maxbuffer",
+        "mdata",
         "memfs",
         "miekg",
         "msid",
