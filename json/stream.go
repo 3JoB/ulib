@@ -1,7 +1,7 @@
 package json
 
 import (
-	js "github.com/3JoB/go-json"
+	"github.com/3JoB/go-json"
 	"github.com/3JoB/unsafeConvert"
 
 	"github.com/3JoB/ulib/err"
@@ -29,5 +29,5 @@ func (m *RawMessage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-var _ js.Marshaler = (*RawMessage)(nil)
-var _ js.Unmarshaler = (*RawMessage)(nil)
+var _ json.Marshaler = (*RawMessage)(nil)
+var _ json.Unmarshaler = (*RawMessage)(nil)

@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"context"
 	"io"
+	_ "unsafe"
 
-	js "github.com/3JoB/go-json"
+	"github.com/3JoB/go-json"
 	"github.com/3JoB/unsafeConvert"
 )
 
@@ -144,17 +145,17 @@ type M struct {
 // an infinite recursion.
 func Marshal(a any) *M {
 	m := &M{}
-	m.data, m.err = js.Marshal(a)
+	m.data, m.err = json.Marshal(a)
 	return m
 }
 
 // MarshalContext returns the JSON encoding of v with context.Context and EncodeOption.
-func MarshalContext(ctx context.Context, v any, optFuncs ...js.EncodeOptionFunc) *M {
+func MarshalContext(ctx context.Context, v any, optFuncs ...json.EncodeOptionFunc) *M {
 	m := &M{}
 	if len(optFuncs) != 0 {
-		m.data, m.err = js.MarshalContext(ctx, v, optFuncs...)
+		m.data, m.err = json.MarshalContext(ctx, v, optFuncs...)
 	} else {
-		m.data, m.err = js.MarshalContext(ctx, v)
+		m.data, m.err = json.MarshalContext(ctx, v)
 	}
 	return m
 }
@@ -162,14 +163,14 @@ func MarshalContext(ctx context.Context, v any, optFuncs ...js.EncodeOptionFunc)
 // MarshalNoEscape returns the JSON encoding of v and doesn't escape v.
 func MarshalNoEscape(v any) *M {
 	m := &M{}
-	m.data, m.err = js.MarshalNoEscape(v)
+	m.data, m.err = json.MarshalNoEscape(v)
 	return m
 }
 
 // MarshalIndent is like Marshal but applies Indent to format the output. Each JSON element in the output will begin on a new line beginning with prefix followed by one or more copies of indent according to the indentation nesting.
 func MarshalIndent(v any, prefix, indent string) *M {
 	m := &M{}
-	m.data, m.err = js.MarshalIndent(v, prefix, indent)
+	m.data, m.err = json.MarshalIndent(v, prefix, indent)
 	return m
 }
 
@@ -199,9 +200,8 @@ to make it easier to embed inside other formatted JSON data.
 
 Although leading space characters (space, tab, carriage return, newline) at the beginning of src are dropped, trailing space characters at the end of src are preserved and copied to dst. For example, if src has no trailing spaces, neither will dst; if src ends in a trailing newline, so will dst.
 */
-func Indent(dst *bytes.Buffer, src []byte, prefix string, indent string) error {
-	return js.Indent(dst, src, prefix, indent)
-}
+//go:linkname Indent js.Indent
+func Indent(dst *bytes.Buffer, src []byte, prefix string, indent string) error
 
 /*
 Indent appends to dst an indented form of the JSON-encoded src.
@@ -215,22 +215,20 @@ to make it easier to embed inside other formatted JSON data.
 Although leading space characters (space, tab, carriage return, newline) at the beginning of src are dropped, trailing space characters at the end of src are preserved and copied to dst. For example, if src has no trailing spaces, neither will dst; if src ends in a trailing newline, so will dst.
 */
 func IndentString(dst *bytes.Buffer, src string, prefix string, indent string) error {
-	return js.Indent(dst, unsafeConvert.BytesReflect(src), prefix, indent)
+	return Indent(dst, unsafeConvert.BytesReflect(src), prefix, indent)
 }
 
 // NewEncoder returns a new encoder that writes to w.
-func NewEncoder(w io.Writer) *js.Encoder {
-	return js.NewEncoder(w)
-}
+//go:linkname NewEncoder js.NewEncoder
+func NewEncoder(w io.Writer) *json.Encoder
 
 /*
 NewDecoder returns a new decoder that reads from r.
 
 The decoder introduces its own buffering and may read data from r beyond the JSON values requested.
 */
-func NewDecoder(r io.Reader) *js.Decoder {
-	return js.NewDecoder(r)
-}
+//go:linkname NewDecoder js.NewDecoder
+func NewDecoder(r io.Reader) *json.Decoder
 
 // Unmarshal parses the JSON-encoded data and stores the result
 // in the value pointed to by v. If v is nil or not a pointer,
@@ -305,9 +303,8 @@ func NewDecoder(r io.Reader) *js.Decoder {
 // invalid UTF-16 surrogate pairs are not treated as an error.
 // Instead, they are replaced by the Unicode replacement
 // character U+FFFD.
-func Unmarshal(data []byte, str any) error {
-	return js.Unmarshal(data, str)
-}
+//go:linkname Unmarshal json.Unmarshal
+func Unmarshal(data []byte, str any) error
 
 // Example:
 //
@@ -318,7 +315,7 @@ func Unmarshal(data []byte, str any) error {
 //	}
 func TUnmarshal[T any](data []byte) (T, error) {
 	var t T
-	err := js.Unmarshal(data, &t)
+	err := json.Unmarshal(data, &t)
 	return t, err
 }
 
@@ -331,21 +328,20 @@ func TUnmarshal[T any](data []byte) (T, error) {
 //	}
 func TUnmarshalString[T any](data string) (T, error) {
 	var t T
-	err := js.Unmarshal(unsafeConvert.BytesReflect(data), &t)
+	err := json.Unmarshal(unsafeConvert.BytesReflect(data), &t)
 	return t, err
 }
 
 // Unmarshal For String
 func UnmarshalString(data string, str any) error {
-	return js.Unmarshal(unsafeConvert.BytesReflect(data), str)
+	return Unmarshal(unsafeConvert.BytesReflect(data), str)
 }
 
 // UnmarshalContext parses the JSON-encoded data and stores the result
 // in the value pointed to by v. If you implement the UnmarshalerContext interface,
 // call it with ctx as an argument.
-func UnmarshalContext(ctx context.Context, data []byte, v any) error {
-	return js.UnmarshalContext(ctx, data, v)
-}
+//go:linkname UnmarshalContext json.UnmarshalContext
+func UnmarshalContext(ctx context.Context, data []byte, v any) error
 
 // UnmarshalContext parses the JSON-encoded data and stores the result
 // in the value pointed to by v. If you implement the UnmarshalerContext interface,
@@ -353,5 +349,5 @@ func UnmarshalContext(ctx context.Context, data []byte, v any) error {
 //
 // Use String Data.
 func UnmarshalStringContext(ctx context.Context, data string, v any) error {
-	return js.UnmarshalContext(ctx, unsafeConvert.BytesReflect(data), v)
+	return UnmarshalContext(ctx, unsafeConvert.BytesReflect(data), v)
 }
