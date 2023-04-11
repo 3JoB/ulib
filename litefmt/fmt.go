@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/3JoB/ulib/strings"
+	"github.com/3JoB/unsafeConvert"
 )
 
 func Sprint(s ...string) string {
@@ -15,6 +16,14 @@ func Sprint(s ...string) string {
 		b.WriteString(r)
 	}
 	return b.String()
+}
+
+func BSprint(s ...string) []byte {
+	b := strings.NewBuilders()
+	for _, r := range s {
+		b.WriteString(r)
+	}
+	return unsafeConvert.BytesReflect(b.String())
 }
 
 func Sprintln(s ...string) string {
@@ -26,6 +35,19 @@ func Sprintln(s ...string) string {
 	return b.String()
 }
 
+func BSprintln(s ...string) []byte {
+	b := strings.NewBuilders()
+	for _, r := range s {
+		b.WriteString(r)
+	}
+	b.WriteString("\n")
+	return unsafeConvert.BytesReflect(b.String())
+}
+
 func Sprintf(format string, a ...any) string {
 	return fmt.Sprintf(format, a...)
+}
+
+func BSprintf(format string, a ...any) []byte {
+	return unsafeConvert.BytesReflect(fmt.Sprintf(format, a...))
 }
