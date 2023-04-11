@@ -6,8 +6,9 @@ package litefmt
 import (
 	"fmt"
 
-	"github.com/3JoB/ulib/strings"
 	"github.com/3JoB/unsafeConvert"
+
+	"github.com/3JoB/ulib/strings"
 )
 
 func Sprint(s ...string) string {

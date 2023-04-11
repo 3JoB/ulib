@@ -219,6 +219,7 @@ func IndentString(dst *bytes.Buffer, src string, prefix string, indent string) e
 }
 
 // NewEncoder returns a new encoder that writes to w.
+//
 //go:linkname NewEncoder js.NewEncoder
 func NewEncoder(w io.Writer) *json.Encoder
 
@@ -303,6 +304,7 @@ func NewDecoder(r io.Reader) *json.Decoder
 // invalid UTF-16 surrogate pairs are not treated as an error.
 // Instead, they are replaced by the Unicode replacement
 // character U+FFFD.
+//
 //go:linkname Unmarshal json.Unmarshal
 func Unmarshal(data []byte, str any) error
 
@@ -340,6 +342,7 @@ func UnmarshalString(data string, str any) error {
 // UnmarshalContext parses the JSON-encoded data and stores the result
 // in the value pointed to by v. If you implement the UnmarshalerContext interface,
 // call it with ctx as an argument.
+//
 //go:linkname UnmarshalContext json.UnmarshalContext
 func UnmarshalContext(ctx context.Context, data []byte, v any) error
 
