@@ -39,8 +39,9 @@ func copyTo(src, dst string) error {
 //go:linkname Copy copyTo
 func Copy(src, dst string) error
 
-//go:linkname IoCopy io.Copy
-func IoCopy(dst io.Writer, src io.Reader) (written int64, err error)
+func IoCopy(dst io.Writer, src io.Reader) (written int64, err error) {
+	return io.Copy(dst, src)
+}
 
 func Move(src, dst string) error {
 	if err := CopyAll(src, dst); err != nil {

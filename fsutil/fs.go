@@ -5,7 +5,6 @@ import (
 	"io"
 	"io/fs"
 	"os"
-	_ "unsafe"
 
 	"github.com/3JoB/unsafeConvert"
 )
@@ -26,8 +25,9 @@ const (
 	O_WROC int = 65
 )
 
-//go:linkname Stat os.Stat
-func Stat(w string) (os.FileInfo, error)
+func Stat(w string) (os.FileInfo, error) {
+	return os.Stat(w)
+}
 
 func Create(v string) (*os.File, error) {
 	return OpenFile(v, O_RDWTRUNC, 0666)
@@ -49,11 +49,13 @@ The caller can use the file's Name method to find the pathname of the file.
 
 It is the caller's responsibility to remove the file when it is no longer needed.
 */
-//go:linkname CreateTemp os.CreateTemp
-func CreateTemp(dir string, pattern string) (*os.File, error)
+func CreateTemp(dir string, pattern string) (*os.File, error) {
+	return os.CreateTemp(dir, pattern)
+}
 
-//go:linkname Rename os.Rename
-func Rename(old, new string)
+func Rename(old, new string) error {
+	return os.Rename(old, new)
+}
 
 /*
 Open opens the named file for reading.
@@ -90,8 +92,9 @@ A successful call returns err == nil, not err == EOF.
 Because ReadAll is defined to read from src until EOF,
 it does not treat an EOF from Read as an error to be reported.
 */
-//go:linkname ReadAll io.ReadAll
-func ReadAll(r io.Reader) ([]byte, error)
+func ReadAll(r io.Reader) ([]byte, error) {
+	return io.ReadAll(r)
+}
 
 func ReaderWriter(w io.Reader, r io.Writer) (*bufio.Reader, *bufio.Writer) {
 	return bufio.NewReader(w), bufio.NewWriter(r)
@@ -106,8 +109,9 @@ it is created with mode perm (before umask).
 If successful, methods on the returned File can be used for I/O.
 If there is an error, it will be of type *PathError.
 */
-//go:linkname OpenFile os.OpenFile
-func OpenFile(name string, flag int, perm fs.FileMode) (*os.File, error)
+func OpenFile(name string, flag int, perm fs.FileMode) (*os.File, error) {
+	return os.OpenFile(name, flag, perm)
+}
 
 func TruncWrite(path string, d any) error {
 	file, err := OpenFile(path, O_TRUNC, 0666)
@@ -150,5 +154,6 @@ func Mkdir(path string, mode ...fs.FileMode) error {
 	return os.MkdirAll(path, O_ModePerm)
 }
 
-//go:linkname Remove os.RemoveAll
-func Remove(v string) error
+func Remove(v string) error {
+	return os.RemoveAll(v)
+}
