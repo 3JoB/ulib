@@ -11,6 +11,26 @@ import (
 	"github.com/3JoB/ulib/strings"
 )
 
+var builders = strings.NewBuilders()
+
+func LSprint(s ...string) string {
+	for _, r := range s {
+		builders.WriteString(r)
+	}
+	defer builders.Reset()
+	return builders.String()
+}
+
+func TSprint(s ...string) string {
+	b := strings.NewBuilders()
+	var buf []byte
+	for _, r := range s {
+		buf = append(buf, r...)
+	}
+	b.Write(buf)
+	return b.String()
+}
+
 func Sprint(s ...string) string {
 	b := strings.NewBuilders()
 	for _, r := range s {
