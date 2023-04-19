@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"io"
-	_ "unsafe"
 
 	"github.com/3JoB/go-json"
 	"github.com/3JoB/unsafeConvert"
@@ -200,8 +199,9 @@ to make it easier to embed inside other formatted JSON data.
 
 Although leading space characters (space, tab, carriage return, newline) at the beginning of src are dropped, trailing space characters at the end of src are preserved and copied to dst. For example, if src has no trailing spaces, neither will dst; if src ends in a trailing newline, so will dst.
 */
-//go:linkname Indent js.Indent
-func Indent(dst *bytes.Buffer, src []byte, prefix string, indent string) error
+func Indent(dst *bytes.Buffer, src []byte, prefix string, indent string) error {
+	return json.Indent(dst, src, prefix, indent)
+}
 
 /*
 Indent appends to dst an indented form of the JSON-encoded src.
@@ -219,17 +219,18 @@ func IndentString(dst *bytes.Buffer, src string, prefix string, indent string) e
 }
 
 // NewEncoder returns a new encoder that writes to w.
-//
-//go:linkname NewEncoder js.NewEncoder
-func NewEncoder(w io.Writer) *json.Encoder
+func NewEncoder(w io.Writer) *json.Encoder {
+	return json.NewEncoder(w)
+}
 
 /*
 NewDecoder returns a new decoder that reads from r.
 
 The decoder introduces its own buffering and may read data from r beyond the JSON values requested.
 */
-//go:linkname NewDecoder js.NewDecoder
-func NewDecoder(r io.Reader) *json.Decoder
+func NewDecoder(r io.Reader) *json.Decoder {
+	return json.NewDecoder(r)
+}
 
 // Unmarshal parses the JSON-encoded data and stores the result
 // in the value pointed to by v. If v is nil or not a pointer,
@@ -304,9 +305,9 @@ func NewDecoder(r io.Reader) *json.Decoder
 // invalid UTF-16 surrogate pairs are not treated as an error.
 // Instead, they are replaced by the Unicode replacement
 // character U+FFFD.
-//
-//go:linkname Unmarshal json.Unmarshal
-func Unmarshal(data []byte, str any) error
+func Unmarshal(data []byte, str any) error {
+	return json.Unmarshal(data, str)
+}
 
 // Example:
 //
@@ -342,9 +343,9 @@ func UnmarshalString(data string, str any) error {
 // UnmarshalContext parses the JSON-encoded data and stores the result
 // in the value pointed to by v. If you implement the UnmarshalerContext interface,
 // call it with ctx as an argument.
-//
-//go:linkname UnmarshalContext json.UnmarshalContext
-func UnmarshalContext(ctx context.Context, data []byte, v any) error
+func UnmarshalContext(ctx context.Context, data []byte, v any) error {
+	return json.UnmarshalContext(ctx, data, v)
+}
 
 // UnmarshalContext parses the JSON-encoded data and stores the result
 // in the value pointed to by v. If you implement the UnmarshalerContext interface,
