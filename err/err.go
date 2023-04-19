@@ -2,7 +2,8 @@ package err
 
 import (
 	"errors"
-	"fmt"
+
+	"github.com/3JoB/ulib/litefmt"
 )
 
 type Err struct {
@@ -15,7 +16,7 @@ func (e *Err) Error() string {
 	if e.E == nil {
 		e.E = errors.New(e.Err)
 	}
-	return fmt.Sprintf("%v: %v", e.Op, e.Err)
+	return litefmt.Sprint(e.Op, "", e.Err)
 }
 
 func (e *Err) Unwrap() error {
