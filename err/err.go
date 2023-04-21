@@ -6,6 +6,10 @@ import (
 	"github.com/3JoB/ulib/litefmt"
 )
 
+func New(text string) error {
+	return errors.New(text)
+}
+
 type Err struct {
 	Op  string
 	Err string
