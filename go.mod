@@ -9,12 +9,12 @@ require (
 	github.com/3JoB/vfs v1.0.0
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
-	github.com/bodgit/sevenzip v1.4.0
+	github.com/bodgit/sevenzip v1.4.1
 	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/goccy/go-json v0.10.2
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
-	github.com/klauspost/compress v1.16.4
+	github.com/klauspost/compress v1.16.5
 	github.com/saracen/walker v0.1.3
 	github.com/shirou/gopsutil/v3 v3.23.3
 	golang.org/x/crypto v0.8.0
@@ -26,7 +26,6 @@ require (
 	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
 	github.com/bodgit/plumbing v1.3.0 // indirect
 	github.com/bodgit/windows v1.0.1 // indirect
-	github.com/connesc/cipherio v0.2.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
