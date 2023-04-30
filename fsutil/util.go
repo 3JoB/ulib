@@ -3,6 +3,8 @@ package fsutil
 import (
 	"io/fs"
 	"os"
+
+	"github.com/3JoB/ulib/litefmt"
 )
 
 func Symlink(src, dst string) error {
@@ -62,7 +64,7 @@ func ReadDir(path string) []string {
 	} else {
 		f := make([]string, 0, len(fr))
 		for _, fs := range fr {
-			f = append(f, path+"/"+fs.Name())
+			f = append(f, litefmt.Sprint(path, "/", fs.Name()))
 		}
 		return f
 	}
@@ -75,9 +77,9 @@ func ReadDirAll(path string) []string {
 		f := make([]string, 0, len(fr))
 		for _, fs := range fr {
 			if fs.IsDir() {
-				f = append(f, ReadDirAll(path+"/"+fs.Name())...)
+				f = append(f, ReadDirAll(litefmt.Sprint(path, "/", fs.Name()))...)
 			} else {
-				f = append(f, path+"/"+fs.Name())
+				f = append(f, litefmt.Sprint(path, "/", fs.Name()))
 			}
 		}
 		return f

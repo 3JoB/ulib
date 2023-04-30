@@ -5,54 +5,18 @@ import (
 	"pgregory.net/rand"
 )
 
-func Rands(n []int, num int) []int {
+func Rands[T any](n []T, num int) []T {
 	idxs := rand.Perm(len(n))[:num]
-	result := make([]int, 0, num)
+	result := make([]T, 0, num)
 	for _, idx := range idxs {
 		result = append(result, n[idx])
 	}
 	return result
 }
 
-func CRands(n []int, num int) []int {
+func CRands[T any](n []T, num int) []T {
 	idxs := frand.Perm(len(n))[:num]
-	result := make([]int, 0, num)
-	for _, idx := range idxs {
-		result = append(result, n[idx])
-	}
-	return result
-}
-
-func Rand64(n []int64, num int) []int64 {
-	idxs := rand.Perm(len(n))[:num]
-	result := make([]int64, 0, num)
-	for _, idx := range idxs {
-		result = append(result, n[idx])
-	}
-	return result
-}
-
-func CRand64(n []int64, num int) []int64 {
-	idxs := frand.Perm(len(n))[:num]
-	result := make([]int64, 0, num)
-	for _, idx := range idxs {
-		result = append(result, n[idx])
-	}
-	return result
-}
-
-func RandString(n []string, num int) []string {
-	idxs := rand.Perm(len(n))[:num]
-	result := make([]string, 0, num)
-	for _, idx := range idxs {
-		result = append(result, n[idx])
-	}
-	return result
-}
-
-func CRandString(n []string, num int) []string {
-	idxs := frand.Perm(len(n))[:num]
-	result := make([]string, 0, num)
+	result := make([]T, 0, num)
 	for _, idx := range idxs {
 		result = append(result, n[idx])
 	}
