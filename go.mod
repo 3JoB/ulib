@@ -3,7 +3,7 @@ module github.com/3JoB/ulib
 go 1.20
 
 require (
-	github.com/3JoB/go-json v0.10.3
+	github.com/3JoB/go-json v0.10.4
 	github.com/3JoB/go-reflect v1.0.1
 	github.com/3JoB/unsafeConvert v1.4.0
 	github.com/3JoB/vfs v1.0.0
