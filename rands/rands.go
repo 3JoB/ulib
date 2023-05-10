@@ -6,6 +6,9 @@ import (
 )
 
 func Rands[T any](n []T, num int) []T {
+	if len(n) < 1 {
+		return nil
+	}
 	idxs := rand.Perm(len(n))[:num]
 	result := make([]T, 0, num)
 	for _, idx := range idxs {
@@ -15,6 +18,9 @@ func Rands[T any](n []T, num int) []T {
 }
 
 func CRands[T any](n []T, num int) []T {
+	if len(n) < 1 {
+		return nil
+	}
 	idxs := frand.Perm(len(n))[:num]
 	result := make([]T, 0, num)
 	for _, idx := range idxs {
