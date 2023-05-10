@@ -17,7 +17,7 @@ require (
 	github.com/klauspost/compress v1.16.5
 	github.com/saracen/walker v0.1.3
 	github.com/shirou/gopsutil/v3 v3.23.3
-	golang.org/x/crypto v0.8.0
+	golang.org/x/crypto v0.9.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2
 )
