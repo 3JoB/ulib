@@ -7,9 +7,7 @@ import (
 // Use Boyer-Moore's compilation method to find the existence of keywords
 func Compile(keyword string) (*bms.BMSCompile, error) {
 	k := &bms.BMSCompile{}
-	if err := k.Init(keyword); err != nil {
-		return nil, err
-	}
+	k.Init(keyword)
 	return k, nil
 }
 

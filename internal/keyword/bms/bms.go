@@ -13,11 +13,10 @@ type BMSCompile struct {
 // DO NOT USE!
 //
 // This is not a public function!
-func (c *BMSCompile) Init(keyword string) (err error) {
+func (c *BMSCompile) Init(keyword string) {
 	c.Keyword = keyword
 	c.Table = make(map[rune]int)
 	c.Table = bms.BuildSkipTable(keyword)
-	return
 }
 
 func (c *BMSCompile) Find(text string) bool {

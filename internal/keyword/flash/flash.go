@@ -34,7 +34,7 @@ func (f *Flash) Find(text string) bool {
 }
 
 func Search(text string, keyword ...string) bool {
-	if len(keyword) == 0 {
+	if len(keyword) == 0 || text == "" {
 		return false
 	}
 	key := flash.NewKeywords()

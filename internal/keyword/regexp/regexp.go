@@ -3,9 +3,10 @@ package regexp
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/grafana/regexp"
+
+	"github.com/3JoB/ulib/litefmt"
 )
 
 var ErrNotCompiled error = errors.New("not compiled")
@@ -18,16 +19,16 @@ type KeywordCompile struct {
 //
 // This is not a public function!
 func (c *KeywordCompile) Init(keyword string) (err error) {
-	keyword = fmt.Sprintf("(^|\\s)%v(\\s|$)", keyword)
+	keyword = litefmt.Sprint("(^|\\s)", keyword, "(\\s|$)")
 	c.Compile, err = regexp.Compile(keyword)
 	return
 }
 
-func (c *KeywordCompile) Find(text string) (bool, error) {
-	if c.Compile == nil {
-		return false, ErrNotCompiled
+func (c *KeywordCompile) Find(text string) bool {
+	if c.Compile == nil && text == "" {
+		return false
 	}
-	return c.Compile.MatchString(text), nil
+	return c.Compile.MatchString(text)
 }
 
 func Match(text, keyword string) bool {

@@ -26,3 +26,11 @@ func DecodeString(s string) ([]byte, error) {
 	n, err := hex.Decode(src, src)
 	return src[:n], err
 }
+
+func DecodeStringCopy(s string) ([]byte, error) {
+	src := unsafeConvert.BytesReflect(s)
+	csrc := make([]byte, len(src))
+	copy(csrc, src)
+	n, err := hex.Decode(csrc, csrc)
+	return csrc[:n], err
+}
