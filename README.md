@@ -21,4 +21,4 @@ $ go get github.com/3JoB/ulib@v1.30.0
 ```
 
 # License
-This software is distributed under Apache-2.0 license.
+This software is distributed under Apache-2.0 license. :)
