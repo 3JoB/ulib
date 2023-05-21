@@ -6,7 +6,7 @@ import (
 )
 
 func Rands[T any](n []T, num int) []T {
-	if len(n) < 1 {
+	if len(n) < 1 && len(n) <= num {
 		return nil
 	}
 	idxs := rand.Perm(len(n))[:num]
@@ -18,7 +18,7 @@ func Rands[T any](n []T, num int) []T {
 }
 
 func CRands[T any](n []T, num int) []T {
-	if len(n) < 1 {
+	if len(n) < 1 && len(n) <= num {
 		return nil
 	}
 	idxs := frand.Perm(len(n))[:num]
