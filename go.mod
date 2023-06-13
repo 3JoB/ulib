@@ -14,7 +14,7 @@ require (
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/goccy/go-json v0.10.2
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
-	github.com/klauspost/compress v1.16.5
+	github.com/klauspost/compress v1.16.6
 	github.com/saracen/walker v0.1.3
 	github.com/shirou/gopsutil/v3 v3.23.3
 	golang.org/x/crypto v0.8.0
