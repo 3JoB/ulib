@@ -17,7 +17,7 @@ require (
 	github.com/klauspost/compress v1.16.5
 	github.com/saracen/walker v0.1.3
 	github.com/shirou/gopsutil/v3 v3.23.3
-	golang.org/x/crypto v0.8.0
+	golang.org/x/crypto v0.11.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2
 )
@@ -40,6 +40,6 @@ require (
 	go4.org v0.0.0-20201209231011-d4a079459e60 // indirect
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
 	golang.org/x/sync v0.2.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
 )
