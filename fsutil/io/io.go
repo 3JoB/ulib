@@ -18,5 +18,5 @@ func WriteString(w io.Writer, s string) (n int, err error) {
 	if sw, ok := w.(StringWriter); ok {
 		return sw.WriteString(s)
 	}
-	return w.Write(unsafeConvert.BytesReflect(s))
+	return w.Write(unsafeConvert.BytePointer(s))
 }

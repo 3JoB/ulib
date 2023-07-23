@@ -5,8 +5,8 @@ import (
 	"context"
 	"io"
 
-	"github.com/3JoB/go-json"
 	"github.com/3JoB/unsafeConvert"
+	"github.com/goccy/go-json"
 )
 
 type M struct {
@@ -175,7 +175,7 @@ func MarshalIndent(v any, prefix, indent string) *M {
 
 // Return string type data
 func (m *M) String() string {
-	return unsafeConvert.StringReflect(m.data)
+	return unsafeConvert.StringPointer(m.data)
 }
 
 // Return []byte type data
@@ -215,7 +215,7 @@ to make it easier to embed inside other formatted JSON data.
 Although leading space characters (space, tab, carriage return, newline) at the beginning of src are dropped, trailing space characters at the end of src are preserved and copied to dst. For example, if src has no trailing spaces, neither will dst; if src ends in a trailing newline, so will dst.
 */
 func IndentString(dst *bytes.Buffer, src string, prefix string, indent string) error {
-	return Indent(dst, unsafeConvert.BytesReflect(src), prefix, indent)
+	return Indent(dst, unsafeConvert.BytePointer(src), prefix, indent)
 }
 
 // NewEncoder returns a new encoder that writes to w.
@@ -331,13 +331,13 @@ func TUnmarshal[T any](data []byte) (T, error) {
 //	}
 func TUnmarshalString[T any](data string) (T, error) {
 	var t T
-	err := json.Unmarshal(unsafeConvert.BytesReflect(data), &t)
+	err := json.Unmarshal(unsafeConvert.BytePointer(data), &t)
 	return t, err
 }
 
 // Unmarshal For String
 func UnmarshalString(data string, str any) error {
-	return Unmarshal(unsafeConvert.BytesReflect(data), str)
+	return Unmarshal(unsafeConvert.BytePointer(data), str)
 }
 
 // UnmarshalContext parses the JSON-encoded data and stores the result
@@ -353,5 +353,5 @@ func UnmarshalContext(ctx context.Context, data []byte, v any) error {
 //
 // Use String Data.
 func UnmarshalStringContext(ctx context.Context, data string, v any) error {
-	return UnmarshalContext(ctx, unsafeConvert.BytesReflect(data), v)
+	return UnmarshalContext(ctx, unsafeConvert.BytePointer(data), v)
 }

@@ -44,7 +44,7 @@ func BSprint(s ...string) []byte {
 	for _, r := range s {
 		b.WriteString(r)
 	}
-	return unsafeConvert.BytesReflect(b.String())
+	return unsafeConvert.BytePointer(b.String())
 }
 
 func Sprintln(s ...string) string {
@@ -62,7 +62,7 @@ func BSprintln(s ...string) []byte {
 		b.WriteString(r)
 	}
 	b.WriteString("\n")
-	return unsafeConvert.BytesReflect(b.String())
+	return unsafeConvert.BytePointer(b.String())
 }
 
 func Sprintf(format string, a ...any) string {
@@ -70,5 +70,5 @@ func Sprintf(format string, a ...any) string {
 }
 
 func BSprintf(format string, a ...any) []byte {
-	return unsafeConvert.BytesReflect(fmt.Sprintf(format, a...))
+	return unsafeConvert.BytePointer(fmt.Sprintf(format, a...))
 }

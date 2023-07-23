@@ -48,7 +48,7 @@ func (n *nn) Add(w any) (err error) {
 	case []byte:
 		err = n.AddBytes(s)
 	default:
-		_, err = n.writer.Write(unsafeConvert.BytesReflect(w.(string)))
+		_, err = n.writer.Write(unsafeConvert.BytePointer(w.(string)))
 	}
 	if err == nil {
 		if n.maxbuffer == 0 {
@@ -82,7 +82,7 @@ func (n *nn) AddBytes(w []byte) error {
 
 // Write data of type `String` to the buffer
 func (n *nn) AddString(w string) error {
-	_, err := n.writer.Write(unsafeConvert.BytesReflect(w))
+	_, err := n.writer.Write(unsafeConvert.BytePointer(w))
 	return err
 }
 

@@ -1,8 +1,8 @@
 package json
 
 import (
-	"github.com/3JoB/go-json"
 	"github.com/3JoB/unsafeConvert"
+	"github.com/goccy/go-json"
 
 	"github.com/3JoB/ulib/err"
 )
@@ -15,7 +15,7 @@ type RawMessage []byte
 // MarshalJSON returns m as the JSON encoding of m.
 func (m RawMessage) MarshalJSON() ([]byte, error) {
 	if m == nil {
-		return unsafeConvert.BytesReflect("null"), nil
+		return unsafeConvert.BytePointer("null"), nil
 	}
 	return m, nil
 }

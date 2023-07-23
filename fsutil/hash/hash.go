@@ -67,7 +67,7 @@ func New(path string, opt *HashOpt) string {
 		return ""
 	}
 	if opt.HMACKey != "" {
-		hs = hmac.New(h, unsafeConvert.BytesReflect(opt.HMACKey))
+		hs = hmac.New(h, unsafeConvert.BytePointer(opt.HMACKey))
 	} else {
 		hs = h()
 	}

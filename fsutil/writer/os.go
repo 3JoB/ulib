@@ -33,7 +33,7 @@ func (n *oo) Add(w any) (err error) {
 	case []byte:
 		err = n.AddBytes(s)
 	default:
-		_, err = n.os.Write(unsafeConvert.Bytes(w.(string)))
+		_, err = n.os.Write(unsafeConvert.BytePointer(w.(string)))
 	}
 	return
 }
@@ -46,7 +46,7 @@ func (n *oo) AddBytes(w []byte) error {
 
 // Write data of type `String` to the buffer
 func (n *oo) AddString(w string) error {
-	_, err := n.os.Write(unsafeConvert.Bytes(w))
+	_, err := n.os.Write(unsafeConvert.BytePointer(w))
 	return err
 }
 

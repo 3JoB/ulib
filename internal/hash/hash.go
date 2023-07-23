@@ -25,7 +25,7 @@ func (h *Hash) Sum() []byte {
 }
 
 func (h *Hash) String() string {
-	return unsafeConvert.StringReflect(h.Data)
+	return unsafeConvert.StringPointer(h.Data)
 }
 
 func (h *Hash) Bytes() []byte {

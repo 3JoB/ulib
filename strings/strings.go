@@ -36,5 +36,5 @@ func ReadFrom(b strings.Builder, r io.Reader) (n int64, err error) {
 }
 
 func Bytes(b strings.Builder) []byte {
-	return unsafeConvert.BytesReflect(b.String())
+	return unsafeConvert.BytePointer(b.String())
 }

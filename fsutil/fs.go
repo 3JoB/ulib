@@ -137,11 +137,11 @@ func write(file *os.File, d any) error {
 	writer := bufio.NewWriter(file)
 	switch d := d.(type) {
 	case string:
-		writer.Write(unsafeConvert.BytesReflect(d))
+		writer.Write(unsafeConvert.BytePointer(d))
 	case []byte:
 		writer.Write(d)
 	default:
-		writer.Write(unsafeConvert.BytesReflect(d.(string)))
+		writer.Write(unsafeConvert.BytePointer(d.(string)))
 	}
 	writer.Flush()
 	return nil

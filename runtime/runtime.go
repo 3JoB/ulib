@@ -34,7 +34,7 @@ func IsAdmin() bool {
 		return false
 	} else {
 		// sudo -pxxx S S S R
-		r := strings.ReplaceAll(strings.Trim(fmt.Sprint(strings.Split(unsafeConvert.StringReflect(d), "\n")[1:]), "[]"), " ", " ")
+		r := strings.ReplaceAll(strings.Trim(fmt.Sprint(strings.Split(unsafeConvert.StringPointer(d), "\n")[1:]), "[]"), " ", " ")
 		return r == "S S S R "
 	}
 }
@@ -75,7 +75,7 @@ func KernelReleaseID() string {
 	if err != nil {
 		return ""
 	}
-	return unsafeConvert.StringReflect(output)
+	return unsafeConvert.StringPointer(output)
 }
 
 func KernelDisplayVersion() string {
@@ -89,7 +89,7 @@ func KernelDisplayVersion() string {
 	if err != nil {
 		return ""
 	}
-	return unsafeConvert.StringReflect(output)
+	return unsafeConvert.StringPointer(output)
 }
 
 type wsInfo struct {
@@ -121,7 +121,7 @@ func cmd(name string, args []string) string {
 	if err != nil {
 		return ""
 	}
-	return unsafeConvert.StringReflect(output)
+	return unsafeConvert.StringPointer(output)
 }
 
 func winPwshKernelReg(v string) (name string, args []string) {

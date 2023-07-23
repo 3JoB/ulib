@@ -33,8 +33,8 @@ func New64(path string, opt *HashOpt) string {
 }
 
 func hmac64(hs hash.Hash64, key string) string {
-	m := hmac.New(sha512.New, unsafeConvert.BytesReflect(key))
-	if _, err := m.Write(unsafeConvert.BytesReflect(hex.EncodeToString(hs.Sum(nil)))); err != nil {
+	m := hmac.New(sha512.New, unsafeConvert.BytePointer(key))
+	if _, err := m.Write(unsafeConvert.BytePointer(hex.EncodeToString(hs.Sum(nil)))); err != nil {
 		return ""
 	}
 	return hex.EncodeToString(m.Sum(nil))

@@ -13,7 +13,7 @@ import (
 	"github.com/3JoB/ulib/internal/hash"
 )
 
-var pubkey = unsafeConvert.BytesReflect("ulib-hmac")
+var pubkey = unsafeConvert.BytePointer("ulib-hmac")
 
 func c(h func() hs.Hash, data, key []byte) *hash.Hash {
 	if key == nil {

@@ -58,12 +58,12 @@ func MD5(data []byte) *hash.Hash {
 }
 
 func HashBcrypt(password string) []byte {
-	hash, _ := bcrypt.GenerateFromPassword(unsafeConvert.BytesReflect(password), bcrypt.DefaultCost)
+	hash, _ := bcrypt.GenerateFromPassword(unsafeConvert.BytePointer(password), bcrypt.DefaultCost)
 	return hash
 }
 
 func CorrectBcrypt(hash []byte, password string) bool {
-	return bcrypt.CompareHashAndPassword(hash, unsafeConvert.BytesReflect(password)) == nil
+	return bcrypt.CompareHashAndPassword(hash, unsafeConvert.BytePointer(password)) == nil
 }
 
 func MD5Str(data []byte) string {
