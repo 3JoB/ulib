@@ -9,7 +9,7 @@ require (
 	github.com/3JoB/vfs v1.0.0
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
-	github.com/bodgit/sevenzip v1.4.1
+	github.com/bodgit/sevenzip v1.4.3
 	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/goccy/go-json v0.10.2
@@ -30,7 +30,7 @@ require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
-	github.com/pierrec/lz4/v4 v4.1.17 // indirect
+	github.com/pierrec/lz4/v4 v4.1.18 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
 	github.com/shoenig/go-m1cpu v0.1.4 // indirect
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
