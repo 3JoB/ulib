@@ -4,20 +4,49 @@
 package litefmt
 
 import (
+	"bytes"
 	"fmt"
+	strs "strings"
+	"sync"
 
 	"github.com/3JoB/unsafeConvert"
 
 	"github.com/3JoB/ulib/strings"
 )
 
-var builders = strings.NewBuilders()
+var builders = strs.Builder{}
+
+var sprintPool = sync.Pool{
+	New: func() any {
+		return &strs.Builder{}
+	},
+}
 
 func LSprint(s ...string) string {
 	for _, r := range s {
 		builders.WriteString(r)
 	}
 	defer builders.Reset()
+	return builders.String()
+}
+
+func VSprint(s ...string) string {
+	bs := bytes.Buffer{}
+	bs.Grow(len(s))
+	for _, r := range s {
+		bs.WriteString(r)
+	}
+	bs.Reset()
+	return bs.String()
+}
+
+func PSprint(s ...string) string {
+	b := sprintPool.Get().(*strs.Builder)
+	for _, r := range s {
+		b.WriteString(r)
+	}
+	defer b.Reset()
+	defer sprintPool.Put(b)
 	return builders.String()
 }
 

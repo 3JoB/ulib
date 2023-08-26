@@ -7,23 +7,23 @@ import (
 	"github.com/3JoB/unsafeConvert"
 )
 
-func NewBuilder(b []byte) strings.Builder {
-	builder := strings.Builder{}
+func NewBuilder(b []byte) *strings.Builder {
+	builder := &strings.Builder{}
 	builder.Write(b)
 	return builder
 }
 
-func NewBuilders() strings.Builder {
-	return strings.Builder{}
+func NewBuilders() *strings.Builder {
+	return &strings.Builder{}
 }
 
-func NewBuilderString(s string) strings.Builder {
-	builder := strings.Builder{}
+func NewBuilderString(s string) *strings.Builder {
+	builder := &strings.Builder{}
 	builder.WriteString(s)
 	return builder
 }
 
-func ReadFrom(b strings.Builder, r io.Reader) (n int64, err error) {
+func ReadFrom(b *strings.Builder, r io.Reader) (n int64, err error) {
 	buf := make([]byte, b.Cap())
 	for {
 		rn, err := r.Read(buf)
@@ -35,6 +35,6 @@ func ReadFrom(b strings.Builder, r io.Reader) (n int64, err error) {
 	}
 }
 
-func Bytes(b strings.Builder) []byte {
+func Bytes(b *strings.Builder) []byte {
 	return unsafeConvert.BytePointer(b.String())
 }
