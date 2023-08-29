@@ -75,11 +75,7 @@ func OpenRead(v string) ([]byte, error) {
 		return nil, err
 	}
 	defer o.Close()
-	if data, err := ReadAll(o); err != nil {
-		return nil, err
-	} else {
-		return data, err
-	}
+	return ReadAll(o)
 }
 
 func CleanFile(path string) error {
@@ -143,8 +139,8 @@ func write(file *os.File, d any) error {
 	default:
 		writer.Write(unsafeConvert.BytePointer(d.(string)))
 	}
-	writer.Flush()
-	return nil
+
+	return writer.Flush()
 }
 
 func Mkdir(path string, mode ...fs.FileMode) error {
