@@ -11,46 +11,6 @@ import (
 	"github.com/3JoB/ulib/litefmt"
 )
 
-func TestLSprint(t *testing.T) {
-	type args struct {
-		s []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := litefmt.LSprint(tt.args.s...); got != tt.want {
-				t.Errorf("LSprint() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestTSprint(t *testing.T) {
-	type args struct {
-		s []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := litefmt.TSprint(tt.args.s...); got != tt.want {
-				t.Errorf("TSprint() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func TestSprint(t *testing.T) {
 	type args struct {
 		s []string
@@ -71,26 +31,6 @@ func TestSprint(t *testing.T) {
 	}
 }
 
-func TestBSprint(t *testing.T) {
-	type args struct {
-		s []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want []byte
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := litefmt.BSprint(tt.args.s...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("BSprint() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func TestSprintln(t *testing.T) {
 	type args struct {
 		s []string
@@ -106,26 +46,6 @@ func TestSprintln(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := litefmt.Sprintln(tt.args.s...); got != tt.want {
 				t.Errorf("Sprintln() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestBSprintln(t *testing.T) {
-	type args struct {
-		s []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want []byte
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := litefmt.BSprintln(tt.args.s...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("BSprintln() = %v, want %v", got, tt.want)
 			}
 		})
 	}

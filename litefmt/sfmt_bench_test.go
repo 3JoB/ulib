@@ -119,22 +119,6 @@ func Benchmark_LiteFMT_Sprint(b *testing.B) {
 	}
 }
 
-func Benchmark_LiteFMT_VSprint(b *testing.B) {
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		_ = litefmt.VSprint(dc...)
-	}
-}
-
-func Benchmark_LiteFMT_LSprint(b *testing.B) {
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		_ = litefmt.LSprint(dc...)
-	}
-}
-
 func Benchmark_LiteFMT_PSprint(b *testing.B) {
 	b.ResetTimer()
 
@@ -143,10 +127,11 @@ func Benchmark_LiteFMT_PSprint(b *testing.B) {
 	}
 }
 
-func Benchmark_LITEFMT_TSprint(b *testing.B) {
+func Benchmark_LiteFMT_PSprintP(b *testing.B) {
 	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
-		_ = litefmt.TSprint(dc...)
+		_ = litefmt.PSprintP(dc...)
 	}
 }
 
@@ -177,6 +162,22 @@ func Benchmark_L_LITEFMT_Sprint(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		_ = litefmt.Sprint(ll...)
+	}
+}
+
+func Benchmark_L_LiteFMT_PSprint(b *testing.B) {
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_ = litefmt.PSprint(ll...)
+	}
+}
+
+func Benchmark_L_LiteFMT_PSprintP(b *testing.B) {
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_ = litefmt.PSprintP(ll...)
 	}
 }
 

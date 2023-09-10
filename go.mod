@@ -13,6 +13,7 @@ require (
 	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/goccy/go-json v0.10.2
+	github.com/goccy/go-reflect v1.2.0
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
 	github.com/klauspost/compress v1.16.7
 	github.com/saracen/walker v0.1.3
