@@ -5,15 +5,10 @@ package litefmt
 
 import (
 	"fmt"
-	"sync"
 
 	"github.com/3JoB/unsafeConvert"
 
 	"github.com/3JoB/ulib/strings"
-)
-
-var (
-	bytesPool sync.Pool
 )
 
 // The most primitive Sprint implementation, only allows string values to pass.

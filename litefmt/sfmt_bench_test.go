@@ -106,7 +106,7 @@ var dc []string = []string{
 	"ccccc",
 }
 
-var ll []string = []string{
+var ll = []string{
 	"aavewtrhjvtrvtrs",
 	"aghasbvaewibavcwe",
 }

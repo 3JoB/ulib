@@ -2,7 +2,6 @@ package litefmt
 
 import (
 	"bytes"
-	"io"
 	"os"
 	"runtime"
 	"strings"
@@ -16,11 +15,7 @@ func Print(s ...string) {
 	for _, r := range s {
 		b.WriteString(r)
 	}
-	if IsInTest() {
-		io.Discard.Write(b.Bytes())
-	} else {
-		os.Stdout.Write(b.Bytes())
-	}
+	os.Stdout.Write(b.Bytes())
 }
 
 func PPrint(s ...string) {
@@ -29,11 +24,8 @@ func PPrint(s ...string) {
 		b.WriteString(r)
 	}
 	defer psp_release(b)
-	if IsInTest() {
-		io.Discard.Write(b.Bytes())
-	} else {
-		os.Stdout.Write(b.Bytes())
-	}
+	// io.Discard.Write(b.Bytes())
+	os.Stdout.Write(b.Bytes())
 }
 
 func Println(s ...string) {
@@ -42,11 +34,7 @@ func Println(s ...string) {
 		b.WriteString(r)
 	}
 	b.WriteString("\n")
-	if IsInTest() {
-		io.Discard.Write(b.Bytes())
-	} else {
-		os.Stdout.Write(b.Bytes())
-	}
+	os.Stdout.Write(b.Bytes())
 }
 
 func PPrintln(s ...string) {
@@ -56,11 +44,7 @@ func PPrintln(s ...string) {
 	}
 	b.WriteString("\n")
 	defer psp_release(b)
-	if IsInTest() {
-		io.Discard.Write(b.Bytes())
-	} else {
-		os.Stdout.Write(b.Bytes())
-	}
+	os.Stdout.Write(b.Bytes())
 }
 
 func IsInTest() bool {

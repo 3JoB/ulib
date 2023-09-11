@@ -2,6 +2,15 @@ package litefmt
 
 import (
 	"bytes"
+	"sync"
+)
+
+var (
+	bytesPool = sync.Pool{
+		New: func() any {
+			return &bytes.Buffer{}
+		},
+	}
 )
 
 func psp_acquire() *bytes.Buffer {
