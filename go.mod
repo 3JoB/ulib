@@ -5,7 +5,7 @@ go 1.21.0
 require (
 	github.com/3JoB/go-json v0.10.4
 	github.com/3JoB/go-reflect v1.0.2
-	github.com/3JoB/unsafeConvert v1.5.0
+	github.com/3JoB/unsafeConvert v1.6.0
 	github.com/3JoB/vfs v1.0.0
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
