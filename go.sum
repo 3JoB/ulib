@@ -42,6 +42,8 @@ github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWR
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
 github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
+github.com/cornelk/hashmap v1.0.8 h1:nv0AWgw02n+iDcawr5It4CjQIAcdMMKRrs10HOJYlrc=
+github.com/cornelk/hashmap v1.0.8/go.mod h1:RfZb7JO3RviW/rT6emczVuC/oxpdz4UsSB2LJSclR1k=
 github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206 h1:xCM/A0kr8HgAUDRVIxmSjiArWToQrlJ6MQ0VLgUNUpg=
 github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206/go.mod h1:1PkVluDmW+Z1O29Fe5zPkX+D7bu4oe/kNh1SbAYvhdE=
 github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62 h1:3RoRVoZEWanetr2l9GtLLBMTkS7zcuYXN7FetCBCVww=

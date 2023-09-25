@@ -10,6 +10,7 @@ require (
 	github.com/JNyaa/headers v0.1.0
 	github.com/andybalholm/brotli v1.0.5
 	github.com/bodgit/sevenzip v1.4.3
+	github.com/cornelk/hashmap v1.0.8
 	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/goccy/go-json v0.10.2
