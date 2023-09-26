@@ -59,12 +59,12 @@ func MD5S(data, key string) *hash.Hash {
 // Its generic security strength is 128 bits against all attacks
 // if at least 32 bytes of its output are used.
 func Shake128S(data string, bits int) string {
-	return Shake128(unsafeConvert.BytePointer(data), bits)
+	return unsafeConvert.StringSlice(Shake128(unsafeConvert.ByteSlice(data), bits))
 }
 
 // NewShake256 creates a new SHAKE256 variable-output-length ShakeHash.
 // Its generic security strength is 256 bits against all attacks
 // if at least 64 bytes of its output are used.
 func Shake256S(data string, bits int) string {
-	return Shake256(unsafeConvert.BytePointer(data), bits)
+	return unsafeConvert.StringSlice(Shake256(unsafeConvert.ByteSlice(data), bits))
 }

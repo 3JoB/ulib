@@ -1,13 +1,11 @@
 package hmac
 
 import (
-	"bytes"
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha256"
 	"crypto/sha512"
 	hs "hash"
-	"sync"
 
 	"github.com/3JoB/unsafeConvert"
 	"golang.org/x/crypto/sha3"
@@ -17,17 +15,7 @@ import (
 )
 
 var (
-	pubkey       = unsafeConvert.BytePointer("ulib-hmac")
-	shake128pool = &sync.Pool{
-		New: func() any {
-			return sha3.NewShake128()
-		},
-	}
-	shake256pool = &sync.Pool{
-		New: func() any {
-			return sha3.NewShake256()
-		},
-	}
+	pubkey = unsafeConvert.BytePointer("ulib-hmac")
 )
 
 func c(h func() hs.Hash, data, key []byte) *hash.Hash {
@@ -84,8 +72,8 @@ func MD5(data, key []byte) *hash.Hash {
 // NewShake128 creates a new SHAKE128 variable-output-length ShakeHash.
 // Its generic security strength is 128 bits against all attacks
 // if at least 32 bytes of its output are used.
-func Shake128(data []byte, bits int) string {
-	shake := shake128pool.Get().(sha3.ShakeHash)
+func Shake128(data []byte, bits int) []byte {
+	shake := hash.AcquireShake128()
 	shake.Write(data)
 	if bits > 128 {
 		bits = 128
@@ -94,27 +82,23 @@ func Shake128(data []byte, bits int) string {
 	}
 	h := make([]byte, bits)
 	shake.Read(h)
-	shake.Reset()
-	shake128pool.Put(shake)
-	return hex.EncodeToString(h)
+	hash.ReleaseShake128(shake)
+	return hex.Encode(h)
 }
 
 // NewShake256 creates a new SHAKE256 variable-output-length ShakeHash.
 // Its generic security strength is 256 bits against all attacks
 // if at least 64 bytes of its output are used.
-func Shake256(data []byte, bits int) string {
-	shake := shake256pool.Get().(sha3.ShakeHash)
+func Shake256(data []byte, bits int) []byte {
+	shake := hash.AcquireShake256()
 	shake.Write(data)
 	if bits > 256 {
 		bits = 256
 	} else if bits < 64 {
 		bits = 64
 	}
-	var g bytes.Buffer
 	h := make([]byte, bits)
-	g.ReadFrom(shake)
 	shake.Read(h)
-	shake.Reset()
-	shake256pool.Put(shake)
-	return hex.EncodeToString(h)
+	hash.ReleaseShake256(shake)
+	return hex.Encode(h)
 }

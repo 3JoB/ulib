@@ -6,11 +6,25 @@ import (
 	"github.com/3JoB/unsafeConvert"
 )
 
+// Encode encodes src into EncodedLen(len(src)) bytes of dst. As a convenience,
+// it returns the number of bytes written to dst, but this value is always
+// EncodedLen(len(src)). Encode implements hexadecimal encoding.
+func Encode(src []byte) []byte {
+	dst := make([]byte, len(src)*2)
+	hex.Encode(dst, src)
+	return dst
+}
+
 // EncodeToString returns the hexadecimal encoding of src.
 func EncodeToString(src []byte) string {
 	dst := make([]byte, len(src)*2)
 	hex.Encode(dst, src)
 	return unsafeConvert.StringPointer(dst)
+}
+
+func Decode(b []byte) ([]byte, error) {
+	n, err := hex.Decode(b, b)
+	return b[:n], err
 }
 
 // DecodeString returns the bytes represented by the hexadecimal string s.
