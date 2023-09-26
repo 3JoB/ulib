@@ -72,8 +72,8 @@ func MD5(data, key []byte) *hash.Hash {
 // NewShake128 creates a new SHAKE128 variable-output-length ShakeHash.
 // Its generic security strength is 128 bits against all attacks
 // if at least 32 bytes of its output are used.
-func Shake128(data []byte, bits int) []byte {
-	shake := hash.AcquireShake128()
+func Shake128(data []byte, bits int) string {
+	shake := sha3.NewShake128()
 	shake.Write(data)
 	if bits > 128 {
 		bits = 128
@@ -82,15 +82,14 @@ func Shake128(data []byte, bits int) []byte {
 	}
 	h := make([]byte, bits)
 	shake.Read(h)
-	hash.ReleaseShake128(shake)
-	return hex.Encode(h)
+	return hex.EncodeToString(h)
 }
 
 // NewShake256 creates a new SHAKE256 variable-output-length ShakeHash.
 // Its generic security strength is 256 bits against all attacks
 // if at least 64 bytes of its output are used.
-func Shake256(data []byte, bits int) []byte {
-	shake := hash.AcquireShake256()
+func Shake256(data []byte, bits int) string {
+	shake := sha3.NewShake256()
 	shake.Write(data)
 	if bits > 256 {
 		bits = 256
@@ -99,6 +98,5 @@ func Shake256(data []byte, bits int) []byte {
 	}
 	h := make([]byte, bits)
 	shake.Read(h)
-	hash.ReleaseShake256(shake)
-	return hex.Encode(h)
+	return hex.EncodeToString(h)
 }

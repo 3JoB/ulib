@@ -19,7 +19,7 @@ func Encode(src []byte) []byte {
 func EncodeToString(src []byte) string {
 	dst := make([]byte, len(src)*2)
 	hex.Encode(dst, src)
-	return unsafeConvert.StringSlice(dst)
+	return unsafeConvert.StringPointer(dst)
 }
 
 func Decode(b []byte) ([]byte, error) {
@@ -34,7 +34,7 @@ func Decode(b []byte) ([]byte, error) {
 // If the input is malformed, DecodeString returns
 // the bytes decoded before the error.
 func DecodeString(s string) ([]byte, error) {
-	src := unsafeConvert.ByteSlice(s)
+	src := unsafeConvert.BytePointer(s)
 	// We can use the source slice itself as the destination
 	// because the decode loop increments by one and then the 'seen' byte is not used anymore.
 	n, err := hex.Decode(src, src)
@@ -42,7 +42,7 @@ func DecodeString(s string) ([]byte, error) {
 }
 
 func DecodeStringCopy(s string) ([]byte, error) {
-	src := unsafeConvert.ByteSlice(s)
+	src := unsafeConvert.BytePointer(s)
 	csrc := make([]byte, len(src))
 	copy(csrc, src)
 	n, err := hex.Decode(csrc, csrc)
