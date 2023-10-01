@@ -8,7 +8,7 @@ import (
 
 func main() {
 	u := ua.GenerateUA(ua.Config{
-		SoftInfo: "ULIB/v1.34.0",
+		SoftInfo: "ULIB/v1.36.2",
 	})
 	fmt.Println(u)
 }

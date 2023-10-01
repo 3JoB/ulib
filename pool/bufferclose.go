@@ -1,24 +1,11 @@
 package pool
 
-import (
-	"bytes"
-	"sync"
-)
-
-type BufferClose struct {
-	*bytes.Buffer
-}
-
-var bufferClosePool = &sync.Pool{
-	New: newBufferClose,
-}
-
-func newBufferClose() any {
-	return &BufferClose{}
-}
-
 func NewBufferClose() *BufferClose {
-	return bufferClosePool.Get().(*BufferClose)
+	r := bufferClosePool.Get()
+	if r == nil {
+		return &BufferClose{}
+	}
+	return r.(*BufferClose)
 }
 
 func (b *BufferClose) Close() error {
