@@ -16,7 +16,7 @@ require (
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
 	github.com/klauspost/compress v1.17.0
 	github.com/saracen/walker v0.1.3
-	github.com/shirou/gopsutil/v3 v3.23.8
+	github.com/shirou/gopsutil/v3 v3.23.9
 	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
 	golang.org/x/crypto v0.13.0
 	lukechampine.com/frand v1.4.2
