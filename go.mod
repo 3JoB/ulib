@@ -3,7 +3,6 @@ module github.com/3JoB/ulib
 go 1.21.0
 
 require (
-	github.com/3JoB/go-json v0.10.4
 	github.com/3JoB/go-reflect v1.0.2
 	github.com/3JoB/unsafeConvert v1.6.0
 	github.com/3JoB/vfs v1.0.0
@@ -13,12 +12,12 @@ require (
 	github.com/cornelk/hashmap v1.0.8
 	github.com/cubicdaiya/bms v0.0.0-20220406120216-977ebe24a206
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
-	github.com/goccy/go-json v0.10.2
 	github.com/goccy/go-reflect v1.2.0
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
 	github.com/klauspost/compress v1.17.0
 	github.com/saracen/walker v0.1.3
 	github.com/shirou/gopsutil/v3 v3.23.8
+	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
 	golang.org/x/crypto v0.13.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2

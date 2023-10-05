@@ -25,11 +25,7 @@ func NewBuffer() *bytes.Buffer {
 	return r.(*bytes.Buffer)
 }
 
-func ReleaseBuffer(b *bytes.Buffer) (err error) {
-	if b == nil {
-		return ErrPtr
-	}
+func ReleaseBuffer(b *bytes.Buffer) {
 	b.Reset()
 	bufferPool.Put(b)
-	return
 }

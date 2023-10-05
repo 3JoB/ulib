@@ -28,8 +28,7 @@ import (
 	"github.com/klauspost/compress/flate"
 	"github.com/klauspost/compress/gzip"
 	"github.com/klauspost/compress/zstd"
-
-	"github.com/3JoB/ulib/json"
+	"github.com/sugawarayuuta/sonnet"
 )
 
 var decoder, _ = zstd.NewReader(nil, zstd.WithDecoderConcurrency(0))
@@ -75,7 +74,7 @@ func (u *update) Error() error {
 
 // Directly bind the structure
 func (u *update) Bind(v any) error {
-	return json.Unmarshal(u.data, v)
+	return sonnet.Unmarshal(u.data, v)
 }
 
 func (u *update) unpack(r *http.Response) ([]byte, error) {

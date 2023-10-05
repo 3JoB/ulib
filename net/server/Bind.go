@@ -4,8 +4,7 @@ import (
 	"io"
 
 	"github.com/3JoB/unsafeConvert"
-
-	"github.com/3JoB/ulib/json"
+	"github.com/sugawarayuuta/sonnet"
 )
 
 /*
@@ -14,7 +13,7 @@ server.Bind(c.Request.Body, &v)
 */
 func Bind(r io.ReadCloser, v any) {
 	data, _ := io.ReadAll(r)
-	json.Unmarshal(data, v)
+	sonnet.Unmarshal(data, v)
 }
 
 func Body(r io.ReadCloser, l int64) string {
