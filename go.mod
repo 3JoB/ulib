@@ -18,7 +18,7 @@ require (
 	github.com/saracen/walker v0.1.3
 	github.com/shirou/gopsutil/v3 v3.23.8
 	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
-	golang.org/x/crypto v0.13.0
+	golang.org/x/crypto v0.14.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2
 )
@@ -41,6 +41,6 @@ require (
 	go4.org v0.0.0-20230225012048-214862532bf5 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/sync v0.2.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 )
