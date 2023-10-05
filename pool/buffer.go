@@ -7,7 +7,7 @@ import (
 )
 
 type BufferClose struct {
-	*bytes.Buffer
+	bytes.Buffer
 }
 
 var (
