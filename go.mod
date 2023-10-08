@@ -1,9 +1,8 @@
 module github.com/3JoB/ulib
 
-go 1.21.0
+go 1.21.1
 
 require (
-	github.com/3JoB/go-reflect v1.0.2
 	github.com/3JoB/unsafeConvert v1.6.0
 	github.com/3JoB/vfs v1.0.0
 	github.com/JNyaa/headers v0.1.0
@@ -15,10 +14,9 @@ require (
 	github.com/goccy/go-reflect v1.2.0
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
 	github.com/klauspost/compress v1.17.0
-	github.com/saracen/walker v0.1.3
-	github.com/shirou/gopsutil/v3 v3.23.8
+	github.com/shirou/gopsutil/v3 v3.23.9
 	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
-	golang.org/x/crypto v0.13.0
+	golang.org/x/crypto v0.14.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2
 )
@@ -27,10 +25,10 @@ require (
 	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
 	github.com/bodgit/plumbing v1.3.0 // indirect
 	github.com/bodgit/windows v1.0.1 // indirect
-	github.com/go-ole/go-ole v1.2.6 // indirect
+	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
+	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
 	github.com/pierrec/lz4/v4 v4.1.18 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
@@ -39,8 +37,7 @@ require (
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
 	go4.org v0.0.0-20230225012048-214862532bf5 // indirect
-	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
-	golang.org/x/sync v0.2.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 )

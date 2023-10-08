@@ -6,7 +6,7 @@ package litefmt_test
 import (
 	"testing"
 
-	"github.com/3JoB/go-reflect"
+	"github.com/goccy/go-reflect"
 
 	"github.com/3JoB/ulib/litefmt"
 )

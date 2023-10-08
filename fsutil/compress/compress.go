@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/klauspost/compress/zip"
 
 	"github.com/3JoB/ulib/err"
 	"github.com/3JoB/ulib/fsutil"
-	ph "github.com/3JoB/ulib/path"
 )
 
 var ErrTargetType error = &err.Err{Op: "ulib.fsutil.compress", Err: "The target directory type is file"}
@@ -23,8 +23,8 @@ func ExtractAndWriteFile(destination string, f *zip.File) error {
 	}
 	defer rc.Close()
 
-	path := ph.Join(destination, f.Name)
-	if !strings.HasPrefix(path, ph.Clean(destination)+string(os.PathSeparator)) {
+	path := filepath.Join(destination, f.Name)
+	if !strings.HasPrefix(path, filepath.Clean(destination)+string(os.PathSeparator)) {
 		return fmt.Errorf("%s: illegal file path", path)
 	}
 
@@ -40,7 +40,9 @@ func ExtractAndWriteFile(destination string, f *zip.File) error {
 				return err
 			}
 		}
-		if err := fsutil.Mkdir(ph.DirPath(path), f.Mode()); err != nil {
+		dir, _ := filepath.Split(path)
+		dir = filepath.Clean(dir)
+		if err := fsutil.Mkdir(dir, f.Mode()); err != nil {
 			return err
 		}
 

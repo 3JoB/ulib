@@ -3,7 +3,7 @@ package hash_test
 import (
 	"testing"
 
-	"github.com/3JoB/go-reflect"
+	"github.com/goccy/go-reflect"
 
 	hs "github.com/3JoB/ulib/hash"
 	"github.com/3JoB/ulib/internal/hash"

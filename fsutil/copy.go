@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
+	"path/filepath"
 	_ "unsafe"
 
 	"github.com/3JoB/ulib/err"
-	"github.com/3JoB/ulib/path"
 )
 
 func copyTo(src, dst string) error {
@@ -51,7 +52,7 @@ func Move(src, dst string) error {
 }
 
 func CopyAll(src, dst string) error {
-	src, dst = path.Clean(src), path.Clean(dst)
+	src, dst = filepath.Clean(src), filepath.Clean(dst)
 	if IsDir(src) {
 		if !IsDir(dst) {
 			if IsFile(dst) {
