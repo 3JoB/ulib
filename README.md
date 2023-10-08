@@ -17,7 +17,7 @@
 
 **Usage**
 ```sh
-$ go get github.com/3JoB/ulib@v1.37.0
+$ go get github.com/3JoB/ulib@v1.38.0
 ```
 
 # License
