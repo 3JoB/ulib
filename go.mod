@@ -1,6 +1,6 @@
 module github.com/3JoB/ulib
 
-go 1.21.1
+go 1.21.3
 
 require (
 	github.com/3JoB/unsafeConvert v1.6.0

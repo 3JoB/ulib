@@ -1,11 +1,7 @@
 package pool
 
 func NewBufferClose() *BufferClose {
-	r := bufferClosePool.Get()
-	if r == nil {
-		return &BufferClose{}
-	}
-	return r.(*BufferClose)
+	return bufferClosePool.Get().(*BufferClose)
 }
 
 func (b *BufferClose) Close() error {
