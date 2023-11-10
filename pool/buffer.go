@@ -11,7 +11,7 @@ type BufferClose struct {
 }
 
 var (
-	bufferPool      = &sync.Pool{
+	bufferPool = &sync.Pool{
 		New: func() any {
 			return &bytes.Buffer{}
 		},

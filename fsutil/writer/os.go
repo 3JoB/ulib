@@ -4,8 +4,6 @@ import (
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
-
-	"github.com/3JoB/ulib/fsutil"
 )
 
 type oo struct {
@@ -18,7 +16,7 @@ type oo struct {
 func NewOSWriter(path string) (*oo, error) {
 	n := &oo{}
 	var err error
-	n.os, err = fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
+	n.os, err = os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
 	}

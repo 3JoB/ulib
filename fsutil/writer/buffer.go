@@ -6,8 +6,6 @@ import (
 	"os"
 
 	"github.com/3JoB/unsafeConvert"
-
-	"github.com/3JoB/ulib/fsutil"
 )
 
 type nn struct {
@@ -23,7 +21,7 @@ type nn struct {
 func NewWriter(path string) (*nn, error) {
 	n := &nn{}
 	var err error
-	n.os, err = fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
+	n.os, err = os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
 	}
@@ -32,12 +30,12 @@ func NewWriter(path string) (*nn, error) {
 }
 
 func (n *nn) CopyTo(to io.Reader) (written int64, err error) {
-	return fsutil.IoCopy(n.writer, to)
+	return io.Copy(n.writer, to)
 }
 
 func (n *nn) CopyIn(in io.Writer) (written int64, err error) {
 	n.Flush()
-	return fsutil.IoCopy(in, n.os)
+	return io.Copy(in, n.os)
 }
 
 // Write data of type `any` to the buffer (automatically checked)

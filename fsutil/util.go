@@ -15,7 +15,7 @@ func IsFile(path string) bool {
 	if !IsExist(path) {
 		return false
 	}
-	if i, _ := Stat(path); i.IsDir() {
+	if i, _ := os.Stat(path); i.IsDir() {
 		return false
 	}
 	return true
@@ -25,7 +25,7 @@ func IsFile(path string) bool {
 //
 // **When the target does not exist or other errors occur, it will return `false`**
 func IsDir(path string) bool {
-	info, err := Stat(path)
+	info, err := os.Stat(path)
 	if err != nil {
 		return false
 	}
@@ -34,7 +34,7 @@ func IsDir(path string) bool {
 
 // This function checks if the target exists.
 func IsExist(path string) bool {
-	if _, err := Stat(path); err == nil {
+	if _, err := os.Stat(path); err == nil {
 		return true
 	}
 	// return os.IsNotExist(err)

@@ -1,7 +1,6 @@
 package litefmt
 
 import (
-	"bytes"
 	"os"
 	"runtime"
 	"strings"
@@ -11,14 +10,6 @@ import (
 )
 
 func Print(s ...string) {
-	var b bytes.Buffer
-	for _, r := range s {
-		b.WriteString(r)
-	}
-	os.Stdout.Write(b.Bytes())
-}
-
-func PPrint(s ...string) {
 	b := psp_acquire()
 	for _, r := range s {
 		b.WriteString(r)
@@ -29,15 +20,6 @@ func PPrint(s ...string) {
 }
 
 func Println(s ...string) {
-	var b bytes.Buffer
-	for _, r := range s {
-		b.WriteString(r)
-	}
-	b.WriteString("\n")
-	os.Stdout.Write(b.Bytes())
-}
-
-func PPrintln(s ...string) {
 	b := psp_acquire()
 	for _, r := range s {
 		b.WriteString(r)

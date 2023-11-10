@@ -35,7 +35,7 @@ func (z Zip) Create(source string, files []string) error {
 	if fsutil.IsExist(source) {
 		fsutil.Remove(source)
 	}
-	fs, err := fsutil.OpenFile(source, os.O_CREATE|os.O_WRONLY, 0644)
+	fs, err := os.OpenFile(source, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func (z Zip) Create(source string, files []string) error {
 	w.RegisterCompressor(zs.ZipMethodPKWare, encomp)
 	w.RegisterCompressor(zs.ZipMethodWinZip, encomp)
 	for _, f := range files {
-		ofs, err := fsutil.OpenFile(f, os.O_RDWR, 0755)
+		ofs, err := os.OpenFile(f, os.O_RDWR, 0755)
 		if err != nil {
 			return err
 		}

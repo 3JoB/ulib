@@ -46,7 +46,7 @@ func ExtractAndWriteFile(destination string, f *zip.File) error {
 			return err
 		}
 
-		f, err := fsutil.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 		if err != nil {
 			return err
 		}

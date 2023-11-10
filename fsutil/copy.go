@@ -6,7 +6,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	_ "unsafe"
 
 	"github.com/3JoB/ulib/err"
 )
@@ -15,11 +14,11 @@ func copyTo(src, dst string) error {
 	if src == dst {
 		return ErrMethods
 	}
-	s, err := OpenFile(src, os.O_RDONLY, 0666)
+	s, err := os.OpenFile(src, os.O_RDONLY, 0666)
 	if err != nil {
 		return err
 	}
-	d, err := OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	d, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if err != nil {
 		return err
 	}
@@ -28,20 +27,13 @@ func copyTo(src, dst string) error {
 
 	sb, db := ReaderWriter(s, d)
 
-	if _, err := IoCopy(db, sb); err != nil {
+	if _, err := io.Copy(db, sb); err != nil {
 		return err
 	}
 	if err := db.Flush(); err != nil {
 		return err
 	}
 	return err
-}
-
-//go:linkname Copy copyTo
-func Copy(src, dst string) error
-
-func IoCopy(dst io.Writer, src io.Reader) (written int64, err error) {
-	return io.Copy(dst, src)
 }
 
 func Move(src, dst string) error {
