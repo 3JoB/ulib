@@ -17,9 +17,7 @@ func Encode(src []byte) []byte {
 
 // EncodeToString returns the hexadecimal encoding of src.
 func EncodeToString(src []byte) string {
-	dst := make([]byte, len(src)*2)
-	hex.Encode(dst, src)
-	return unsafeConvert.StringPointer(dst)
+	return unsafeConvert.StringPointer(Encode(src))
 }
 
 func Decode(b []byte) ([]byte, error) {
