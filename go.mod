@@ -10,7 +10,7 @@ require (
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/goccy/go-reflect v1.2.0
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
-	github.com/klauspost/compress v1.17.4
+	github.com/klauspost/compress v1.17.6
 	golang.org/x/crypto v0.18.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2
