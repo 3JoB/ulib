@@ -11,7 +11,7 @@ require (
 	github.com/goccy/go-reflect v1.2.0
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
 	github.com/klauspost/compress v1.17.6
-	golang.org/x/crypto v0.18.0
+	golang.org/x/crypto v0.19.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2
 )
@@ -27,6 +27,6 @@ require (
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	go4.org v0.0.0-20230225012048-214862532bf5 // indirect
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
-	golang.org/x/sys v0.16.0 // indirect
+	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )
