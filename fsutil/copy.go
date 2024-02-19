@@ -6,8 +6,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-
-	"github.com/3JoB/ulib/err"
 )
 
 func copyTo(src, dst string) error {
@@ -48,7 +46,7 @@ func CopyAll(src, dst string) error {
 	if IsDir(src) {
 		if !IsDir(dst) {
 			if IsFile(dst) {
-				return &err.Err{Op: "CopyAll", Err: fmt.Sprintf("cannot copy directory to file src=%v dst=%v", src, dst)}
+				return fmt.Errorf("cannot copy directory to file src=%v dst=%v", src, dst)
 			}
 		}
 		s, err := os.Stat(src)

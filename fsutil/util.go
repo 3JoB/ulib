@@ -15,7 +15,7 @@ func IsFile(path string) bool {
 	if !IsExist(path) {
 		return false
 	}
-	if i, _ := os.Stat(path); i.IsDir() {
+	if IsDir(path) {
 		return false
 	}
 	return true
