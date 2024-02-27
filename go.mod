@@ -11,7 +11,7 @@ require (
 	github.com/goccy/go-reflect v1.2.0
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd
 	github.com/klauspost/compress v1.17.6
-	golang.org/x/crypto v0.19.0
+	golang.org/x/crypto v0.20.0
 	lukechampine.com/frand v1.4.2
 	pgregory.net/rand v1.0.2
 )
