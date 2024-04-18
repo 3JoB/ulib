@@ -13,8 +13,8 @@ func main() {
 	r := rands.Rands(data, 3)
 	fmt.Println(r)
 	sdata := []string{"a", "b", "c", "d", "e", "f", "g"}
-	cs := rands.CRandString(sdata, 3)
+	cs := rands.CRands(sdata, 3)
 	fmt.Println(cs)
-	s := rands.RandString(sdata, 3)
+	s := rands.Rands(sdata, 3)
 	fmt.Println(s)
 }

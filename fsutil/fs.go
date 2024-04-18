@@ -41,6 +41,10 @@ func Open(v string) (*os.File, error) {
 	return os.OpenFile(v, O_RDONLY, 0)
 }
 
+func OpenWrite(v string) (*os.File, error) {
+	return os.OpenFile(v, os.O_RDWR, 0)
+}
+
 func OpenRead(v string) ([]byte, error) {
 	o, err := Open(v)
 	if err != nil {

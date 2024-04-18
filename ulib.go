@@ -2,8 +2,8 @@ package ulib
 
 const (
 	// ULIB Version (int64)
-	Version int64 = 13900
+	Version int64 = 14000
 
 	// ULIB Version (String)
-	VersionLong string = "v1.39.0"
+	VersionLong string = "v1.40.0"
 )

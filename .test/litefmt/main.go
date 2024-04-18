@@ -4,7 +4,7 @@ import (
 	"github.com/3JoB/ulib/litefmt"
 )
 
-var dc []string = []string{
+var dc = []string{
 	"aaaaa",
 	"bbbbb",
 	"ccccc",
@@ -64,14 +64,14 @@ var dc []string = []string{
 }
 
 func main() {
-	e := litefmt.PSprint(dc...)
+	e := litefmt.Sprint(dc...)
 	litefmt.Println(e)
-	e1 := litefmt.PSprint(dc...)
+	e1 := litefmt.Sprint(dc...)
 	litefmt.Println(e1)
-	e2 := litefmt.PSprint(dc...)
+	e2 := litefmt.Sprint(dc...)
 	litefmt.Println(e2)
-	e3 := litefmt.PSprint(dc...)
+	e3 := litefmt.Sprint(dc...)
 	litefmt.Println(e3)
-	e4 := litefmt.PSprint(dc...)
+	e4 := litefmt.Sprint(dc...)
 	litefmt.Println(e4)
 }
