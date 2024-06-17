@@ -2,12 +2,13 @@ package litefmt_test
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/3JoB/ulib/litefmt"
 )
 
-var dc []string = []string{
+var dc = []string{
 	"aaaaa",
 	"bbbbb",
 	"ccccc",
@@ -111,11 +112,38 @@ var ll = []string{
 	"aghasbvaewibavcwe",
 }
 
+func Benchmark_String_For(b *testing.B) {
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		r := ""
+		for _, e := range dc {
+			r = r + e
+		}
+	}
+}
+
+func Benchmark_Strings_Join(b *testing.B) {
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_ = strings.Join(dc, " ")
+	}
+}
+
 func Benchmark_LiteFMT_Sprint(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
 		_ = litefmt.Sprint(dc...)
+	}
+}
+
+func Benchmark_LiteFMT_SprintP(b *testing.B) {
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_ = litefmt.SprintP(dc...)
 	}
 }
 
