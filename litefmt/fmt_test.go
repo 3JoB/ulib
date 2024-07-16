@@ -4,9 +4,8 @@
 package litefmt_test
 
 import (
+	"reflect"
 	"testing"
-
-	"github.com/goccy/go-reflect"
 
 	"github.com/3JoB/ulib/litefmt"
 )

@@ -1,11 +1,10 @@
-package ulib
+package runtime
 
 import (
+	"reflect"
 	"runtime"
 	"strings"
 	"testing"
-
-	"github.com/goccy/go-reflect"
 )
 
 func IsInTest() bool {

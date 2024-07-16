@@ -1,9 +1,8 @@
 package hash_test
 
 import (
+	"reflect"
 	"testing"
-
-	"github.com/goccy/go-reflect"
 
 	hs "github.com/3JoB/ulib/hash"
 	"github.com/3JoB/ulib/internal/hash"
@@ -13,12 +12,10 @@ func TestSHA3_224(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -33,12 +30,10 @@ func TestSHA3_256(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -53,12 +48,10 @@ func TestSHA3_384(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -73,12 +66,10 @@ func TestSHA3_512(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -93,12 +84,10 @@ func TestSHA224(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -113,12 +102,10 @@ func TestSHA256(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -133,12 +120,10 @@ func TestSHA384(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -153,12 +138,10 @@ func TestSHA512(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -173,12 +156,10 @@ func TestSHA512_224(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -193,12 +174,10 @@ func TestSHA512_256(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -213,12 +192,10 @@ func TestMD5(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want *hash.Hash
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -233,12 +210,10 @@ func TestHashBcrypt(t *testing.T) {
 	type args struct {
 		password string
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want []byte
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -254,12 +229,10 @@ func TestCorrectBcrypt(t *testing.T) {
 		hash     []byte
 		password string
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want bool
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -274,12 +247,10 @@ func TestMD5Str(t *testing.T) {
 	type args struct {
 		data []byte
 	}
-	tests := []struct {
+	var tests []struct {
 		name string
 		args args
 		want string
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

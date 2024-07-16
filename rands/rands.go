@@ -1,9 +1,10 @@
 package rands
 
 import (
-	"lukechampine.com/frand"
 	v1rand "math/rand"
 	v2rand "math/rand/v2"
+
+	"lukechampine.com/frand"
 	"pgregory.net/rand"
 )
 
