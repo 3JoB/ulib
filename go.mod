@@ -1,6 +1,7 @@
 module github.com/3JoB/ulib
 
 go 1.22.4
+toolchain go1.23.2
 
 require (
 	github.com/3JoB/unsafeConvert v1.6.0
@@ -11,12 +12,11 @@ require (
 	github.com/grafana/regexp v0.0.0-20240518133315-a468a5bfb3bc
 	github.com/klauspost/compress v1.17.9
 	golang.org/x/crypto v0.26.0
-	lukechampine.com/frand v1.4.2
+	lukechampine.com/frand v1.5.1
 	pgregory.net/rand v1.0.2
 )
 
 require (
-	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/bodgit/plumbing v1.3.0 // indirect
 	github.com/bodgit/windows v1.0.1 // indirect
