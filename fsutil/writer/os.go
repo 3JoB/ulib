@@ -6,15 +6,14 @@ import (
 	"github.com/3JoB/unsafeConvert"
 )
 
-type oo struct {
+// Os represents a wrapper around an *os.File object for performing write operations.
+type Os struct {
 	os *os.File
 }
 
-// Higher performance sustainable file write operations.
-//
-// Example Files: `writer_test.go`
-func NewOSWriter(path string) (*oo, error) {
-	n := &oo{}
+// NewOSWriter creates and returns a new Os instance for writing to the specified file path with necessary permissions.
+func NewOSWriter(path string) (*Os, error) {
+	n := &Os{}
 	var err error
 	n.os, err = os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
@@ -23,8 +22,8 @@ func NewOSWriter(path string) (*oo, error) {
 	return n, nil
 }
 
-// Write data of type `any` to the buffer (automatically checked)
-func (n *oo) Add(w any) (err error) {
+// Add writes the provided value to the underlying os. Supports string, byte slice, or defaults to string conversion.
+func (n *Os) Add(w any) (err error) {
 	switch s := w.(type) {
 	case string:
 		err = n.AddString(s)
@@ -36,22 +35,20 @@ func (n *oo) Add(w any) (err error) {
 	return
 }
 
-// Write data of type `[]byte` to the buffer
-func (n *oo) AddBytes(w []byte) error {
+// AddBytes writes the provided byte slice to the underlying file and returns an error if the write operation fails.
+func (n *Os) AddBytes(w []byte) error {
 	_, err := n.os.Write(w)
 	return err
 }
 
-// Write data of type `String` to the buffer
-func (n *oo) AddString(w string) error {
+// AddString writes the given string to the underlying file and returns an error if the write operation fails.
+func (n *Os) AddString(w string) error {
 	_, err := n.os.Write(unsafeConvert.BytePointer(w))
 	return err
 }
 
-// Write the data in the buffer to the file and close the IO channel.
-//
-// Tips: After this operation, please do not continue to operate on the previous pointer!
-func (n *oo) Close() error {
+// Close closes the underlying os.File associated with the Os instance and returns any error encountered.
+func (n *Os) Close() error {
 	if err := n.os.Close(); err != nil {
 		return err
 	}

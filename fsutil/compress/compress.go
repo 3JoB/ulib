@@ -8,54 +8,59 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/klauspost/compress/zip"
-
 	"github.com/3JoB/ulib/fsutil"
+	"github.com/klauspost/compress/zip"
 )
 
-var ErrTargetType error = errors.New("The target directory type is file")
+var ErrTargetType = errors.New("The target directory type is file")
 
-// Extract files
-func ExtractAndWriteFile(destination string, f *zip.File) error {
-	rc, err := f.Open()
+// ExtractAndWriteFile extracts a file from a zip archive and writes it to the specified destination path.
+// If the file is a directory, it ensures the directory exists. Otherwise, writes the file content to the destination.
+// Returns an error if path validation fails, if file writing fails, or if creating directories encounters issues.
+func ExtractAndWriteFile(destination string, zipFile *zip.File) error {
+	reader, err := zipFile.Open()
 	if err != nil {
 		return err
 	}
-	defer rc.Close()
+	defer reader.Close()
 
-	path := filepath.Join(destination, f.Name)
-	if !strings.HasPrefix(path, filepath.Clean(destination)+string(os.PathSeparator)) {
-		return fmt.Errorf("%s: illegal file path", path)
+	targetPath := filepath.Join(destination, zipFile.Name)
+	if !isPathSafe(destination, targetPath) {
+		return fmt.Errorf("%s: illegal file path", targetPath)
 	}
 
-	if f.FileInfo().IsDir() {
-		if !fsutil.IsExist(path) {
-			if err = fsutil.Mkdir(path, f.Mode()); err != nil {
-				return err
-			}
+	if zipFile.FileInfo().IsDir() {
+		if !fsutil.IsExist(targetPath) {
+			return fsutil.Mkdir(targetPath, zipFile.Mode())
 		}
-	} else {
-		if fsutil.IsExist(path) {
-			if err := fsutil.Remove(path); err != nil {
-				return err
-			}
-		}
-		dir, _ := filepath.Split(path)
-		dir = filepath.Clean(dir)
-		if err := fsutil.Mkdir(dir, f.Mode()); err != nil {
-			return err
-		}
+		return nil
+	}
 
-		f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
-		if err != nil {
-			return err
-		}
-		defer f.Close()
-
-		if _, err := io.Copy(f, rc); err != nil {
+	if fsutil.IsExist(targetPath) {
+		if err := fsutil.Remove(targetPath); err != nil {
 			return err
 		}
 	}
 
+	dir := filepath.Clean(filepath.Dir(targetPath))
+	if err := fsutil.Mkdir(dir, zipFile.Mode()); err != nil {
+		return err
+	}
+
+	destFile, err := os.OpenFile(targetPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, zipFile.Mode())
+	if err != nil {
+		return err
+	}
+	defer destFile.Close()
+
+	if _, err := io.Copy(destFile, reader); err != nil {
+		return err
+	}
 	return nil
+}
+
+// isPathSafe checks if the targetPath is within the destination directory, ensuring no path traversal issues.
+func isPathSafe(destination, targetPath string) bool {
+	cleanDest := filepath.Clean(destination) + string(os.PathSeparator)
+	return strings.HasPrefix(targetPath, cleanDest)
 }

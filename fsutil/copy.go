@@ -6,7 +6,28 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"sync"
 )
+
+var bytePool = sync.Pool{
+	New: func() any {
+		return make([]byte, 4096)
+	},
+}
+
+func Copy(w io.Writer, r io.Reader) (int64, error) {
+	if wt, ok := r.(io.WriterTo); ok {
+		return wt.WriteTo(w)
+	}
+	if rt, ok := w.(io.ReaderFrom); ok {
+		return rt.ReadFrom(r)
+	}
+	v := bytePool.Get()
+	buf := v.([]byte)
+	n, err := io.CopyBuffer(w, r, buf)
+	bytePool.Put(v)
+	return n, err
+}
 
 func copyTo(src, dst string) error {
 	if src == dst {

@@ -147,6 +147,14 @@ func Benchmark_LiteFMT_SprintP(b *testing.B) {
 	}
 }
 
+func Benchmark_LiteFMT_SprintP2(b *testing.B) {
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_ = litefmt.SprintP2(dc...)
+	}
+}
+
 func Benchmark_FMT_Sprint(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

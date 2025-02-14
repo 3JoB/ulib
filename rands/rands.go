@@ -8,7 +8,29 @@ import (
 	"pgregory.net/rand"
 )
 
-func RandStd[T any](n []T, num int) []T {
+const (
+	STD = iota
+	STDV2
+	FRAND
+	PG
+)
+
+func Rand[T any](algorithm int, n []T, num int) []T {
+	switch algorithm {
+	case STD:
+		return stdV1(n, num)
+	case STDV2:
+		return stdV2(n, num)
+	case FRAND:
+		return frandRand(n, num)
+	case PG:
+		return pgRand(n, num)
+	default:
+		return nil
+	}
+}
+
+func stdV2[T any](n []T, num int) []T {
 	un := len(n)
 	if un < 1 || num <= 0 || un <= num {
 		return nil
@@ -20,7 +42,7 @@ func RandStd[T any](n []T, num int) []T {
 	return result
 }
 
-func RandStdV1[T any](n []T, num int) []T {
+func stdV1[T any](n []T, num int) []T {
 	un := len(n)
 	if un < 1 || num <= 0 || un <= num {
 		return nil
@@ -32,7 +54,7 @@ func RandStdV1[T any](n []T, num int) []T {
 	return result
 }
 
-func Rands[T any](n []T, num int) []T {
+func pgRand[T any](n []T, num int) []T {
 	un := len(n)
 	if un < 1 || num <= 0 || un <= num {
 		return nil
@@ -44,7 +66,7 @@ func Rands[T any](n []T, num int) []T {
 	return result
 }
 
-func CRands[T any](n []T, num int) []T {
+func frandRand[T any](n []T, num int) []T {
 	un := len(n)
 	if un < 1 || num <= 0 || un <= num {
 		return nil

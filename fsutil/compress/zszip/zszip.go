@@ -17,20 +17,8 @@ func New() *Zip {
 	return &Zip{}
 }
 
-// Example:
-//
-//	package main
-//
-//	import (
-//		"fmt"
-//
-//		"github.com/3JoB/ulib/fsutil/compress/zszip"
-//		"github.com/3JoB/ulib/fsutil"
-//	)
-//
-//	func main() {
-//		//Todo:
-//	}
+// Create compresses the specified files into a zip archive at the given source path. Existing files at the source path
+// are overwritten. It uses specific compression methods while processing files. Returns an error if any step fails.
 func (z Zip) Create(source string, files []string) error {
 	if fsutil.IsExist(source) {
 		fsutil.Remove(source)
@@ -64,7 +52,8 @@ func (z Zip) Create(source string, files []string) error {
 	return nil
 }
 
-// Extract files
+// Extract extracts files from a zip archive at the specified source path to the given destination directory.
+// It returns a slice of extracted file names and an error if the operation fails.
 func (z Zip) Extract(source, destination string) (extractedFiles []string, err error) {
 	decomp := zs.ZipDecompressor()
 	zip.RegisterDecompressor(zs.ZipMethodPKWare, decomp)

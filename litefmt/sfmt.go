@@ -5,6 +5,7 @@ package litefmt
 
 import (
 	"fmt"
+	"github.com/3JoB/ulib/pool"
 
 	"github.com/3JoB/unsafeConvert"
 )
@@ -12,11 +13,11 @@ import (
 // The pooled Sprint method. Of course, you don't need to deal with it.
 // Although pointers will be generated, they are automatically managed by the pool.
 func Sprint(s ...string) string {
-	b := psp_acquire()
+	b := pool.NewBuffer()
 	for _, r := range s {
 		b.WriteString(r)
 	}
-	defer psp_release(b)
+	defer pool.ReleaseBuffer(b)
 	return b.String()
 }
 
@@ -28,22 +29,40 @@ func Sprint(s ...string) string {
 // The difference from PSprint is that it uses unsafe to convert []byte to string.
 // Although it returns an immutable value, it can get a huge performance improvement.
 func SprintP(s ...string) string {
-	b := psp_acquire()
+	b := pool.NewBuffer()
 	for _, r := range s {
 		b.WriteString(r)
 	}
-	defer psp_release(b)
+	defer pool.ReleaseBuffer(b)
 
 	return unsafeConvert.StringSlice(b.Bytes())
 }
 
+func SprintP2(s ...string) string {
+	b := pool.NewBuffer()
+
+	totalLen := 0
+	for _, str := range s {
+		totalLen += len(str)
+	}
+	b.Grow(totalLen)
+
+	for _, str := range s {
+		b.WriteString(str)
+	}
+	result := unsafeConvert.StringSlice(b.Bytes())
+	pool.ReleaseBuffer(b)
+
+	return result
+}
+
 func Sprintln(s ...string) string {
-	b := psp_acquire()
+	b := pool.NewBuffer()
 	for _, r := range s {
 		b.WriteString(r)
 	}
 	b.WriteString("\n")
-	defer psp_release(b)
+	defer pool.ReleaseBuffer(b)
 	return b.String()
 }
 

@@ -1,4 +1,26 @@
 # Benchmark
+
+## 25/02/14
+```
+goos: windows
+goarch: amd64
+pkg: github.com/3JoB/ulib/litefmt
+cpu: 12th Gen Intel(R) Core(TM) i7-12700H
+Benchmark_String_For-20          	  194816	      5914 ns/op	   24328 B/op	      95 allocs/op
+Benchmark_Strings_Join-20        	 2229858	       543.1 ns/op	     576 B/op	       1 allocs/op
+Benchmark_LiteFMT_Sprint-20      	 2864112	       388.8 ns/op	     480 B/op	       1 allocs/op
+Benchmark_LiteFMT_SprintP-20     	 4032630	       287.0 ns/op	       0 B/op	       0 allocs/op
+Benchmark_LiteFMT_SprintP2-20    	 3443402	       346.0 ns/op	       0 B/op	       0 allocs/op
+Benchmark_FMT_Sprint-20          	  291774	      4223 ns/op	    2201 B/op	      98 allocs/op
+Benchmark_LiteFMT_Sprintln-20    	 2983507	       394.6 ns/op	     512 B/op	       1 allocs/op
+Benchmark_FMT_Sprintln-20        	  317449	      4074 ns/op	    2201 B/op	      98 allocs/op
+Benchmark_L_LITEFMT_Sprint-20    	32436990	        38.02 ns/op	      48 B/op	       1 allocs/op
+Benchmark_L_FMT_Sprint-20        	 6644476	       172.4 ns/op	     104 B/op	       4 allocs/op
+PASS
+coverage: 66.7% of statements
+ok  	github.com/3JoB/ulib/litefmt	15.119s
+```
+
 ## New
 ```
 goos: windows

@@ -30,34 +30,54 @@ var player = []int64{
 	345765345, 234123234, 432543432, 123876123, 321678321, 213987213, 231543231, 987432987, 789876789, 678123678,
 }
 
-func Benchmark_Rands_Std_V2(b *testing.B) {
-	b.ResetTimer()
+func BenchmarkRandBase(b *testing.B) {
+	benchmarks := []struct {
+		name      string
+		algorithm int
+		input     []int64
+		num       int
+	}{
+		{"stdV1_large", STD, player, 500},
+		{"stdV2_large", STDV2, player, 500},
+		{"frand_large", FRAND, player, 500},
+		{"pg_large", PG, player, 500},
+	}
 
-	for i := 0; i < b.N; i++ {
-		_ = RandStd(player, 10)
+	for _, bm := range benchmarks {
+		b.Run(bm.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				Rand(bm.algorithm, bm.input, bm.num)
+			}
+		})
 	}
 }
 
-func Benchmark_Rands_Std_V1(b *testing.B) {
-	b.ResetTimer()
+func BenchmarkRand(b *testing.B) {
+	benchmarks := []struct {
+		name      string
+		algorithm int
+		input     []int
+		num       int
+	}{
+		{"stdV1_large", STD, generateSlice(1000), 500},
+		{"stdV2_large", STDV2, generateSlice(1000), 500},
+		{"frand_large", FRAND, generateSlice(1000), 500},
+		{"pg_large", PG, generateSlice(1000), 500},
+	}
 
-	for i := 0; i < b.N; i++ {
-		_ = RandStdV1(player, 10)
+	for _, bm := range benchmarks {
+		b.Run(bm.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				Rand(bm.algorithm, bm.input, bm.num)
+			}
+		})
 	}
 }
 
-func Benchmark_Rands(b *testing.B) {
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		_ = Rands(player, 10)
+func generateSlice(n int) []int {
+	result := make([]int, n)
+	for i := range result {
+		result[i] = i
 	}
-}
-
-func Benchmark_CRands(b *testing.B) {
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		_ = CRands(player, 10)
-	}
+	return result
 }
