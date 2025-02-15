@@ -1,9 +1,9 @@
 package ulib
 
 const (
-	// ULIB Version (int64)
-	Version int64 = 14300
+	// Version represents the current short version of the application as an integer.
+	Version int64 = 14400
 
-	// ULIB Version (String)
-	VersionLong string = "v1.43.0"
+	// VersionLong represents the full semantic version of the application as a string.
+	VersionLong string = "v1.44.0"
 )

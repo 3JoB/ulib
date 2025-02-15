@@ -8,14 +8,19 @@ import (
 	"pgregory.net/rand"
 )
 
+type Algorithm int
+
 const (
-	STD = iota
+	STD Algorithm = iota
 	STDV2
 	FRAND
 	PG
 )
 
-func Rand[T any](algorithm int, n []T, num int) []T {
+// Rand returns a random subset of the input slice n based on the specified algorithm and number of elements (num).
+// The algorithm parameter determines the randomization method to be used (e.g., STD, STDV2, FRAND, PG).
+// If the input slice is nil, num <= 0, or num exceeds the length of n, the function will return nil.
+func Rand[T any](algorithm Algorithm, n []T, num int) []T {
 	switch algorithm {
 	case STD:
 		return stdV1(n, num)
