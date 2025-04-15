@@ -10,7 +10,7 @@ require (
 	github.com/dav009/flash v0.0.0-20171215081313-a4f0c2e0fc62
 	github.com/grafana/regexp v0.0.0-20240518133315-a468a5bfb3bc
 	github.com/klauspost/compress v1.18.0
-	golang.org/x/crypto v0.33.0
+	golang.org/x/crypto v0.37.0
 	lukechampine.com/frand v1.5.1
 	pgregory.net/rand v1.0.2
 )
@@ -26,6 +26,6 @@ require (
 	github.com/ulikunitz/xz v0.5.12 // indirect
 	go4.org v0.0.0-20230225012048-214862532bf5 // indirect
 	golang.org/x/exp v0.0.0-20250210185358-939b2ce775ac // indirect
-	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
 )
