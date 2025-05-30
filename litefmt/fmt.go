@@ -1,8 +1,9 @@
 package litefmt
 
 import (
-	"github.com/3JoB/ulib/pool"
 	"os"
+
+	"github.com/3JoB/ulib/pool"
 )
 
 func Print(s ...string) {

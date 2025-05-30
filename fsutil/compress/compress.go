@@ -8,8 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/3JoB/ulib/fsutil"
 	"github.com/klauspost/compress/zip"
+
+	"github.com/3JoB/ulib/fsutil"
 )
 
 var ErrTargetType = errors.New("The target directory type is file")

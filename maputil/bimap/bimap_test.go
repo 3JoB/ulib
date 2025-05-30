@@ -12,10 +12,10 @@ func TestInsert(t *testing.T) {
 		value     string
 		expected  bool
 	}{
-		{"insert new pair", false, 1, "a", true},
-		{"insert replace existing key", false, 1, "b", true},
-		{"insert replace existing value inverse", false, 2, "b", true},
-		{"insert immutable", true, 1, "a", false},
+		{name: "insert new pair", immutable: false, key: 1, value: "a", expected: true},
+		{name: "insert replace existing key", immutable: false, key: 1, value: "b", expected: true},
+		{name: "insert replace existing value inverse", immutable: false, key: 2, value: "b", expected: true},
+		{name: "insert immutable", immutable: true, key: 1, value: "a", expected: false},
 	}
 
 	for _, tt := range tests {
@@ -87,9 +87,9 @@ func TestDelete(t *testing.T) {
 		key       int
 		expected  bool
 	}{
-		{"delete existing key", false, 1, true},
-		{"delete non-existing key", false, 2, false},
-		{"delete immutable map", true, 1, false},
+		{name: "delete existing key", immutable: false, key: 1, expected: true},
+		{name: "delete non-existing key", immutable: false, key: 2, expected: false},
+		{name: "delete immutable map", immutable: true, key: 1, expected: false},
 	}
 
 	for _, tt := range tests {
@@ -114,9 +114,9 @@ func TestDeleteInverse(t *testing.T) {
 		value     string
 		expected  bool
 	}{
-		{"delete existing value", false, "a", true},
-		{"delete non-existing value", false, "b", false},
-		{"delete immutable map", true, "a", false},
+		{name: "delete existing value", immutable: false, value: "a", expected: true},
+		{name: "delete non-existing value", immutable: false, value: "b", expected: false},
+		{name: "delete immutable map", immutable: true, value: "a", expected: false},
 	}
 
 	for _, tt := range tests {

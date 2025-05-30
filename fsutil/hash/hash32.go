@@ -12,7 +12,7 @@ import (
 	"github.com/3JoB/ulib/hex"
 )
 
-func New32(path string, opt *HashOpt) string {
+func New32(path string, opt *Opt) string {
 	var h hash.Hash32
 	switch opt.Crypt {
 	case CRC32:
@@ -31,7 +31,7 @@ func New32(path string, opt *HashOpt) string {
 	if opt.HMACKey != "" {
 		return hmac32(h, opt.HMACKey)
 	}
-	return hash32el(path, h)
+	return hashel(path, h)
 }
 
 func hmac32(hs hash.Hash32, key string) string {

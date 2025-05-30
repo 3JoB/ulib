@@ -37,10 +37,10 @@ func BenchmarkRandBase(b *testing.B) {
 		input     []int64
 		num       int
 	}{
-		{"stdV1_large", STD, player, 500},
-		{"stdV2_large", STDV2, player, 500},
-		{"frand_large", FRAND, player, 500},
-		{"pg_large", PG, player, 500},
+		{name: "stdV1_large", algorithm: STD, input: player, num: 500},
+		{name: "stdV2_large", algorithm: STDV2, input: player, num: 500},
+		{name: "frand_large", algorithm: FRAND, input: player, num: 500},
+		{name: "pg_large", algorithm: PG, input: player, num: 500},
 	}
 
 	for _, bm := range benchmarks {
@@ -59,10 +59,10 @@ func BenchmarkRand(b *testing.B) {
 		input     []int
 		num       int
 	}{
-		{"stdV1_large", STD, generateSlice(1000), 500},
-		{"stdV2_large", STDV2, generateSlice(1000), 500},
-		{"frand_large", FRAND, generateSlice(1000), 500},
-		{"pg_large", PG, generateSlice(1000), 500},
+		{name: "stdV1_large", algorithm: STD, input: generateSlice(1000), num: 500},
+		{name: "stdV2_large", algorithm: STDV2, input: generateSlice(1000), num: 500},
+		{name: "frand_large", algorithm: FRAND, input: generateSlice(1000), num: 500},
+		{name: "pg_large", algorithm: PG, input: generateSlice(1000), num: 500},
 	}
 
 	for _, bm := range benchmarks {

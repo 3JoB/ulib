@@ -1,8 +1,9 @@
 package maputil
 
 import (
-	"github.com/cornelk/hashmap"
 	"maps"
+
+	"github.com/cornelk/hashmap"
 )
 
 type hashable interface {

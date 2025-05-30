@@ -12,9 +12,9 @@ func TestBaseInsert(t *testing.T) {
 		immutable bool
 		want      bool
 	}{
-		{"insert valid pair", 1, "one", false, true},
-		{"insert duplicate key", 1, "one again", false, true},
-		{"insert immutable", 2, "two", true, false},
+		{name: "insert valid pair", key: 1, value: "one", immutable: false, want: true},
+		{name: "insert duplicate key", key: 1, value: "one again", immutable: false, want: true},
+		{name: "insert immutable", key: 2, value: "two", immutable: true, want: false},
 	}
 
 	for _, tt := range tests {
@@ -36,8 +36,8 @@ func TestBaseExists(t *testing.T) {
 		key   int
 		want  bool
 	}{
-		{"key exists", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, 1, true},
-		{"key does not exist", func(b *BaseBiMap[int, string]) {}, 2, false},
+		{name: "key exists", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, key: 1, want: true},
+		{name: "key does not exist", setup: func(b *BaseBiMap[int, string]) {}, key: 2, want: false},
 	}
 
 	for _, tt := range tests {
@@ -59,8 +59,8 @@ func TestBaseExistsInverse(t *testing.T) {
 		value string
 		want  bool
 	}{
-		{"value exists", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, "one", true},
-		{"value does not exist", func(b *BaseBiMap[int, string]) {}, "two", false},
+		{name: "value exists", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, value: "one", want: true},
+		{name: "value does not exist", setup: func(b *BaseBiMap[int, string]) {}, value: "two", want: false},
 	}
 
 	for _, tt := range tests {
@@ -83,8 +83,8 @@ func TestBaseGet(t *testing.T) {
 		want  string
 		found bool
 	}{
-		{"key exists", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, 1, "one", true},
-		{"key does not exist", func(b *BaseBiMap[int, string]) {}, 2, "", false},
+		{name: "key exists", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, key: 1, want: "one", found: true},
+		{name: "key does not exist", setup: func(b *BaseBiMap[int, string]) {}, key: 2, want: "", found: false},
 	}
 
 	for _, tt := range tests {
@@ -107,8 +107,8 @@ func TestBaseGetInverse(t *testing.T) {
 		want  int
 		found bool
 	}{
-		{"value exists", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, "one", 1, true},
-		{"value does not exist", func(b *BaseBiMap[int, string]) {}, "two", 0, false},
+		{name: "value exists", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, value: "one", want: 1, found: true},
+		{name: "value does not exist", setup: func(b *BaseBiMap[int, string]) {}, value: "two", want: 0, found: false},
 	}
 
 	for _, tt := range tests {
@@ -131,9 +131,9 @@ func TestBaseDelete(t *testing.T) {
 		immutable bool
 		want      bool
 	}{
-		{"delete existing key", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, 1, false, true},
-		{"delete non-existing key", func(b *BaseBiMap[int, string]) {}, 2, false, false},
-		{"delete on immutable map", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, 1, true, false},
+		{name: "delete existing key", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, key: 1, immutable: false, want: true},
+		{name: "delete non-existing key", setup: func(b *BaseBiMap[int, string]) {}, key: 2, immutable: false, want: false},
+		{name: "delete on immutable map", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, key: 1, immutable: true, want: false},
 	}
 
 	for _, tt := range tests {
@@ -157,9 +157,9 @@ func TestBaseDeleteInverse(t *testing.T) {
 		immutable bool
 		want      bool
 	}{
-		{"delete existing value", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, "one", false, true},
-		{"delete non-existing value", func(b *BaseBiMap[int, string]) {}, "two", false, false},
-		{"delete on immutable map", func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, "one", true, false},
+		{name: "delete existing value", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, value: "one", immutable: false, want: true},
+		{name: "delete non-existing value", setup: func(b *BaseBiMap[int, string]) {}, value: "two", immutable: false, want: false},
+		{name: "delete on immutable map", setup: func(b *BaseBiMap[int, string]) { b.Insert(1, "one") }, value: "one", immutable: true, want: false},
 	}
 
 	for _, tt := range tests {

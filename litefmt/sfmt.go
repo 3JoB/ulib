@@ -5,9 +5,10 @@ package litefmt
 
 import (
 	"fmt"
-	"github.com/3JoB/ulib/pool"
 
 	"github.com/3JoB/unsafeConvert"
+
+	"github.com/3JoB/ulib/pool"
 )
 
 // The pooled Sprint method. Of course, you don't need to deal with it.

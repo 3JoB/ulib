@@ -1,10 +1,7 @@
-package hmac
+package hash
 
 import (
 	"crypto/hmac"
-	"crypto/md5"
-	"crypto/sha256"
-	"crypto/sha512"
 	hs "hash"
 
 	"github.com/3JoB/unsafeConvert"
@@ -25,48 +22,8 @@ func c(h func() hs.Hash, data, key []byte) *hash.Hash {
 	return hash.Crypt(hmac.New(h, key), data)
 }
 
-func SHA3_224(data, key []byte) *hash.Hash {
-	return c(sha3.New224, key, data)
-}
-
-func SHA3_256(data, key []byte) *hash.Hash {
-	return c(sha3.New256, key, data)
-}
-
-func SHA3_384(data, key []byte) *hash.Hash {
-	return c(sha3.New384, key, data)
-}
-
-func SHA3_512(data, key []byte) *hash.Hash {
-	return c(sha3.New512, key, data)
-}
-
-func SHA256(data, key []byte) *hash.Hash {
-	return c(sha256.New, key, data)
-}
-
-func SHA224(data, key []byte) *hash.Hash {
-	return c(sha256.New224, key, data)
-}
-
-func SHA384(data, key []byte) *hash.Hash {
-	return c(sha512.New384, key, data)
-}
-
-func SHA512_224(data, key []byte) *hash.Hash {
-	return c(sha512.New512_224, key, data)
-}
-
-func SHA512_256(data, key []byte) *hash.Hash {
-	return c(sha512.New512_256, key, data)
-}
-
-func SHA512(data, key []byte) *hash.Hash {
-	return c(sha512.New, key, data)
-}
-
-func MD5(data, key []byte) *hash.Hash {
-	return c(md5.New, key, data)
+func CreateHMAC(data, key []byte, h func() hs.Hash) *hash.Hash {
+	return c(h, key, data)
 }
 
 // NewShake128 creates a new SHAKE128 variable-output-length ShakeHash.

@@ -12,7 +12,7 @@ import (
 	"github.com/3JoB/ulib/hex"
 )
 
-func New64(path string, opt *HashOpt) string {
+func New64(path string, opt *Opt) string {
 	var h hash.Hash64
 	switch opt.Crypt {
 	case CRC64:
@@ -29,7 +29,7 @@ func New64(path string, opt *HashOpt) string {
 	if opt.HMACKey != "" {
 		return hmac64(h, opt.HMACKey)
 	}
-	return hash64el(path, h)
+	return hashel(path, h)
 }
 
 func hmac64(hs hash.Hash64, key string) string {
